@@ -1,0 +1,51 @@
+<!--现场签到核验：扫码自动提交 → 出示凭证 → 轮询核验结果（§2.1-5 / §4.3）-->
+<view class="page">
+  <!-- 提交中 -->
+  <view wx:if="{{phase === 'submitting'}}" class="state-box">
+    <view class="spinner"></view>
+    <text class="state-title">正在提交签到请求</text>
+    <text class="state-desc">请稍候</text>
+  </view>
+
+  <!-- 待核验：出示凭证 -->
+  <block wx:elif="{{phase === 'waiting'}}">
+    <view class="cred-card">
+      <view class="cred-head">
+        <image class="avatar" src="{{credential.avatar}}" mode="aspectFill" />
+        <view class="cred-info">
+          <text class="nickname">{{credential.nickname}}</text>
+          <text class="pay-type">{{credential.payTypeText}}</text>
+        </view>
+        <text class="tag">待核验</text>
+      </view>
+      <view wx:if="{{credential.cardRemainText}}" class="cred-extra">
+        <text class="card-remain">{{credential.cardRemainText}}</text>
+      </view>
+      <view class="cred-tip">{{tip}}</view>
+    </view>
+    <view class="state-box">
+      <view class="pulse-dot"></view>
+      <text class="state-title">等待工作人员核验</text>
+      <text class="state-desc">核验通过后本页将自动更新</text>
+    </view>
+  </block>
+
+  <!-- 签到成功 -->
+  <view wx:elif="{{phase === 'success'}}" class="state-box">
+    <text class="state-icon ok">✓</text>
+    <text class="state-title">签到成功</text>
+    <text wx:if="{{checkinTimeText}}" class="state-desc">签到时间 {{checkinTimeText}}</text>
+    <text class="state-desc">祝您游戏愉快</text>
+  </view>
+
+  <!-- 失败 -->
+  <view wx:elif="{{phase === 'error'}}" class="state-box">
+    <text class="state-icon err">✕</text>
+    <text class="state-title">无法完成签到</text>
+    <text class="state-desc">{{errorMsg}}</text>
+    <view class="btn-row">
+      <view wx:if="{{rescan}}" class="btn" bindtap="onRescanTap">重新扫码</view>
+      <view wx:else class="btn" bindtap="onRetryTap">重试</view>
+    </view>
+  </view>
+</view>

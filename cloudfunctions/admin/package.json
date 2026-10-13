@@ -1,0 +1,12 @@
+{
+  "name": "admin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "管理与权限模块云函数（docs/design/admin-module.md）",
+  "main": "index.js",
+  "dependencies": {
+    "@club/admin-common": "file:../common",
+    "exceljs": "^4.4.0",
+    "wx-server-sdk": "~2.6.3"
+  }
+}

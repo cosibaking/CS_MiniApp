@@ -1,0 +1,59 @@
+/* app.wxss — 全局样式（骨架阶段通用类） */
+page {
+  background: #F5F6F8;
+  color: #1F2A38;
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+/* 页面通用容器 */
+.page {
+  padding: 24rpx;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+/* 骨架占位卡片（各页面实现前统一展示） */
+.skeleton-card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 48rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.skeleton-title {
+  font-size: 36rpx;
+  font-weight: 600;
+}
+.skeleton-line {
+  color: #8A94A0;
+  font-size: 26rpx;
+}
+.skeleton-api {
+  color: #B0B8C1;
+  font-size: 22rpx;
+  word-break: break-all;
+}
+
+/* 通用按钮 */
+.btn-primary {
+  background: #C8552F;
+  color: #FFFFFF;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+}
+.btn-primary[disabled] {
+  background: #D8DCE1;
+  color: #FFFFFF;
+}
+
+/* 加载与空态 */
+.loading-tip,
+.empty-tip {
+  text-align: center;
+  color: #8A94A0;
+  padding: 48rpx 0;
+  font-size: 26rpx;
+}

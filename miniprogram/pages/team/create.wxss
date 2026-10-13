@@ -1,0 +1,150 @@
+/* 创建战队（profile/edit 表单范式） */
+
+/* 拦截态 */
+.blocked-block {
+  text-align: center;
+  padding: 160rpx 32rpx 0;
+}
+.blocked-emoji {
+  font-size: 88rpx;
+  line-height: 1;
+}
+.blocked-text {
+  margin-top: 24rpx;
+  font-size: 28rpx;
+  color: #5A6572;
+}
+.blocked-btn {
+  width: 320rpx;
+  margin: 40rpx auto 0;
+}
+.blocked-btn::after {
+  border: none;
+}
+
+/* R1 被拒重提横幅 */
+.reject-banner {
+  margin: 0 0 24rpx;
+  padding: 24rpx 28rpx;
+  background: rgba(200, 85, 47, 0.08);
+  border-radius: 12rpx;
+}
+.reject-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #C8552F;
+}
+.reject-reason {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: #5A6572;
+}
+.reject-tip {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #8A94A0;
+}
+
+/* 表单卡片 */
+.card {
+  padding: 32rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+/* 队徽行 */
+.logo-row {
+  display: flex;
+  align-items: center;
+  padding-bottom: 26rpx;
+  border-bottom: 1rpx solid #F0F2F4;
+}
+.logo-box {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.logo-img {
+  width: 140rpx;
+  height: 140rpx;
+  background: #F5F6F8;
+}
+.logo-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56rpx;
+  color: #B0B8C1;
+  border: 2rpx dashed #D8DCE1;
+  box-sizing: border-box;
+  border-radius: 16rpx;
+}
+.logo-tip {
+  flex: 1;
+  margin-left: 24rpx;
+}
+.logo-tip-text {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1F2A38;
+}
+.logo-tip-sub {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #8A94A0;
+}
+
+/* 表单行 */
+.form-row {
+  display: flex;
+  align-items: center;
+  padding: 26rpx 0;
+  border-bottom: 1rpx solid #F0F2F4;
+}
+.form-row-top {
+  align-items: flex-start;
+}
+.form-last {
+  border-bottom: none;
+}
+.form-label {
+  width: 190rpx;
+  flex-shrink: 0;
+  font-size: 28rpx;
+  color: #5A6572;
+}
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #1F2A38;
+}
+.form-textarea {
+  flex: 1;
+  height: 160rpx;
+  font-size: 28rpx;
+  color: #1F2A38;
+}
+.form-error {
+  padding: 8rpx 0 0 190rpx;
+  font-size: 24rpx;
+  color: #B03030;
+}
+.form-note {
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  color: #8A94A0;
+}
+
+/* 保存区 */
+.save-area {
+  padding: 16rpx 8rpx 0;
+}
+.save-btn {
+  width: 100%;
+}
+.save-btn::after {
+  border: none;
+}

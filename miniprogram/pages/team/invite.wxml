@@ -1,0 +1,71 @@
+<!--邀请队员（team-module §2.1-5 / §2.2）：按昵称/手机号搜索会员，选人发送邀请-->
+<view class="page invite-page">
+
+  <!-- 未登录引导 -->
+  <view wx:if="{{!logged}}" class="empty-block">
+    <view class="empty-emoji">🛡️</view>
+    <view class="empty-text">登录后即可邀请队员</view>
+    <button class="btn-primary empty-btn" bindtap="retryLogin">立即登录</button>
+  </view>
+
+  <block wx:else>
+    <!-- 搜索栏（昵称 / 手机号） -->
+    <view class="filter-bar">
+      <view class="search-box">
+        <input
+          class="search-input"
+          placeholder="昵称 / 手机号"
+          placeholder-class="search-ph"
+          value="{{keyword}}"
+          confirm-type="search"
+          bindinput="onKeyword"
+          bindconfirm="onSearch"
+        />
+      </view>
+      <view class="search-entry" bindtap="onSearch">搜索</view>
+    </view>
+
+    <!-- 搜索失败重试 -->
+    <view wx:if="{{failed}}" class="empty-block">
+      <view class="empty-emoji">⚠️</view>
+      <view class="empty-text">搜索失败，请重试</view>
+      <button class="btn-primary empty-btn" bindtap="retry">重新搜索</button>
+    </view>
+
+    <!-- 空结果（§2.2） -->
+    <view wx:elif="{{searched && !searching && results.length === 0}}" class="empty-block">
+      <view class="empty-emoji">🔍</view>
+      <view class="empty-text">未找到相关会员，换个关键词试试</view>
+      <button class="empty-btn-plain" bindtap="onClear">清空关键词</button>
+    </view>
+
+    <!-- 结果列表（§2.2 禁选标注：已入队 / 已有申请或邀请） -->
+    <view wx:elif="{{results.length > 0}}" class="result-card">
+      <view
+        wx:for="{{results}}"
+        wx:key="user_id"
+        class="member-row {{item.tip ? 'row-disabled' : ''}}"
+        data-index="{{index}}"
+        bindtap="onPick"
+      >
+        <image class="member-avatar" src="{{item.avatar}}" mode="aspectFill" />
+        <view class="member-info">
+          <view class="member-name-line">
+            <text class="member-name">{{item.nickname}}</text>
+            <text wx:if="{{item.phone_masked}}" class="phone-text">{{item.phone_masked}}</text>
+          </view>
+          <view class="member-sub {{item.tip ? 'sub-tip' : ''}}">{{item.tip || '未加入战队，可邀请'}}</view>
+          <view wx:if="{{item.failMsg}}" class="apply-fail">{{item.failMsg}}</view>
+        </view>
+        <view class="member-actions">
+          <text class="act-link {{item.tip ? 'act-disabled' : 'act-primary'}}">{{item.tip ? '不可邀请' : '邀请'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{searching}}" class="loading-tip">搜索中…</view>
+    <view wx:if="{{!searching && searched && results.length > 0}}" class="list-more">
+      {{total > 20 ? '仅显示前 20 位，请细化关键词' : '共 ' + total + ' 位会员'}}
+    </view>
+  </block>
+</view>

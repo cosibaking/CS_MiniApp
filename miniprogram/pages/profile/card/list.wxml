@@ -1,0 +1,54 @@
+<!--我的会员卡-->
+<view class="page">
+  <!-- 有效卡 -->
+  <view class="section" wx:if="{{activeCards.length}}">
+    <view class="section-title">有效卡</view>
+    <view
+      class="vip-card {{item.isCount ? 'vip-count' : 'vip-period'}}"
+      wx:for="{{activeCards}}"
+      wx:key="card_id"
+      data-id="{{item.card_id}}"
+      bindtap="goDetail"
+    >
+      <view class="vip-top">
+        <text class="vip-name">{{item.card_name}}</text>
+        <text class="vip-type">{{item.typeLabel}}</text>
+      </view>
+      <view class="vip-remain">{{item.remainText}}</view>
+      <view class="vip-bottom">
+        <text class="vip-expire">{{item.expireText}}</text>
+        <text class="vip-status">{{item.statusLabel}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空态 -->
+  <view class="empty-block" wx:if="{{loaded && !activeCards.length}}">
+    <text class="empty-text">暂无有效会员卡</text>
+    <button class="btn-primary empty-btn" bindtap="goBuy">去购买</button>
+  </view>
+
+  <!-- 历史卡 -->
+  <view class="section" wx:if="{{historyCards.length}}">
+    <view class="section-title">历史卡</view>
+    <view
+      class="his-card"
+      wx:for="{{historyCards}}"
+      wx:key="card_id"
+      data-id="{{item.card_id}}"
+      bindtap="goDetail"
+    >
+      <view class="his-main">
+        <text class="his-name">{{item.card_name}}</text>
+        <text class="his-meta" wx:if="{{item.metaText}}">{{item.metaText}}</text>
+      </view>
+      <text class="his-status">{{item.statusLabel}}</text>
+    </view>
+  </view>
+
+  <!-- 购买入口 -->
+  <view class="buy-entry" wx:if="{{loaded && activeCards.length}}" bindtap="goBuy">
+    <text class="buy-entry-text">购买新会员卡</text>
+    <text class="buy-entry-arrow">›</text>
+  </view>
+</view>

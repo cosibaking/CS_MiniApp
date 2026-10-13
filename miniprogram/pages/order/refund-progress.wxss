@@ -1,0 +1,123 @@
+/* 退款进度（payment-module §2 页面6）：卡片 + 状态时间线 */
+.page {
+  padding: 24rpx 32rpx calc(40rpx + env(safe-area-inset-bottom));
+}
+
+.loading-tip {
+  text-align: center;
+  font-size: 26rpx;
+  color: #8A94A0;
+  padding: 120rpx 0;
+}
+
+.empty-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 160rpx 0;
+}
+.empty-icon { font-size: 72rpx; }
+.empty-text {
+  margin-top: 16rpx;
+  font-size: 26rpx;
+  color: #8A94A0;
+}
+
+.card {
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+}
+.row {
+  display: flex;
+  align-items: flex-start;
+  padding: 16rpx 0;
+}
+.label {
+  width: 140rpx;
+  flex-shrink: 0;
+  font-size: 26rpx;
+  color: #8A94A0;
+}
+.value {
+  flex: 1;
+  font-size: 26rpx;
+  color: #1F2A38;
+}
+.refund-amount {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #C8552F;
+}
+
+.refund-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16rpx;
+  border-bottom: 1rpx solid #F0F2F4;
+}
+.refund-no {
+  font-size: 26rpx;
+  color: #5A6572;
+}
+.refund-status {
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 999rpx;
+}
+.st-green { color: #2E7D5B; background: rgba(46, 125, 91, 0.12); }
+.st-blue { color: #2D6CA3; background: rgba(45, 108, 163, 0.12); }
+.st-red { color: #B03030; background: rgba(176, 48, 48, 0.12); }
+.st-orange { color: #8A6D1F; background: rgba(138, 109, 31, 0.12); }
+.st-grey { color: #8A94A0; background: rgba(138, 148, 160, 0.12); }
+
+/* 状态时间线（申请→审核中→处理中→已退款/已驳回） */
+.timeline {
+  margin-top: 16rpx;
+  padding-top: 24rpx;
+  border-top: 1rpx solid #F0F2F4;
+}
+.tl-step {
+  position: relative;
+  padding: 0 0 36rpx 40rpx;
+}
+.tl-step:last-child { padding-bottom: 4rpx; }
+.tl-step::before {
+  content: '';
+  position: absolute;
+  left: 15rpx;
+  top: 30rpx;
+  bottom: 6rpx;
+  width: 2rpx;
+  background: #E5E9ED;
+}
+.tl-step:last-child::before { display: none; }
+.tl-dot {
+  position: absolute;
+  left: 6rpx;
+  top: 8rpx;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: #C4CBD4;
+}
+.tl-title {
+  font-size: 26rpx;
+  font-weight: 400;
+  color: #8A94A0;
+}
+.tl-desc {
+  margin-top: 4rpx;
+  font-size: 22rpx;
+  color: #8A94A0;
+}
+.tl-done .tl-dot { background: #2D6CA3; }
+.tl-done .tl-title { color: #1F2A38; }
+.tl-current .tl-dot { background: #C8552F; }
+.tl-current .tl-title { color: #C8552F; font-weight: 600; }
+.tl-current .tl-desc { color: #5A6572; }
+.tl-danger .tl-dot { background: #B03030; }
+.tl-danger .tl-title { color: #B03030; font-weight: 600; }
+.tl-danger .tl-desc { color: #B03030; }

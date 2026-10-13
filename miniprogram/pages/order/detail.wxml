@@ -1,0 +1,78 @@
+<!--pages/order/detail.wxml — 订单详情（§2 页面4：快照/金额/流水/退款记录/操作按钮）-->
+<view class="page">
+  <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+
+  <block wx:if="{{!loading && order}}">
+    <!-- 状态卡：大字状态 + 副标题（倒计时/关闭原因/支付时间） -->
+    <view class="status-card">
+      <view class="status-main {{order.statusClass}}">{{order.statusLabel}}</view>
+      <view wx:if="{{countdownText}}" class="status-countdown">{{countdownText}}</view>
+      <view wx:elif="{{statusSubText}}" class="status-sub">{{statusSubText}}</view>
+    </view>
+
+    <!-- 活动快照 -->
+    <view class="card">
+      <view class="card-title">活动信息</view>
+      <view class="row"><text class="label">活动</text><text class="value strong">{{order.title}}</text></view>
+      <view class="row"><text class="label">时间</text><text class="value">{{order.timeText}}</text></view>
+      <view wx:if="{{order.venue}}" class="row"><text class="label">场地</text><text class="value">{{order.venue}}</text></view>
+      <view class="row"><text class="label">订单号</text><text class="value">{{order.orderNo}}</text></view>
+      <view class="row"><text class="label">下单时间</text><text class="value">{{order.createdText}}</text></view>
+    </view>
+
+    <!-- 金额明细 -->
+    <view class="card">
+      <view class="card-title">金额明细</view>
+      <view class="row"><text class="label">应付金额</text><text class="value">¥{{order.amountText}}</text></view>
+      <view class="row"><text class="label">实付金额</text><text class="value strong">¥{{order.payAmountText}}</text></view>
+      <view wx:if="{{order.refundedTotalText}}" class="row"><text class="label">已退金额</text><text class="value">¥{{order.refundedTotalText}}</text></view>
+    </view>
+
+    <!-- 报名明细（按人） -->
+    <view wx:if="{{items.length}}" class="card">
+      <view class="card-title">报名明细（{{items.length}} 人）</view>
+      <view class="item-row {{item.refunded ? 'item-refunded' : ''}}" wx:for="{{items}}" wx:key="key">
+        <text class="item-name">{{item.nickname}}</text>
+        <view class="item-right">
+          <text wx:if="{{item.refundLabel}}" class="item-refund-label">{{item.refundLabel}}</text>
+          <text class="item-price">{{item.priceText}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 支付流水（transaction_id 服务端已脱敏） -->
+    <view wx:if="{{payments.length}}" class="card">
+      <view class="card-title">支付流水</view>
+      <view class="sub-block" wx:for="{{payments}}" wx:key="key">
+        <view class="row"><text class="label">方式</text><text class="value">{{item.channelLabel}}</text></view>
+        <view class="row"><text class="label">流水号</text><text class="value">{{item.txId}}</text></view>
+        <view class="row"><text class="label">金额</text><text class="value">¥{{item.amountText}}</text></view>
+        <view class="row"><text class="label">时间</text><text class="value">{{item.paidText}}</text></view>
+      </view>
+    </view>
+
+    <!-- 退款记录 -->
+    <view wx:if="{{refunds.length}}" class="card">
+      <view class="card-title">退款记录</view>
+      <view class="sub-block" wx:for="{{refunds}}" wx:key="refundNo">
+        <view class="refund-head">
+          <text class="refund-no">{{item.refundNo}}</text>
+          <text class="refund-status {{item.statusClass}}">{{item.statusLabel}}</text>
+        </view>
+        <view class="row"><text class="label">类型</text><text class="value">{{item.typeLabel}}</text></view>
+        <view class="row"><text class="label">金额</text><text class="value">¥{{item.amountText}}</text></view>
+        <view class="row"><text class="label">时间</text><text class="value">{{item.timeText}}</text></view>
+        <view wx:if="{{item.reason}}" class="row"><text class="label">原因</text><text class="value">{{item.reason}}</text></view>
+        <view wx:if="{{item.remark}}" class="row"><text class="label">备注</text><text class="value">{{item.remark}}</text></view>
+      </view>
+    </view>
+
+    <!-- 操作按钮（按状态） -->
+    <view wx:if="{{canPay || canCancel || canRefund || hasRefund}}" class="btns">
+      <button wx:if="{{canPay}}" class="btn-lg btn-primary" bindtap="onTapPay">去支付</button>
+      <button wx:if="{{canRefund}}" class="btn-lg btn-primary" bindtap="onTapRefund">申请退款</button>
+      <button wx:if="{{hasRefund}}" class="btn-lg btn-plain" bindtap="onTapRefundProgress">退款进度</button>
+      <button wx:if="{{canCancel}}" class="btn-lg btn-plain" bindtap="onTapCancel">取消订单</button>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,66 @@
+<!--活动列表（activity-module §2.1-1）-->
+<view class="page list-page">
+  <!-- 搜索 + 状态筛选 -->
+  <view class="filter-bar">
+    <view class="search-box">
+      <input
+        class="search-input"
+        placeholder="搜索活动标题"
+        placeholder-class="search-ph"
+        value="{{keyword}}"
+        confirm-type="search"
+        bindinput="onKeyword"
+        bindconfirm="onSearch"
+      />
+    </view>
+    <picker class="status-pick" range="{{statusOptions}}" range-key="label" value="{{statusIndex}}" bindchange="onStatusChange">
+      <view class="status-pick-inner">{{statusOptions[statusIndex].label}}<text class="arrow">▾</text></view>
+    </picker>
+  </view>
+
+  <!-- 类型筛选 chips -->
+  <scroll-view class="type-bar" scroll-x enable-flex>
+    <view
+      wx:for="{{types}}"
+      wx:key="value"
+      class="type-chip {{type === item.value ? 'on' : ''}}"
+      data-value="{{item.value}}"
+      bindtap="onTypeTap"
+    >{{item.label}}</view>
+  </scroll-view>
+
+  <!-- 空态（§2.2） -->
+  <view wx:if="{{empty && !loading}}" class="empty-block">
+    <view class="empty-emoji">🎯</view>
+    <view class="empty-text">近期暂无符合条件的活动</view>
+    <view class="empty-sub">可切换筛选或下拉刷新看看</view>
+  </view>
+
+  <!-- 列表 -->
+  <view class="act-list">
+    <view
+      wx:for="{{list}}"
+      wx:key="id"
+      class="act-card"
+      data-id="{{item.id}}"
+      bindtap="goDetail"
+    >
+      <image class="act-cover" src="{{item.cover}}" mode="aspectFill" />
+      <view class="act-info">
+        <view class="act-title-row">
+          <text class="act-type {{item.typeClass}}">{{item.typeLabel}}</text>
+          <text class="act-title">{{item.title}}</text>
+        </view>
+        <view class="act-time">{{item.timeText}}</view>
+        <view wx:if="{{item.deadlineText}}" class="act-deadline">{{item.deadlineText}}</view>
+        <view class="act-meta">
+          <text class="act-price">{{item.priceText}}</text>
+          <text wx:if="{{item.badge}}" class="act-badge {{item.badgeClass}}">{{item.badge}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading-tip">加载中…</view>
+  <view wx:if="{{!loading && !empty && finished}}" class="loading-tip">没有更多了</view>
+</view>

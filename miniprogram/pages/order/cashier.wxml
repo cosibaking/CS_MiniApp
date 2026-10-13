@@ -1,0 +1,40 @@
+<!--pages/order/cashier.wxml — 收银台（payment-module §2）-->
+<view class="page">
+  <view wx:if="{{loading}}" class="loading-tip">加载中…</view>
+
+  <block wx:if="{{!loading && order}}">
+    <!-- 订单摘要 -->
+    <view class="card">
+      <view class="row"><text class="label">活动</text><text class="value strong">{{order.title}}</text></view>
+      <view class="row" wx:if="{{order.timeText}}"><text class="label">时间</text><text class="value">{{order.timeText}}</text></view>
+      <view class="row" wx:if="{{order.venue}}"><text class="label">场地</text><text class="value">{{order.venue}}</text></view>
+      <view class="row"><text class="label">人数</text><text class="value">{{order.count}} 人</text></view>
+      <view class="row"><text class="label">订单号</text><text class="value">{{orderNo}}</text></view>
+    </view>
+
+    <!-- 金额 -->
+    <view class="card amount-card">
+      <text class="amount">¥{{order.amountText}}</text>
+      <text class="amount-label">应付金额</text>
+    </view>
+
+    <!-- 待支付：倒计时 + 操作 -->
+    <block wx:if="{{order.status === 'pending'}}">
+      <view class="countdown {{expired ? 'expired' : ''}}">
+        {{expired ? '订单已超时，名额释放中（如有支付请留意退款通知）' : countdownText}}
+      </view>
+      <view class="btns">
+        <button class="btn-lg btn-primary" disabled="{{expired || paying}}" bindtap="onTapPay">
+          {{paying ? '正在拉起支付…' : '立即支付'}}
+        </button>
+        <button class="btn-lg btn-plain" disabled="{{paying}}" bindtap="onTapCancel">取消订单</button>
+      </view>
+    </block>
+
+    <!-- 终态 -->
+    <view wx:else class="status-card">
+      <text class="status-text">{{order.statusLabel}}</text>
+      <button class="btn-lg btn-primary" bindtap="onTapBack">返回</button>
+    </view>
+  </block>
+</view>

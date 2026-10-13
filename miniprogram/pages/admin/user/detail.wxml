@@ -1,0 +1,139 @@
+<!--用户详情（user-module §5.21-§5.24 / admin-module §2.3）-->
+<view class="page user-detail-page">
+  <view wx:if="{{checking}}" class="loading-tip">加载中…</view>
+
+  <!-- 权限门控（user_manage；入口体验层，云函数侧硬校验） -->
+  <view wx:elif="{{noPermission}}" class="empty-block">
+    <view class="empty-emoji">🚫</view>
+    <view class="empty-text">无用户管理权限</view>
+    <button class="btn-primary empty-btn" bindtap="goBack">返回首页</button>
+  </view>
+
+  <block wx:else>
+    <view wx:if="{{loading}}" class="loading-tip">加载中…</view>
+
+    <!-- 首屏加载失败 -->
+    <view wx:elif="{{failed}}" class="empty-block">
+      <view class="empty-emoji">⚠️</view>
+      <view class="empty-text">详情加载失败，请重试</view>
+      <button class="btn-primary empty-btn" bindtap="onRetry">重新加载</button>
+    </view>
+
+    <block wx:else>
+      <!-- 资料卡 -->
+      <view class="card profile-card">
+        <view class="profile-head">
+          <image wx:if="{{profile.avatar}}" class="avatar" src="{{profile.avatar}}" mode="aspectFill" />
+          <view wx:else class="avatar avatar-placeholder">{{profile.avatar_char}}</view>
+          <view class="profile-title">
+            <view class="profile-name">
+              {{profile.nickname}}
+              <text wx:if="{{profile.is_minor}}" class="minor-tag">未成年</text>
+            </view>
+            <view class="profile-badges">
+              <view class="role-badge role-{{profile.role}}">{{profile.role_text}}</view>
+              <view class="status-badge {{profile.banned ? 'badge-banned' : 'badge-normal'}}">{{profile.status_text}}</view>
+            </view>
+          </view>
+        </view>
+        <view class="stat-row">
+          <view class="stat-item"><view class="stat-num">{{profile.total_games}}</view><view class="stat-label">场次</view></view>
+          <view class="stat-item"><view class="stat-num">{{profile.total_kills}}</view><view class="stat-label">击杀</view></view>
+          <view class="stat-item"><view class="stat-num">{{profile.total_wins}}</view><view class="stat-label">胜场</view></view>
+        </view>
+        <view class="info-list">
+          <view class="info-row"><view class="info-label">手机号</view><view class="info-value">{{profile.phone_text}}{{profile.phone_owner_text}}</view></view>
+          <view class="info-row"><view class="info-label">等级 / 军衔</view><view class="info-value">{{profile.level_text}} · {{profile.rank_name}}</view></view>
+          <view class="info-row"><view class="info-label">性别 / 生日</view><view class="info-value">{{profile.gender_text}} · {{profile.birthday}}</view></view>
+          <view class="info-row"><view class="info-label">注册时间</view><view class="info-value">{{profile.created_text}}</view></view>
+          <view class="info-row"><view class="info-label">最近登录</view><view class="info-value">{{profile.last_login_text}}</view></view>
+        </view>
+      </view>
+
+      <!-- 管理操作（按权限点显隐；本人隐藏角色/封禁，与后端 2010 对齐） -->
+      <view wx:if="{{showActions}}" class="card section-card">
+        <view class="section-title">管理操作</view>
+
+        <view wx:if="{{canRole && !isSelf}}" class="action-row">
+          <view class="action-label">角色（当前：{{profile.role_text}}）</view>
+          <picker range="{{roleNames}}" value="{{roleIndex}}" bindchange="onRoleChange">
+            <view class="btn-mini">更换角色</view>
+          </picker>
+        </view>
+
+        <view wx:if="{{canBan && !isSelf}}" class="action-row">
+          <view class="action-label">账号状态</view>
+          <view class="btn-mini {{profile.banned ? 'btn-mini-success' : 'btn-mini-danger'}}" bindtap="onToggleBan">
+            {{profile.banned ? '解封账号' : '封禁账号'}}
+          </view>
+        </view>
+
+        <view wx:if="{{canCard}}" class="action-row">
+          <view class="action-label">会员卡</view>
+          <view class="btn-mini" bindtap="onToggleGrant">{{grant.visible ? '收起开卡表单' : '人工开卡'}}</view>
+        </view>
+
+        <!-- 人工开卡表单（R13 ①：source=admin，不产生支付流水） -->
+        <view wx:if="{{canCard && grant.visible}}" class="grant-form">
+          <view class="form-row">
+            <view class="form-label">卡名称</view>
+            <input class="form-input" value="{{grant.name}}" placeholder="≤50 字" data-field="name" bindinput="onGrantInput" />
+          </view>
+          <view class="form-row">
+            <view class="form-label">卡类型</view>
+            <picker class="form-picker" range="{{grantTypes}}" range-key="name" value="{{grant.typeIndex}}" bindchange="onGrantTypeChange">
+              <view class="form-picker-value">{{grantTypes[grant.typeIndex].name}}</view>
+            </picker>
+          </view>
+          <view wx:if="{{grant.typeIndex === 0}}" class="form-row">
+            <view class="form-label">次数</view>
+            <input class="form-input" type="number" value="{{grant.times}}" placeholder="正整数，如 10" data-field="times" bindinput="onGrantInput" />
+          </view>
+          <view wx:else class="form-row">
+            <view class="form-label">期限</view>
+            <input class="form-input" type="number" value="{{grant.months}}" placeholder="月数，如 3" data-field="months" bindinput="onGrantInput" />
+          </view>
+          <view class="form-row">
+            <view class="form-label">备注</view>
+            <input class="form-input" value="{{grant.remark}}" placeholder="必填，≤200 字" data-field="remark" bindinput="onGrantInput" />
+          </view>
+          <view class="form-hint">次卡有效期默认自当下起 12 个月；期限卡自当下起算。</view>
+          <view class="btn-mini btn-submit" bindtap="onGrantSubmit">提交开卡</view>
+        </view>
+      </view>
+
+      <!-- 会员卡列表 -->
+      <view class="card section-card">
+        <view class="section-title">会员卡（{{cards.length}}）</view>
+        <view wx:if="{{cards.length === 0}}" class="section-empty">暂无会员卡</view>
+        <view class="card-item" wx:for="{{cards}}" wx:key="card_id">
+          <view class="card-item-head">
+            <view class="card-item-name">
+              {{item.card_name}}
+              <text class="card-type-tag">{{item.is_count ? '次卡' : '期限卡'}}</text>
+            </view>
+            <view class="status-badge badge-card-{{item.status}}">{{item.status_text}}</view>
+          </view>
+          <view class="card-item-meta">{{item.times_text}}</view>
+          <view class="card-item-meta">有效期至 {{item.expire_text}}{{item.source_text ? ' · ' + item.source_text : ''}}</view>
+          <view wx:if="{{item.remark}}" class="card-item-remark">备注：{{item.remark}}</view>
+          <view wx:if="{{canCard && (item.can_add || item.can_extend || item.can_void)}}" class="card-item-actions">
+            <view wx:if="{{item.can_add}}" class="act-link act-primary" data-index="{{index}}" catchtap="onAddTimes">加次</view>
+            <view wx:if="{{item.can_extend}}" class="act-link act-primary" data-index="{{index}}" catchtap="onExtend">延期</view>
+            <view wx:if="{{item.can_void}}" class="act-link act-danger" data-index="{{index}}" catchtap="onVoid">作废</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 免责协议签署记录（R5 留痕，只读） -->
+      <view class="card section-card">
+        <view class="section-title">协议签署记录（{{waivers.length}}）</view>
+        <view wx:if="{{waivers.length === 0}}" class="section-empty">暂无签署记录</view>
+        <view class="waiver-row" wx:for="{{waivers}}" wx:key="signed_text">
+          <view class="waiver-main">{{item.type_text}} · {{item.version_text}}</view>
+          <view class="waiver-time">{{item.signed_text}}</view>
+        </view>
+      </view>
+    </block>
+  </block>
+</view>

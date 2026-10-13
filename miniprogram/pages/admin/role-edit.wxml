@@ -1,0 +1,67 @@
+<!--角色编辑（admin-module §2.2-3：新建/编辑双模式 + 权限点分组勾选 + 乐观锁保存）-->
+<view class="page role-edit-page">
+  <view wx:if="{{checking}}" class="loading-tip">加载中…</view>
+
+  <!-- 权限门控（role_manage） -->
+  <view wx:elif="{{noPermission}}" class="empty-block">
+    <view class="empty-emoji">🚫</view>
+    <view class="empty-text">无角色管理权限</view>
+  </view>
+
+  <block wx:else>
+    <view wx:if="{{loading}}" class="loading-tip">数据加载中…</view>
+
+    <block wx:else>
+      <!-- 基本信息表单卡 -->
+      <view class="card form-card">
+        <view class="form-item">
+          <view class="form-label">角色名称 <text class="form-req">*</text></view>
+          <input class="form-input" value="{{name}}" maxlength="20" placeholder="1-20 字，如：场地管理员"
+            placeholder-class="input-ph" bindinput="onNameInput" />
+        </view>
+
+        <view class="form-item">
+          <view class="form-label">角色标识</view>
+          <!-- 编辑模式标识不可改（role/update 以 role_key 为查询键） -->
+          <view wx:if="{{mode === 'edit'}}" class="form-static">{{roleKey}}</view>
+          <block wx:else>
+            <input class="form-input" value="{{inputKey}}" maxlength="31" placeholder="小写字母开头，可含数字/下划线"
+              placeholder-class="input-ph" bindinput="onKeyInput" />
+            <view class="form-tip">创建后不可修改，如 ops_master</view>
+          </block>
+        </view>
+
+        <view class="form-item form-item-last">
+          <view class="form-label">角色描述</view>
+          <textarea class="form-textarea" value="{{description}}" maxlength="100" placeholder="选填，不超过 100 字"
+            placeholder-class="input-ph" bindinput="onDescInput" />
+        </view>
+      </view>
+
+      <!-- 预置角色受限提示（§2.2-3） -->
+      <view wx:if="{{isPreset}}" class="preset-notice">
+        预置角色：标识不可修改，调整权限请谨慎（保存将记入操作日志）。
+      </view>
+
+      <!-- 权限点勾选（按 §1.4 总表分组） -->
+      <view class="perm-section-title">权限点配置（已选 {{selected.length}}）</view>
+      <view class="card perm-card" wx:for="{{groups}}" wx:key="label" wx:for-item="group">
+        <view class="perm-group-label">{{group.label}}</view>
+        <view class="perm-point {{point.locked ? 'perm-locked' : ''}}" wx:for="{{group.points}}" wx:key="key"
+          wx:for-item="point" data-key="{{point.key}}" data-locked="{{point.locked}}" bindtap="togglePerm">
+          <view class="perm-point-info">
+            <view class="perm-point-name">{{point.name}}<text wx:if="{{point.locked}}" class="perm-lock-tag">固有</text></view>
+            <view class="perm-point-key">{{point.key}}</view>
+          </view>
+          <view class="perm-check {{point.checked ? 'perm-check-on' : ''}}">
+            <text wx:if="{{point.checked}}">✓</text>
+          </view>
+        </view>
+      </view>
+
+      <button class="btn-primary save-btn" bindtap="onSave" disabled="{{saving}}">
+        {{saving ? '保存中…' : (mode === 'create' ? '创建角色' : '保存修改')}}
+      </button>
+    </block>
+  </block>
+</view>

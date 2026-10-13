@@ -1,0 +1,141 @@
+/* 现场签到核验 — 与会员端同一套设计令牌 */
+page {
+  background: #F5F6F8;
+  font-size: 28rpx;
+  color: #1F2A38;
+}
+
+.page {
+  padding: 24rpx;
+}
+
+/* 通用状态块（提交中/等待/成功/失败） */
+.state-box {
+  margin-top: 160rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.state-title {
+  margin-top: 28rpx;
+  font-size: 34rpx;
+  font-weight: 600;
+}
+.state-desc {
+  margin-top: 14rpx;
+  font-size: 26rpx;
+  color: #8A94A0;
+  text-align: center;
+  padding: 0 60rpx;
+  line-height: 1.6;
+}
+.state-icon {
+  font-size: 96rpx;
+  font-weight: 600;
+}
+.state-icon.ok { color: #2E7D5B; }
+.state-icon.err { color: #B03030; }
+
+/* 提交中 spinner */
+.spinner {
+  width: 64rpx;
+  height: 64rpx;
+  border: 6rpx solid #E8EAEE;
+  border-top-color: #C8552F;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 等待核验 pulse 圆点 */
+.pulse-dot {
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  background: #C8552F;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(1.35); }
+}
+
+/* 凭证卡 */
+.cred-card {
+  margin-top: 24rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.cred-head {
+  display: flex;
+  align-items: center;
+}
+.avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: #F0F2F4;
+  flex-shrink: 0;
+}
+.cred-info {
+  flex: 1;
+  margin-left: 20rpx;
+  min-width: 0;
+}
+.nickname {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pay-type {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #5A6572;
+}
+.tag {
+  padding: 6rpx 18rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  flex-shrink: 0;
+  background: rgba(138, 109, 31, 0.12);
+  color: #8A6D1F;
+}
+.cred-extra {
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #F0F2F4;
+}
+.card-remain {
+  font-size: 26rpx;
+  color: #2D6CA3;
+  font-weight: 500;
+}
+.cred-tip {
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #F0F2F4;
+  font-size: 24rpx;
+  color: #8A94A0;
+  line-height: 1.6;
+}
+
+/* 失败态按钮 */
+.btn-row {
+  margin-top: 40rpx;
+}
+.btn {
+  padding: 16rpx 64rpx;
+  border-radius: 40rpx;
+  background: #C8552F;
+  color: #FFFFFF;
+  font-size: 28rpx;
+  font-weight: 500;
+}

@@ -1,0 +1,76 @@
+<!--战队审核（team-module §2.1-10 / §2.2 / §5.15-§5.16）-->
+<view class="page audit-page">
+  <view wx:if="{{checking}}" class="loading-tip">加载中…</view>
+
+  <!-- 权限门控（audit_team；入口体验层，云函数侧硬校验） -->
+  <view wx:elif="{{noPermission}}" class="empty-block">
+    <view class="empty-emoji">🚫</view>
+    <view class="empty-text">无战队审核权限</view>
+    <button class="btn-primary empty-btn" bindtap="goBack">返回首页</button>
+  </view>
+
+  <block wx:else>
+    <!-- Tab：待审核 / 已拒绝（§5.16：待审核 + 近期已审核记录） -->
+    <view class="tabs">
+      <view class="tab {{activeTab === 'pending' ? 'tab-active' : ''}}" data-tab="pending" bindtap="onSwitchTab">待审核</view>
+      <view class="tab {{activeTab === 'rejected' ? 'tab-active' : ''}}" data-tab="rejected" bindtap="onSwitchTab">已拒绝</view>
+    </view>
+
+    <!-- 当前 Tab 首次加载失败 -->
+    <view wx:if="{{tabFailed}}" class="empty-block tab-fail-block">
+      <view class="empty-text">列表加载失败，请重试</view>
+      <button class="btn-primary empty-btn" bindtap="retryTab">重新加载</button>
+    </view>
+
+    <!-- 待审核：申请详情（队名/队徽/口号/简介/创建人）+ 通过/拒绝（拒绝必填理由） -->
+    <block wx:if="{{!tabFailed && activeTab === 'pending'}}">
+      <view wx:if="{{pending.length === 0 && !listLoading}}" class="empty-block">
+        <view class="empty-emoji">🕊️</view>
+        <view class="empty-text">暂无待审核战队</view>
+      </view>
+      <view wx:else class="card">
+        <view class="audit-row" wx:for="{{pending}}" wx:key="team_id">
+          <view class="row-head">
+            <image class="audit-logo" src="{{item.logo}}" mode="aspectFill" />
+            <view class="row-info">
+              <view class="row-name">{{item.name}}</view>
+              <view class="row-sub">{{item.created_text}}</view>
+            </view>
+            <view class="row-actions">
+              <view class="act-link act-danger" data-index="{{index}}" catchtap="onReject">拒绝</view>
+              <view class="act-link act-primary" data-index="{{index}}" catchtap="onApprove">通过</view>
+            </view>
+          </view>
+          <view wx:if="{{item.slogan}}" class="row-slogan">「{{item.slogan}}」</view>
+          <view wx:if="{{item.intro}}" class="row-intro">{{item.intro}}</view>
+          <view class="row-creator">创建人：{{item.creator_name}}{{item.creator_phone ? ' · ' + item.creator_phone : ''}}</view>
+          <view wx:if="{{item.failMsg}}" class="row-fail">{{item.failMsg}}</view>
+        </view>
+        <view wx:if="{{listLoading}}" class="list-more">加载中…</view>
+      </view>
+    </block>
+
+    <!-- 已拒绝：近期已审核记录（拒绝理由 + 审核时间，只读） -->
+    <block wx:elif="{{!tabFailed && activeTab === 'rejected'}}">
+      <view wx:if="{{rejected.length === 0 && !listLoading}}" class="empty-block">
+        <view class="empty-emoji">🗂️</view>
+        <view class="empty-text">暂无已拒绝记录</view>
+      </view>
+      <view wx:else class="card">
+        <view class="audit-row" wx:for="{{rejected}}" wx:key="team_id">
+          <view class="row-head">
+            <image class="audit-logo" src="{{item.logo}}" mode="aspectFill" />
+            <view class="row-info">
+              <view class="row-name">{{item.name}}</view>
+              <view class="row-sub">{{item.audit_text}}</view>
+            </view>
+            <view class="status-badge status-rejected">已拒绝</view>
+          </view>
+          <view wx:if="{{item.reject_reason}}" class="row-reason">拒绝理由：{{item.reject_reason}}</view>
+          <view class="row-creator">创建人：{{item.creator_name}}{{item.creator_phone ? ' · ' + item.creator_phone : ''}}</view>
+        </view>
+        <view wx:if="{{listLoading}}" class="list-more">加载中…</view>
+      </view>
+    </block>
+  </block>
+</view>

@@ -1,0 +1,81 @@
+<!--战绩录入：选人 + 五项数值 + 胜负 + 批量导入入口（§5.23/§5.24）-->
+<view class="page">
+  <block wx:if="{{noPermission}}">
+    <view class="perm-box">
+      <text class="perm-icon">🔒</text>
+      <text class="perm-title">暂无权限</text>
+      <text class="perm-desc">需要「战绩录入」权限，请联系管理员开通</text>
+    </view>
+  </block>
+
+  <block wx:else>
+    <!-- 选人 -->
+    <view class="card">
+      <view class="card-title">选择会员</view>
+      <picker wx:if="{{candNames.length}}" mode="selector" range="{{candNames}}" value="{{pickIndex}}"
+        bindchange="onPickChange">
+        <view class="picker {{pickIndex >= 0 ? 'picker-on' : ''}}">
+          <text class="{{pickIndex >= 0 ? '' : 'placeholder'}}">
+            {{pickIndex >= 0 ? candNames[pickIndex] : '点击选择（仅已签到会员）'}}
+          </text>
+          <text class="picker-arrow">›</text>
+        </view>
+      </picker>
+      <view wx:else class="picker disabled">
+        <text class="placeholder">暂无可录入的会员（需已签到）</text>
+      </view>
+    </view>
+
+    <!-- 数值录入 -->
+    <view class="card">
+      <view class="card-title">战绩数值</view>
+      <view class="field">
+        <text class="field-label">击杀</text>
+        <input class="field-input" type="number" value="{{kills}}" data-field="kills"
+          bindinput="onNumInput" maxlength="3" />
+      </view>
+      <view class="field">
+        <text class="field-label">阵亡</text>
+        <input class="field-input" type="number" value="{{deaths}}" data-field="deaths"
+          bindinput="onNumInput" maxlength="3" />
+      </view>
+      <view class="field">
+        <text class="field-label">治疗</text>
+        <input class="field-input" type="number" value="{{heals}}" data-field="heals"
+          bindinput="onNumInput" maxlength="3" />
+      </view>
+      <view class="field">
+        <text class="field-label">补给</text>
+        <input class="field-input" type="number" value="{{supplies}}" data-field="supplies"
+          bindinput="onNumInput" maxlength="3" />
+      </view>
+      <view class="field">
+        <text class="field-label">占领</text>
+        <input class="field-input" type="number" value="{{captures}}" data-field="captures"
+          bindinput="onNumInput" maxlength="3" />
+      </view>
+      <view class="field last">
+        <text class="field-label">本局结果</text>
+        <view class="win-toggle">
+          <view class="win-btn {{isWin ? 'win-on' : ''}}" data-win="1" bindtap="onWinToggle">胜</view>
+          <view class="win-btn {{!isWin ? 'lose-on' : ''}}" data-win="0" bindtap="onWinToggle">负</view>
+        </view>
+      </view>
+      <view class="field-tip">录入后系统自动评定 MVP/SVP/最佳治疗/最佳补给/最佳占领，并重算军衔</view>
+    </view>
+
+    <!-- 提交 -->
+    <view class="submit-btn {{submitting ? 'btn-busy' : ''}}" bindtap="onSubmitTap">
+      {{submitting ? '提交中...' : '保存战绩'}}
+    </view>
+
+    <!-- 批量导入入口 -->
+    <view class="import-card" bindtap="onImportTap">
+      <view class="import-left">
+        <text class="import-title">Excel 批量导入</text>
+        <text class="import-desc">多场/多人战绩一次性导入，当前活动 ID 已自动填入</text>
+      </view>
+      <text class="import-arrow">›</text>
+    </view>
+  </block>
+</view>

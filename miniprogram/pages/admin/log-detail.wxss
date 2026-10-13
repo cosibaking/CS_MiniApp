@@ -1,0 +1,171 @@
+/* 日志详情页 — 对齐 admin 模块设计语言（基础容器 .page 见 app.wxss） */
+.log-detail-page {
+  padding-bottom: 48rpx;
+}
+
+.loading-tip {
+  padding: 120rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+  color: #8A94A0;
+}
+
+.empty-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 140rpx 48rpx;
+}
+
+.empty-emoji {
+  font-size: 72rpx;
+  margin-bottom: 16rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #8A94A0;
+}
+
+.card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 8rpx 32rpx 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+  margin-bottom: 24rpx;
+}
+
+.card-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1F2A38;
+  padding: 24rpx 0 8rpx;
+}
+
+/* 头部：操作人 + 结果徽标 */
+.detail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 0 16rpx;
+  border-bottom: 1rpx solid #F0F2F4;
+  margin-bottom: 8rpx;
+}
+
+.detail-op {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1F2A38;
+}
+
+.log-result {
+  font-size: 24rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+}
+
+.result-ok {
+  color: #2E7D52;
+  background: rgba(46, 125, 82, 0.1);
+}
+
+.result-fail {
+  color: #B03030;
+  background: rgba(176, 48, 48, 0.1);
+}
+
+/* 基础信息 k-v 行 */
+.kv-row {
+  display: flex;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #F0F2F4;
+}
+
+.kv-row:last-child {
+  border-bottom: none;
+}
+
+.kv-label {
+  width: 170rpx;
+  flex-shrink: 0;
+  font-size: 28rpx;
+  color: #8A94A0;
+}
+
+.kv-value {
+  flex: 1;
+  font-size: 28rpx;
+  color: #1F2A38;
+  word-break: break-all;
+}
+
+.kv-id {
+  color: #8A94A0;
+  font-size: 26rpx;
+}
+
+.kv-error {
+  color: #B03030;
+  word-break: break-all;
+}
+
+/* 变更对比 */
+.diff-row {
+  display: flex;
+  padding: 20rpx 16rpx;
+  border-bottom: 1rpx solid #F0F2F4;
+  border-radius: 8rpx;
+}
+
+.diff-row:last-child {
+  border-bottom: none;
+}
+
+.diff-changed {
+  background: rgba(200, 85, 47, 0.05);
+}
+
+.diff-field {
+  width: 190rpx;
+  flex-shrink: 0;
+  font-size: 28rpx;
+  color: #5A6572;
+  word-break: break-all;
+}
+
+.diff-values {
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8rpx;
+}
+
+.diff-old {
+  font-size: 28rpx;
+  color: #8A94A0;
+  word-break: break-all;
+}
+
+.diff-arrow {
+  font-size: 26rpx;
+  color: #B0B8C1;
+}
+
+.diff-new {
+  font-size: 28rpx;
+  color: #1F2A38;
+  word-break: break-all;
+}
+
+.diff-new-changed {
+  color: #C8552F;
+  font-weight: 600;
+}
+
+.diff-tip {
+  padding: 20rpx 0 12rpx;
+  font-size: 26rpx;
+  color: #B0B8C1;
+}

@@ -1,0 +1,199 @@
+{
+  "version": "1.0",
+  "_readme": [
+    "云数据库集合与索引声明（CloudBase Framework database 格式，可用 tcb framework deploy 或控制台手动创建）",
+    "索引口径逐条取自设计文档：user-module §6.1-6.8 / team-module §6.1-6.4 / activity-module §6.1-6.5 / payment-module §6.1-6.3 / admin-module §6.1-6.6",
+    "复合唯一索引若云数据库不支持，按 user-module §6.8 以组合键字段实现（见 seed.json 中 _id 取值）",
+    "team.name 不建唯一索引（team-module R9 软唯一校验）；team_member (user_id,status) 不建唯一索引（保留历史记录，见 team-module §6.3）"
+  ],
+  "collections": [
+    {
+      "name": "user",
+      "description": "用户主表（user-module §6.1）；team 模块要求的 active_team_id 冗余字段见 team-module §6.3",
+      "createIndexes": [
+        { "name": "openid_unique", "unique": true, "keys": [{ "name": "openid", "direction": "1" }] },
+        { "name": "union_id", "unique": false, "keys": [{ "name": "union_id", "direction": "1" }] },
+        { "name": "phone_hash", "unique": false, "keys": [{ "name": "phone_hash", "direction": "1" }] },
+        { "name": "role", "unique": false, "keys": [{ "name": "role", "direction": "1" }] },
+        { "name": "status", "unique": false, "keys": [{ "name": "status", "direction": "1" }] },
+        { "name": "created_at_desc", "unique": false, "keys": [{ "name": "created_at", "direction": "-1" }] },
+        { "name": "active_team_id", "unique": false, "keys": [{ "name": "active_team_id", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "member_card",
+      "description": "会员卡（user-module §6.2）；order_id 唯一索引支撑支付回调幂等防重发卡",
+      "createIndexes": [
+        { "name": "order_id_unique", "unique": true, "keys": [{ "name": "order_id", "direction": "1" }] },
+        { "name": "user_id_status", "unique": false, "keys": [{ "name": "user_id", "direction": "1" }, { "name": "status", "direction": "1" }] },
+        { "name": "status_expire_at", "unique": false, "keys": [{ "name": "status", "direction": "1" }, { "name": "expire_at", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "waiver_record",
+      "description": "免责协议签署记录（user-module §6.3）；复合唯一 (user_id, agreement_version)，不支持时用组合键 _id 实现",
+      "createIndexes": [
+        { "name": "user_id_version_unique", "unique": true, "keys": [{ "name": "user_id", "direction": "1" }, { "name": "agreement_version", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "user_address",
+      "description": "收货地址（user-module §6.5，P2）",
+      "createIndexes": [
+        { "name": "user_id", "unique": false, "keys": [{ "name": "user_id", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "agreement",
+      "description": "协议版本（user-module §6.7 建议集合）；(type, version) 版本唯一，_id 用组合键 'type:version'",
+      "createIndexes": [
+        { "name": "type_version_unique", "unique": true, "keys": [{ "name": "type", "direction": "1" }, { "name": "version", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "card_product",
+      "description": "会员卡种配置（user-module §6.7 建议集合）；getCardShop 按 status=on + sort 升序",
+      "createIndexes": [
+        { "name": "status_sort", "unique": false, "keys": [{ "name": "status", "direction": "1" }, { "name": "sort", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "team",
+      "description": "战队（team-module §6.1）；name 软唯一不建库级唯一索引（R9）",
+      "createIndexes": [
+        { "name": "name", "unique": false, "keys": [{ "name": "name", "direction": "1" }] },
+        { "name": "captain_user_id", "unique": false, "keys": [{ "name": "captain_user_id", "direction": "1" }] },
+        { "name": "status_member_count", "unique": false, "keys": [{ "name": "status", "direction": "1" }, { "name": "member_count", "direction": "-1" }] },
+        { "name": "status_created_at", "unique": false, "keys": [{ "name": "status", "direction": "1" }, { "name": "created_at", "direction": "-1" }] }
+      ]
+    },
+    {
+      "name": "team_member",
+      "description": "战队成员/申请/邀请记录（team-module §6.2）；不建 (user_id,status) 唯一索引，历史记录允许多条",
+      "createIndexes": [
+        { "name": "team_id_status", "unique": false, "keys": [{ "name": "team_id", "direction": "1" }, { "name": "status", "direction": "1" }] },
+        { "name": "user_id_status", "unique": false, "keys": [{ "name": "user_id", "direction": "1" }, { "name": "status", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "team_stats",
+      "description": "战队统计（team-module §6.4，M3 启用）；排行榜组合索引",
+      "createIndexes": [
+        { "name": "win_rate_total_games", "unique": false, "keys": [{ "name": "win_rate", "direction": "-1" }, { "name": "total_games", "direction": "-1" }] }
+      ]
+    },
+    {
+      "name": "activity",
+      "description": "活动（activity-module §6.1）",
+      "createIndexes": [
+        { "name": "type_start_time", "unique": false, "keys": [{ "name": "type", "direction": "1" }, { "name": "start_time", "direction": "1" }] },
+        { "name": "status_start_time", "unique": false, "keys": [{ "name": "status", "direction": "1" }, { "name": "start_time", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "activity_enrollment",
+      "description": "活动报名（activity-module §6.2）；无重复报名为业务层校验，索引仅加速",
+      "createIndexes": [
+        { "name": "activity_id_status", "unique": false, "keys": [{ "name": "activity_id", "direction": "1" }, { "name": "status", "direction": "1" }] },
+        { "name": "user_id_created_at", "unique": false, "keys": [{ "name": "user_id", "direction": "1" }, { "name": "created_at", "direction": "-1" }] },
+        { "name": "status_expire_at", "unique": false, "keys": [{ "name": "status", "direction": "1" }, { "name": "expire_at", "direction": "1" }] },
+        { "name": "activity_id_enqueue_at", "unique": false, "keys": [{ "name": "activity_id", "direction": "1" }, { "name": "enqueue_at", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "activity_stats",
+      "description": "活动战绩（activity-module §6.3）；activity_id+user_id 为 upsert 键（建议唯一）",
+      "createIndexes": [
+        { "name": "activity_id_user_id_unique", "unique": true, "keys": [{ "name": "activity_id", "direction": "1" }, { "name": "user_id", "direction": "1" }] },
+        { "name": "user_id", "unique": false, "keys": [{ "name": "user_id", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "activity_review",
+      "description": "活动评价（activity-module §6.4）；每场一条 (activity_id, user_id) 唯一",
+      "createIndexes": [
+        { "name": "activity_id_user_id_unique", "unique": true, "keys": [{ "name": "activity_id", "direction": "1" }, { "name": "user_id", "direction": "1" }] },
+        { "name": "activity_id_created_at", "unique": false, "keys": [{ "name": "activity_id", "direction": "1" }, { "name": "created_at", "direction": "-1" }] }
+      ]
+    },
+    {
+      "name": "activity_album",
+      "description": "活动相册（activity-module §6.5）",
+      "createIndexes": [
+        { "name": "activity_id_created_at", "unique": false, "keys": [{ "name": "activity_id", "direction": "1" }, { "name": "created_at", "direction": "-1" }] },
+        { "name": "status_created_at", "unique": false, "keys": [{ "name": "status", "direction": "1" }, { "name": "created_at", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "order",
+      "description": "订单（payment-module §6.1）；order_no 唯一索引为并发防撞兜底",
+      "createIndexes": [
+        { "name": "order_no_unique", "unique": true, "keys": [{ "name": "order_no", "direction": "1" }] },
+        { "name": "user_id_created_at", "unique": false, "keys": [{ "name": "user_id", "direction": "1" }, { "name": "created_at", "direction": "-1" }] },
+        { "name": "biz_type_biz_id", "unique": false, "keys": [{ "name": "biz_type", "direction": "1" }, { "name": "biz_id", "direction": "1" }] },
+        { "name": "status_expire_at", "unique": false, "keys": [{ "name": "status", "direction": "1" }, { "name": "expire_at", "direction": "1" }] },
+        { "name": "team_id", "unique": false, "keys": [{ "name": "team_id", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "payment",
+      "description": "支付流水（payment-module §6.2）；transaction_id 唯一索引为回调幂等兜底",
+      "createIndexes": [
+        { "name": "transaction_id_unique", "unique": true, "keys": [{ "name": "transaction_id", "direction": "1" }] },
+        { "name": "order_id", "unique": false, "keys": [{ "name": "order_id", "direction": "1" }] },
+        { "name": "order_no", "unique": false, "keys": [{ "name": "order_no", "direction": "1" }] },
+        { "name": "paid_at", "unique": false, "keys": [{ "name": "paid_at", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "refund",
+      "description": "退款流水（payment-module §6.3）；refund_no 唯一（同订单多次部分退款各不相同）",
+      "createIndexes": [
+        { "name": "refund_no_unique", "unique": true, "keys": [{ "name": "refund_no", "direction": "1" }] },
+        { "name": "order_id", "unique": false, "keys": [{ "name": "order_id", "direction": "1" }] },
+        { "name": "order_no", "unique": false, "keys": [{ "name": "order_no", "direction": "1" }] },
+        { "name": "status_created_at", "unique": false, "keys": [{ "name": "status", "direction": "1" }, { "name": "created_at", "direction": "-1" }] },
+        { "name": "refunded_at", "unique": false, "keys": [{ "name": "refunded_at", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "role_permission",
+      "description": "角色-权限点映射（admin-module §6.1，user-module §6.4 引用）",
+      "createIndexes": [
+        { "name": "role_key_unique", "unique": true, "keys": [{ "name": "role_key", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "permission_point",
+      "description": "权限点登记（admin-module §6.5）；key 唯一支撑部署幂等 upsert",
+      "createIndexes": [
+        { "name": "key_unique", "unique": true, "keys": [{ "name": "key", "direction": "1" }] }
+      ]
+    },
+    {
+      "name": "operation_log",
+      "description": "操作审计日志（admin-module §6.2，架构 §1.5 唯一事实源）；各模块为写入方",
+      "createIndexes": [
+        { "name": "created_at_desc", "unique": false, "keys": [{ "name": "created_at", "direction": "-1" }] },
+        { "name": "module_created_at", "unique": false, "keys": [{ "name": "module", "direction": "1" }, { "name": "created_at", "direction": "-1" }] },
+        { "name": "operator_id_created_at", "unique": false, "keys": [{ "name": "operator_id", "direction": "1" }, { "name": "created_at", "direction": "-1" }] },
+        { "name": "action_created_at", "unique": false, "keys": [{ "name": "action", "direction": "1" }, { "name": "created_at", "direction": "-1" }] }
+      ]
+    },
+    {
+      "name": "import_record",
+      "description": "Excel 导入任务（admin-module §6.3）",
+      "createIndexes": [
+        { "name": "submitter_id_created_at", "unique": false, "keys": [{ "name": "submitter_id", "direction": "1" }, { "name": "created_at", "direction": "-1" }] },
+        { "name": "biz_type_biz_id_created_at", "unique": false, "keys": [{ "name": "biz_type", "direction": "1" }, { "name": "biz_id", "direction": "1" }, { "name": "created_at", "direction": "-1" }] }
+      ]
+    },
+    {
+      "name": "operation_log_archive",
+      "description": "操作日志按月归档（admin-module §6.7）；month 唯一索引支撑归档幂等",
+      "createIndexes": [
+        { "name": "month_unique", "unique": true, "keys": [{ "name": "month", "direction": "-1" }] }
+      ]
+    }
+  ]
+}

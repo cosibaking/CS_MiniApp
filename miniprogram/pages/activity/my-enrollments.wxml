@@ -1,0 +1,48 @@
+<!--pages/activity/my-enrollments.wxml — 我的报名（§2.1 页面4：分组/倒计时/去支付/退出候补）-->
+<view class="page">
+  <!-- 分组 tab：全部/待支付/已报名/候补/历史 -->
+  <view class="tab-bar">
+    <view wx:for="{{tabs}}" wx:key="key" class="tab {{activeTab === item.key ? 'on' : ''}}" data-key="{{item.key}}" bindtap="onTabTap">{{item.label}}</view>
+  </view>
+
+  <!-- 空态 -->
+  <view wx:if="{{empty}}" class="empty-block">
+    <view class="empty-icon">📋</view>
+    <view class="empty-text">暂无报名记录</view>
+  </view>
+
+  <!-- 报名卡片 -->
+  <view wx:for="{{list}}" wx:key="id" class="enr-card" data-index="{{index}}" bindtap="goDetail">
+    <view class="enr-main">
+      <image class="enr-cover" src="{{item.cover}}" mode="aspectFill" />
+      <view class="enr-info">
+        <view class="enr-title-row">
+          <text class="enr-title">{{item.title}}</text>
+          <text class="enr-status {{item.statusClass}}">{{item.statusLabel}}</text>
+        </view>
+        <text class="enr-time">{{item.timeText}}</text>
+        <view class="enr-meta">
+          <text class="enr-price">{{item.priceText}}</text>
+          <text wx:if="{{item.payTypeLabel}}" class="enr-paytype">{{item.payTypeLabel}}</text>
+        </view>
+        <!-- 候补位次 -->
+        <text wx:if="{{item.positionText}}" class="enr-position">{{item.positionText}} · 有人退出时自动递补</text>
+        <!-- 已取消原因 -->
+        <text wx:if="{{item.cancelTypeLabel}}" class="enr-cancel-reason">{{item.cancelTypeLabel}}</text>
+      </view>
+    </view>
+    <!-- 操作区：待支付倒计时 + 去支付/取消/退出候补 -->
+    <view class="enr-actions">
+      <view wx:if="{{item.status === 'pending'}}" class="enr-countdown {{item.countdownText === '已超时，系统释放中' ? 'expired' : ''}}">{{item.countdownText}}</view>
+      <view class="enr-btns">
+        <button wx:if="{{item.status === 'pending'}}" class="btn-sm btn-primary" data-index="{{index}}" catchtap="goPay">去支付</button>
+        <button wx:if="{{item.status === 'pending' || item.status === 'enrolled'}}" class="btn-sm btn-plain" data-index="{{index}}" catchtap="onCancel">取消报名</button>
+        <button wx:if="{{item.status === 'waitlist'}}" class="btn-sm btn-plain" data-index="{{index}}" catchtap="onCancel">退出候补</button>
+        <button wx:if="{{item.status === 'completed'}}" class="btn-sm btn-primary" data-index="{{index}}" catchtap="goReview">评价</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+  <view wx:if="{{!loading && !empty && finished && list.length}}" class="load-end">没有更多了</view>
+</view>

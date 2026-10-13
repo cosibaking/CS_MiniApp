@@ -1,0 +1,132 @@
+/* 购买会员卡 */
+.page {
+  padding: 24rpx;
+  padding-bottom: 180rpx; /* 给底部固定按钮留空间 */
+}
+
+/* 卡种卡片 */
+.shop-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin-bottom: 20rpx;
+  border: 2rpx solid transparent;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+.shop-active {
+  border-color: #c8552f;
+}
+
+/* 单选圆点 */
+.radio {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  border: 2rpx solid #d0d5dd;
+  margin-right: 24rpx;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.radio-on {
+  border: 10rpx solid #c8552f;
+}
+
+.shop-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.shop-head {
+  display: flex;
+  align-items: center;
+}
+
+.shop-name {
+  font-size: 30rpx;
+  color: #1f2a38;
+  font-weight: 600;
+}
+
+.shop-type {
+  font-size: 22rpx;
+  color: #c8552f;
+  margin-left: 16rpx;
+}
+
+.shop-benefit {
+  font-size: 24rpx;
+  color: #98a2b3;
+  margin-top: 12rpx;
+}
+
+/* 价格 */
+.shop-price {
+  display: flex;
+  align-items: baseline;
+  margin-left: 24rpx;
+  color: #c8552f;
+  flex-shrink: 0;
+}
+
+.price-symbol {
+  font-size: 24rpx;
+}
+
+.price-num {
+  font-size: 40rpx;
+  font-weight: 600;
+}
+
+/* 空态 */
+.empty-block {
+  display: flex;
+  justify-content: center;
+  padding: 120rpx 0;
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #98a2b3;
+}
+
+/* 底部固定购买按钮 */
+.footer-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20rpx 24rpx calc(20rpx + env(safe-area-inset-bottom));
+  background: #f7f8fa;
+}
+
+.btn-lg {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  font-size: 32rpx;
+  border-radius: 44rpx;
+  padding: 0;
+}
+
+.btn-primary {
+  background: #c8552f;
+  color: #fff;
+}
+
+.btn-primary[disabled] {
+  background: #e3b7a8;
+  color: #fff;
+}
+
+.btn-lg::after {
+  border: none;
+}

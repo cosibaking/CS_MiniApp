@@ -1,0 +1,169 @@
+/* 操作日志查询（admin-module §2.2-5）— 设计语言对齐 team-audit */
+.log-list-page .card {
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+  overflow: hidden;
+}
+
+/* 筛选条 */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 8rpx 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+.filter-picker {
+  flex: 1;
+  min-width: 0;
+}
+
+.filter-item {
+  text-align: center;
+  font-size: 24rpx;
+  color: #5a6572;
+  padding: 12rpx 4rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.filter-toggle {
+  flex-shrink: 0;
+  font-size: 24rpx;
+  color: #c8552f;
+  padding: 12rpx 12rpx;
+}
+
+.filter-toggle-on {
+  color: #5a6572;
+}
+
+/* 高级筛选 */
+.adv-filter {
+  margin-top: 16rpx;
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 16rpx 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+.adv-row {
+  margin-bottom: 16rpx;
+}
+
+.adv-input {
+  background: #f5f6f8;
+  border-radius: 10rpx;
+  padding: 12rpx 20rpx;
+  font-size: 26rpx;
+  color: #1f2a38;
+}
+
+.input-ph {
+  color: #b0b8c1;
+}
+
+.adv-btn {
+  text-align: center;
+  font-size: 26rpx;
+  color: #fff;
+  background: #c8552f;
+  border-radius: 10rpx;
+  padding: 12rpx 0;
+}
+
+/* 导出（§5.12） */
+.export-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16rpx;
+}
+
+.export-btn {
+  font-size: 24rpx;
+  color: #c8552f;
+  background: #fff;
+  border: 1rpx solid #c8552f;
+  border-radius: 10rpx;
+  padding: 10rpx 28rpx;
+}
+
+.export-btn-disabled {
+  color: #b0b8c1;
+  border-color: #e5e8ec;
+}
+
+/* 日志行 */
+.log-row {
+  padding: 24rpx 28rpx;
+  border-bottom: 1rpx solid #f0f2f4;
+}
+
+.log-row:last-of-type {
+  border-bottom: none;
+}
+
+.row-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.log-op {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1f2a38;
+}
+
+.log-result {
+  font-size: 20rpx;
+  padding: 4rpx 14rpx;
+  border-radius: 8rpx;
+}
+
+.result-ok {
+  color: #2e7d52;
+  background: rgba(46, 125, 82, 0.1);
+}
+
+.result-fail {
+  color: #b03030;
+  background: rgba(176, 48, 48, 0.08);
+}
+
+.log-action {
+  margin-top: 10rpx;
+  font-size: 26rpx;
+  color: #5a6572;
+}
+
+.log-target {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #8a94a0;
+  word-break: break-all;
+}
+
+.log-error {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: #b03030;
+  word-break: break-all;
+}
+
+.log-time {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: #b0b8c1;
+}
+
+.list-more {
+  padding: 20rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #8a94a0;
+}

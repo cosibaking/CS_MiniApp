@@ -1,0 +1,182 @@
+/* 活动列表 — 筛选条 + 类型 chips + 活动卡片 */
+
+.list-page {
+  padding: 24rpx 24rpx calc(24rpx + env(safe-area-inset-bottom));
+}
+
+/* 搜索 + 状态筛选 */
+.filter-bar {
+  display: flex;
+  align-items: center;
+}
+.search-box {
+  flex: 1;
+  background: #FFFFFF;
+  border-radius: 12rpx;
+  padding: 14rpx 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.search-input {
+  font-size: 26rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+}
+.search-ph {
+  color: #B0B8C1;
+}
+.status-pick {
+  margin-left: 16rpx;
+  flex-shrink: 0;
+}
+.status-pick-inner {
+  background: #FFFFFF;
+  border-radius: 12rpx;
+  padding: 14rpx 20rpx;
+  font-size: 26rpx;
+  color: #5A6572;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.status-pick .arrow {
+  margin-left: 8rpx;
+  font-size: 20rpx;
+  color: #8A94A0;
+}
+
+/* 类型 chips */
+.type-bar {
+  white-space: nowrap;
+  margin-top: 20rpx;
+}
+.type-chip {
+  display: inline-block;
+  background: #FFFFFF;
+  color: #5A6572;
+  font-size: 24rpx;
+  border-radius: 999rpx;
+  padding: 10rpx 28rpx;
+  margin-right: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.type-chip.on {
+  background: #1F2A38;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* 空态 */
+.empty-block {
+  text-align: center;
+  padding: 120rpx 0 60rpx;
+}
+.empty-emoji {
+  font-size: 88rpx;
+}
+.empty-text {
+  margin-top: 24rpx;
+  font-size: 28rpx;
+  color: #5A6572;
+}
+.empty-sub {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #8A94A0;
+}
+
+/* 活动卡片 */
+.act-list {
+  margin-top: 20rpx;
+}
+.act-card {
+  display: flex;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.act-cover {
+  width: 200rpx;
+  height: 150rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+  background: #F0F2F4;
+}
+.act-info {
+  flex: 1;
+  margin-left: 20rpx;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.act-title-row {
+  display: flex;
+  align-items: flex-start;
+}
+.act-type {
+  flex-shrink: 0;
+  font-size: 20rpx;
+  color: #C8552F;
+  background: rgba(200, 85, 47, 0.1);
+  border-radius: 6rpx;
+  padding: 2rpx 10rpx;
+  margin-right: 12rpx;
+  margin-top: 4rpx;
+}
+.type-novice { color: #2E7D5B; background: rgba(46, 125, 91, 0.12); }
+.type-regular { color: #C8552F; background: rgba(200, 85, 47, 0.1); }
+.type-theme { color: #7B4FBF; background: rgba(123, 79, 191, 0.12); }
+.type-league { color: #2D6CA3; background: rgba(45, 108, 163, 0.12); }
+.type-custom { color: #8A6D1F; background: rgba(138, 109, 31, 0.12); }
+.act-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1F2A38;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.act-time {
+  font-size: 24rpx;
+  color: #5A6572;
+  margin-top: 8rpx;
+}
+.act-deadline {
+  font-size: 22rpx;
+  color: #8A94A0;
+  margin-top: 4rpx;
+}
+.act-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8rpx;
+}
+.act-price {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #C8552F;
+}
+.act-badge {
+  font-size: 22rpx;
+  border-radius: 999rpx;
+  padding: 4rpx 16rpx;
+}
+.badge-remain {
+  color: #2E7D5B;
+  background: rgba(46, 125, 91, 0.12);
+}
+.badge-full {
+  color: #B03030;
+  background: rgba(176, 48, 48, 0.1);
+}
+.badge-grey {
+  color: #8A94A0;
+  background: #F0F2F4;
+}
+.badge-ongoing {
+  color: #2D6CA3;
+  background: rgba(45, 108, 163, 0.12);
+}

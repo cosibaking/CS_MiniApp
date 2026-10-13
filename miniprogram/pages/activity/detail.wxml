@@ -1,0 +1,124 @@
+<!--pages/activity/detail.wxml — 活动详情（§2.1 页面2 / §2.2 状态展示矩阵）-->
+<view class="page">
+  <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+
+  <block wx:if="{{!loading && act}}">
+    <!-- 封面 -->
+    <image class="cover" src="{{act.cover}}" mode="aspectFill" />
+
+    <!-- 标题 + 状态 + 类型 -->
+    <view class="head">
+      <view class="title-row">
+        <text class="title">{{act.title}}</text>
+        <text class="status {{act.statusClass}}">{{act.statusLabel}}</text>
+      </view>
+      <text class="type-tag">{{act.typeLabel}}</text>
+    </view>
+
+    <!-- 已取消：原因 + 全额退回提示（§2.2） -->
+    <view wx:if="{{act.status === 'cancelled'}}" class="cancel-banner">
+      <view class="cancel-title">活动已取消</view>
+      <view wx:if="{{act.cancelReason}}" class="cancel-reason">取消原因：{{act.cancelReason}}</view>
+      <view class="cancel-tip">已支付报名费将原路全额退回，请留意到账通知</view>
+    </view>
+
+    <!-- 基本信息 -->
+    <view class="card">
+      <view class="row">
+        <text class="row-label">活动时间</text>
+        <text class="row-value">{{act.timeText}}</text>
+      </view>
+      <view class="row">
+        <text class="row-label">报名截止</text>
+        <text class="row-value">{{act.deadlineText}}</text>
+      </view>
+      <view class="row">
+        <text class="row-label">场地</text>
+        <text class="row-value">{{act.venue}}</text>
+      </view>
+      <view wx:if="{{act.address}}" class="row">
+        <text class="row-label">地址</text>
+        <text class="row-value">{{act.address}}</text>
+      </view>
+      <view class="row">
+        <text class="row-label">费用</text>
+        <text class="row-value price">{{act.priceText}}</text>
+      </view>
+      <view class="row">
+        <text class="row-label">支付方式</text>
+        <text class="row-value">{{act.payTypeText}}</text>
+      </view>
+    </view>
+
+    <!-- 名额 / 报名进度 -->
+    <view class="card">
+      <view class="row">
+        <text class="row-label">名额</text>
+        <text class="row-value">已报名 {{act.maxNum - act.remain}} / {{act.maxNum}} 人{{act.minNum > 0 ? '（成团 ' + act.minNum + ' 人）' : ''}}</text>
+      </view>
+      <view class="progress">
+        <view class="progress-bar" style="width: {{act.signupPercent}}%"></view>
+      </view>
+      <!-- 满员候补提示（§2.2） -->
+      <view wx:if="{{act.status === 'published' && act.remain <= 0}}" class="waitlist-tip">
+        名额已满，报名将进入候补（当前候补 {{act.waitlistCount}} 人，有人退出时自动递补）
+      </view>
+    </view>
+
+    <!-- 已结束：战绩榜 + 评价摘要 + 相册入口（M2 完整页面，此处入口） -->
+    <block wx:if="{{act.status === 'finished'}}">
+      <view class="card" wx:if="{{statsSummary}}">
+        <view class="card-title">本场战绩<text wx:if="{{statsSummary.total}}" class="title-sub">{{statsSummary.total}} 人参战</text></view>
+        <!-- 荣誉名单 -->
+        <view wx:if="{{statsSummary.hasHonors}}" class="honor-lines">
+          <view wx:for="{{statsSummary.honorLines}}" wx:key="key" class="honor-line">
+            <text class="honor-tag h-{{item.key}}">{{item.label}}</text>
+            <text class="honor-names">{{item.names}}</text>
+          </view>
+        </view>
+        <!-- 击杀榜 Top10 -->
+        <view wx:if="{{statsSummary.hasBoard}}" class="kill-board">
+          <view wx:for="{{statsSummary.top10}}" wx:key="index" class="kill-row">
+            <text class="kb-rank {{index < 3 ? 'kb-top' : ''}}">{{index + 1}}</text>
+            <text class="kb-name">{{item.nickname}}</text>
+            <text class="kb-tag {{item.is_win ? 'kb-win' : 'kb-lose'}}">{{item.is_win ? '胜' : '负'}}</text>
+            <text class="kb-kills">{{item.kills}} 杀 / {{item.deaths}} 亡</text>
+          </view>
+        </view>
+        <view wx:if="{{!statsSummary.total}}" class="empty-tip">战绩尚未录入，请稍后查看</view>
+      </view>
+      <view class="card">
+        <view class="card-title">活动评价</view>
+        <view wx:if="{{reviewSummary}}" class="review-summary">
+          <text class="stars">★ {{reviewSummary.avg_stars}}</text>
+          <text class="review-count">{{reviewSummary.count}} 条评价</text>
+        </view>
+        <view wx:else class="empty-tip">暂无评价</view>
+      </view>
+      <view class="card link-card" bindtap="goAlbum">
+        <text class="card-title">活动相册</text>
+        <view class="link-right">
+          <text class="link-sub">{{albumCount}} 张</text>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+    </block>
+
+    <!-- 活动介绍（图文详情） -->
+    <view class="card">
+      <view class="card-title">活动介绍</view>
+      <text class="intro">{{act.intro}}</text>
+    </view>
+
+    <!-- 底部操作栏：主按钮状态机（§2.2） -->
+    <view class="bottom-bar">
+      <view class="bottom-price">
+        <text class="price">{{act.priceText}}</text>
+        <text wx:if="{{act.minNum > 0 && act.status === 'published'}}" class="min-tip">成团 {{act.minNum}} 人</text>
+      </view>
+      <button class="btn-share" open-type="share">分享</button>
+      <button wx:if="{{showTeamEnroll}}" class="btn-team" bindtap="goTeamEnroll">战队报名</button>
+      <button class="btn-main {{action.disabled ? 'btn-disabled' : ''}}" disabled="{{action.disabled}}" bindtap="onMainTap">{{action.text}}</button>
+    </view>
+  </block>
+</view>

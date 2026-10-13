@@ -1,0 +1,136 @@
+/* 战队排行榜 */
+.my-rank {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx 32rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+.my-rank-label {
+  font-size: 26rpx;
+  color: #667085;
+}
+
+.my-rank-value {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #c8552f;
+}
+
+/* 表头 */
+.rank-head {
+  display: flex;
+  align-items: center;
+  padding: 8rpx 24rpx 12rpx;
+  font-size: 22rpx;
+  color: #98a2b3;
+}
+
+/* 行 */
+.rank-row {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+.col-rank {
+  flex-shrink: 0;
+  width: 80rpx;
+  text-align: center;
+}
+
+.col-team {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.col-num {
+  flex-shrink: 0;
+  width: 110rpx;
+  text-align: center;
+  font-size: 26rpx;
+  color: #1f2a38;
+}
+
+.col-rate {
+  color: #c8552f;
+  font-weight: 600;
+}
+
+/* 名次徽章：前三名高亮 */
+.rank-badge {
+  width: 48rpx;
+  height: 48rpx;
+  line-height: 48rpx;
+  border-radius: 50%;
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 auto;
+}
+
+.r1 { background: #e6a23c; }
+.r2 { background: #909399; }
+.r3 { background: #b3733d; }
+
+.rank-plain {
+  background: transparent;
+  color: #667085;
+}
+
+/* 战队信息 */
+.team-logo {
+  flex-shrink: 0;
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 12rpx;
+  background: #f2f4f7;
+}
+
+.team-logo-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #c8552f;
+}
+
+.team-info {
+  margin-left: 20rpx;
+  min-width: 0;
+}
+
+.team-name {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1f2a38;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.team-sub {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #8a94a0;
+}
+
+.load-tip {
+  text-align: center;
+  color: #8a94a0;
+  font-size: 24rpx;
+  padding: 24rpx 0;
+}

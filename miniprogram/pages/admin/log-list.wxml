@@ -1,0 +1,70 @@
+<!--操作日志查询（admin-module §2.2-5 / §2.4：筛选 + 分页 + 点击进详情）-->
+<view class="page log-list-page">
+  <view wx:if="{{checking}}" class="loading-tip">加载中…</view>
+
+  <!-- 权限门控（view_operation_log） -->
+  <view wx:elif="{{noPermission}}" class="empty-block">
+    <view class="empty-emoji">🚫</view>
+    <view class="empty-text">无日志查询权限</view>
+  </view>
+
+  <block wx:else>
+    <!-- 筛选条（模块/结果/时间范围；点击箭头展开高级筛选） -->
+    <view class="filter-bar">
+      <picker class="filter-picker" range="{{moduleLabels}}" value="{{moduleIndex}}" bindchange="onPickModule">
+        <view class="filter-item">{{moduleLabels[moduleIndex]}}</view>
+      </picker>
+      <picker class="filter-picker" range="{{resultLabels}}" value="{{resultIndex}}" bindchange="onPickResult">
+        <view class="filter-item">{{resultLabels[resultIndex]}}</view>
+      </picker>
+      <picker class="filter-picker" range="{{rangeLabels}}" value="{{rangeIndex}}" bindchange="onPickRange">
+        <view class="filter-item">{{rangeLabels[rangeIndex]}}</view>
+      </picker>
+      <view class="filter-toggle {{showFilter ? 'filter-toggle-on' : ''}}" bindtap="onToggleFilter">筛选{{showFilter ? '▲' : '▼'}}</view>
+    </view>
+
+    <!-- 高级筛选（keyword：操作人昵称/错误信息模糊；action：精确） -->
+    <view wx:if="{{showFilter}}" class="adv-filter">
+      <view class="adv-row">
+        <input class="adv-input" value="{{keyword}}" maxlength="32" placeholder="关键词（操作人/错误信息）"
+          placeholder-class="input-ph" confirm-type="search" bindinput="onKeywordInput" bindconfirm="onSearch" />
+      </view>
+      <view class="adv-row">
+        <input class="adv-input" value="{{action}}" maxlength="64" placeholder="操作类型，如 role.update"
+          placeholder-class="input-ph" confirm-type="search" bindinput="onActionInput" bindconfirm="onSearch" />
+      </view>
+      <view class="adv-btn" bindtap="onSearch">搜索</view>
+    </view>
+
+    <!-- 导出（§5.12：按当前筛选条件导出 Excel） -->
+    <view class="export-row">
+      <view class="export-btn {{exporting ? 'export-btn-disabled' : ''}}" bindtap="onExport">
+        {{exporting ? '导出中…' : '导出 Excel'}}
+      </view>
+    </view>
+
+    <!-- 列表 -->
+    <view wx:if="{{list.length === 0 && !listLoading && firstLoaded}}" class="empty-block">
+      <view class="empty-emoji">📄</view>
+      <view class="empty-text">暂无符合条件的日志</view>
+    </view>
+
+    <view wx:else class="card">
+      <view class="log-row" wx:for="{{list}}" wx:key="log_id" data-id="{{item.log_id}}" bindtap="onNav">
+        <view class="row-head">
+          <view class="log-op">{{item.operator_name}}</view>
+          <view class="log-result {{item.result === 'fail' ? 'result-fail' : 'result-ok'}}">
+            {{item.result === 'fail' ? '失败' : '成功'}}
+          </view>
+        </view>
+        <view class="log-action">{{item.module_label}} · {{item.action}}</view>
+        <view class="log-target">{{item.target_text}}</view>
+        <view wx:if="{{item.error_msg}}" class="log-error">{{item.error_msg}}</view>
+        <view class="log-time">{{item.created_text}}</view>
+      </view>
+      <view wx:if="{{listLoading}}" class="list-more">加载中…</view>
+      <view wx:elif="{{hasMore && list.length > 0}}" class="list-more">上拉加载更多（{{list.length}}/{{total}}）</view>
+      <view wx:elif="{{!hasMore && list.length > 0}}" class="list-more">已全部加载（共 {{total}} 条）</view>
+    </view>
+  </block>
+</view>

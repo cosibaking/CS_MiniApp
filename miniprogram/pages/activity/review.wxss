@@ -1,0 +1,98 @@
+/* 评价活动 — 星级选择 + 文字输入（设计令牌同套） */
+
+.review-page {
+  min-height: 100vh;
+  padding: 24rpx 24rpx calc(48rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+
+/* 活动标题 */
+.act-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1F2A38;
+  padding: 8rpx 4rpx 20rpx;
+}
+
+/* 卡片 */
+.card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.card-label {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1F2A38;
+  margin-bottom: 20rpx;
+}
+
+/* 星级 */
+.stars {
+  display: flex;
+  gap: 16rpx;
+}
+.star {
+  font-size: 64rpx;
+  line-height: 1;
+  color: #E4E8EC;
+}
+.star.on {
+  color: #F5A623;
+}
+.star:active {
+  transform: scale(1.1);
+}
+.star-text {
+  display: block;
+  margin-top: 16rpx;
+  font-size: 26rpx;
+  color: #F5A623;
+}
+.star-hint {
+  display: block;
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #8A94A0;
+}
+
+/* 文字输入 */
+.content-input {
+  width: 100%;
+  min-height: 240rpx;
+  font-size: 28rpx;
+  color: #1F2A38;
+  line-height: 1.6;
+  box-sizing: border-box;
+}
+.counter {
+  text-align: right;
+  font-size: 22rpx;
+  color: #8A94A0;
+  margin-top: 12rpx;
+}
+.counter.full {
+  color: #B03030;
+}
+
+/* 提交按钮 */
+.btn-submit {
+  margin-top: 16rpx;
+  background: #C8552F;
+  color: #FFFFFF;
+  font-size: 30rpx;
+  border-radius: 999rpx;
+  padding: 24rpx 0;
+}
+.btn-submit[disabled] {
+  background: #D9A896;
+  color: rgba(255, 255, 255, 0.8);
+}
+.page-tip {
+  text-align: center;
+  font-size: 22rpx;
+  color: #8A94A0;
+  margin-top: 24rpx;
+}

@@ -1,0 +1,41 @@
+<!--战队排行榜：我的战队名次条 + 榜单列表（胜率降序，门槛 5 场）-->
+<view class="page">
+  <view class="loading-tip" wx:if="{{loading}}">加载中…</view>
+
+  <block wx:if="{{!loading}}">
+    <!-- 我的战队名次（§5.17 第 4 步：未上榜/未入队为 null） -->
+    <view class="my-rank">
+      <text class="my-rank-label">我的战队</text>
+      <text class="my-rank-value">{{myRank ? '第 ' + myRank + ' 名' : '未上榜'}}</text>
+    </view>
+
+    <view class="empty-tip" wx:if="{{!list.length}}">暂无上榜战队，战队累计满 5 场后进入榜单</view>
+
+    <!-- 表头 -->
+    <view class="rank-head" wx:if="{{list.length}}">
+      <text class="col-rank">排名</text>
+      <text class="col-team">战队</text>
+      <text class="col-num">场次</text>
+      <text class="col-num">胜率</text>
+    </view>
+
+    <view class="rank-row" wx:for="{{list}}" wx:key="team_id" data-id="{{item.team_id}}" bindtap="goTeam">
+      <view class="col-rank">
+        <view class="rank-badge r{{item.rank}} {{item.rank > 3 ? 'rank-plain' : ''}}">{{item.rank}}</view>
+      </view>
+      <view class="col-team">
+        <image wx:if="{{item.logo}}" class="team-logo" src="{{item.logo}}" mode="aspectFill" />
+        <view wx:else class="team-logo team-logo-empty">{{item.name[0]}}</view>
+        <view class="team-info">
+          <text class="team-name">{{item.name}}</text>
+          <text class="team-sub">{{item.memberCount}} 人 · {{item.wins}} 胜</text>
+        </view>
+      </view>
+      <text class="col-num">{{item.totalGames}}</text>
+      <text class="col-num col-rate">{{item.winRateText}}</text>
+    </view>
+
+    <view class="load-tip" wx:if="{{loadingMore}}">加载中…</view>
+    <view class="load-tip" wx:if="{{finished && list.length}}">没有更多了</view>
+  </block>
+</view>

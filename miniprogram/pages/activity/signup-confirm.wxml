@@ -1,0 +1,84 @@
+<!--pages/activity/signup-confirm.wxml — 报名确认（§2.1 页面3：费用明细/支付方式/协议勾选/前置引导）-->
+<view class="page">
+  <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+
+  <block wx:if="{{!loading && act}}">
+    <!-- 活动快照 -->
+    <view class="card act-brief">
+      <image class="brief-cover" src="{{act.cover}}" mode="aspectFill" />
+      <view class="brief-info">
+        <text class="brief-title">{{act.title}}</text>
+        <text class="brief-time">{{act.timeText}}</text>
+        <text class="brief-venue">{{act.venue}}</text>
+      </view>
+    </view>
+
+    <!-- 前置项引导：协议 / 手机号（缺失才显示） -->
+    <view wx:if="{{!user.waiverSigned}}" class="pre-card" bindtap="goWaiver">
+      <view class="pre-text">
+        <text class="pre-title">签署《参赛免责协议》</text>
+        <text class="pre-sub">首次报名需先完成签署</text>
+      </view>
+      <text class="pre-go">去签署 ›</text>
+    </view>
+    <view wx:if="{{!user.phoneBound}}" class="pre-card" bindtap="goBindPhone">
+      <view class="pre-text">
+        <text class="pre-title">绑定手机号</text>
+        <text class="pre-sub">报名与签到通知需要手机号</text>
+      </view>
+      <text class="pre-go">去绑定 ›</text>
+    </view>
+
+    <!-- 满员候补提示 -->
+    <view wx:if="{{act.isFull}}" class="full-tip">名额已满，提交后将进入候补（当前候补 {{act.waitlistCount}} 人，有人退出时自动递补）</view>
+
+    <!-- 费用明细 -->
+    <view class="card">
+      <view class="card-title">费用明细</view>
+      <view class="fee-row">
+        <text class="fee-label">原价</text>
+        <text class="fee-value">{{originalText}}</text>
+      </view>
+      <view wx:if="{{discountText}}" class="fee-row">
+        <text class="fee-label">等级折扣（{{discountLabel}}）</text>
+        <text class="fee-value discount">{{discountText}}</text>
+      </view>
+      <view wx:if="{{cardDeductText}}" class="fee-row">
+        <text class="fee-label">会员卡抵扣</text>
+        <text class="fee-value discount">{{cardDeductText}}</text>
+      </view>
+      <view class="fee-row total">
+        <text class="fee-label">应付</text>
+        <text class="fee-value total">{{payableText}}</text>
+      </view>
+      <view class="fee-note">金额以服务端计算为准</view>
+    </view>
+
+    <!-- 支付方式（免费活动无需选择） -->
+    <view wx:if="{{!act.isFree}}" class="card">
+      <view class="card-title">支付方式</view>
+      <view class="pay-options">
+        <view wx:for="{{payOptions}}" wx:key="key" class="pay-option {{payType === item.key ? 'on' : ''}}" data-key="{{item.key}}" bindtap="onPayTypeTap">
+          <text class="pay-label">{{item.label}}</text>
+          <text class="pay-desc">{{item.desc}}</text>
+        </view>
+      </view>
+      <view wx:if="{{payType !== 'wxpay'}}" class="fee-note">需持有有效会员卡，提交时将校验卡状态</view>
+    </view>
+
+    <!-- 协议勾选 -->
+    <view class="agree-row" bindtap="toggleAgreed">
+      <view class="agree-check {{agreed ? 'on' : ''}}">{{agreed ? '✓' : ''}}</view>
+      <view class="agree-text">我已阅读并同意<text class="agree-link" catchtap="goWaiver">《参赛免责协议》</text>，知悉真人 CS 运动风险</view>
+    </view>
+
+    <!-- 底部提交 -->
+    <view class="bottom-bar">
+      <view class="bottom-price">
+        <text class="label">应付</text>
+        <text class="price">{{payableText}}</text>
+      </view>
+      <button class="btn-main" disabled="{{submitting}}" bindtap="onSubmit">{{submitting ? '提交中...' : '确认报名'}}</button>
+    </view>
+  </block>
+</view>

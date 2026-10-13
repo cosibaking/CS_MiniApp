@@ -1,0 +1,243 @@
+/* 成员管理（头部人数条 + Tab 三页 + 行内操作链接） */
+
+/* 空态/引导块（与 detail 页同结构） */
+.empty-block {
+  text-align: center;
+  padding: 120rpx 32rpx 0;
+}
+.empty-emoji {
+  font-size: 88rpx;
+  line-height: 1;
+}
+.empty-text {
+  margin-top: 24rpx;
+  font-size: 28rpx;
+  color: #5A6572;
+}
+.empty-btn {
+  width: 320rpx;
+  margin: 40rpx auto 0;
+}
+.empty-btn::after {
+  border: none;
+}
+.tab-fail-block {
+  padding-top: 64rpx;
+}
+
+/* 白卡（同 detail；首卡去顶部间距） */
+.card {
+  margin-top: 24rpx;
+  padding: 32rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+/* 头部：战队信息 + 人数条（§2.2：97+ 预警 / 满员红字） */
+.head-card {
+  margin-top: 0;
+}
+.head-row {
+  display: flex;
+  align-items: center;
+}
+.head-logo {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 16rpx;
+  flex-shrink: 0;
+  background: #F5F6F8;
+}
+.head-info {
+  flex: 1;
+  min-width: 0;
+  margin-left: 20rpx;
+}
+.head-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1F2A38;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.head-count {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: #8A94A0;
+}
+.count-warn {
+  color: #C8552F;
+}
+.count-full {
+  color: #B03030;
+}
+.invite-btn {
+  flex-shrink: 0;
+  margin: 0 0 0 16rpx;
+  padding: 0 28rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  font-size: 24rpx;
+  background: #C8552F;
+  color: #FFFFFF;
+  border-radius: 12rpx;
+}
+.invite-btn::after {
+  border: none;
+}
+.invite-btn[disabled] {
+  background: #D8DCE1;
+  color: #FFFFFF;
+}
+.full-tip {
+  margin-top: 20rpx;
+  padding: 16rpx 20rpx;
+  font-size: 22rpx;
+  color: #B03030;
+  background: rgba(176, 48, 48, 0.06);
+  border-radius: 10rpx;
+}
+
+/* Tab 三页 */
+.tabs {
+  display: flex;
+  margin-top: 24rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx 0;
+  font-size: 28rpx;
+  color: #5A6572;
+  border-bottom: 4rpx solid transparent;
+}
+.tab-active {
+  font-weight: 600;
+  color: #C8552F;
+  border-bottom-color: #C8552F;
+}
+
+/* 成员/申请/邀请 行（与 detail 页同语言） */
+.member-row {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #F0F2F4;
+}
+.member-row:last-of-type {
+  border-bottom: none;
+}
+.member-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #F5F6F8;
+}
+.member-info {
+  flex: 1;
+  min-width: 0;
+  margin-left: 20rpx;
+}
+.member-name-line {
+  display: flex;
+  align-items: center;
+}
+.member-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1F2A38;
+  max-width: 280rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.member-role {
+  margin-left: 12rpx;
+  padding: 2rpx 12rpx;
+  font-size: 20rpx;
+  color: #C8552F;
+  background: rgba(200, 85, 47, 0.12);
+  border-radius: 8rpx;
+  flex-shrink: 0;
+}
+.rank-badge {
+  flex-shrink: 0;
+  margin-left: 12rpx;
+  padding: 2rpx 14rpx;
+  font-size: 20rpx;
+  color: #3E6B96;
+  background: rgba(62, 107, 150, 0.12);
+  border-radius: 8rpx;
+}
+.member-sub {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #8A94A0;
+}
+
+/* 行内操作（小链接，右侧） */
+.member-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+.act-link {
+  padding: 8rpx 18rpx;
+  font-size: 24rpx;
+  color: #5A6572;
+  border: 1rpx solid #D8DCE1;
+  border-radius: 10rpx;
+}
+.act-link + .act-link {
+  margin-left: 12rpx;
+}
+.act-danger {
+  color: #B03030;
+  border-color: rgba(176, 48, 48, 0.3);
+}
+.act-primary {
+  color: #C8552F;
+  border-color: rgba(200, 85, 47, 0.35);
+}
+.act-disabled {
+  color: #B0B8C1;
+  border-color: #F0F2F4;
+}
+
+/* 申请行补充 */
+.apply-time {
+  margin-left: 12rpx;
+  font-size: 22rpx;
+  color: #B0B8C1;
+  flex-shrink: 0;
+}
+.apply-note {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #5A6572;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.apply-fail {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #B03030;
+}
+
+/* 列表底部加载 */
+.list-more {
+  padding-top: 16rpx;
+  font-size: 22rpx;
+  color: #B0B8C1;
+  text-align: center;
+}

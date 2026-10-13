@@ -1,0 +1,90 @@
+/* 管理工作台（头部身份条 + 分组入口卡片；与 admin 各页同设计语言） */
+
+.wb-header {
+  padding: 16rpx 8rpx 8rpx;
+}
+.wb-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #1F2A38;
+}
+.wb-user {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: #8A94A0;
+}
+.wb-role {
+  color: #C8552F;
+}
+
+/* 空态（与 team-audit 同结构） */
+.empty-block {
+  text-align: center;
+  padding: 120rpx 32rpx 0;
+}
+.empty-emoji {
+  font-size: 88rpx;
+  line-height: 1;
+}
+.empty-text {
+  margin-top: 24rpx;
+  font-size: 28rpx;
+  color: #5A6572;
+}
+
+/* 分组：组名 + 白卡入口列表 */
+.wb-group {
+  margin-top: 28rpx;
+}
+.group-name {
+  padding: 0 8rpx 12rpx;
+  font-size: 26rpx;
+  color: #8A94A0;
+}
+.group-card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+  padding: 0 32rpx;
+}
+.entry {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #F0F2F4;
+}
+.entry:last-child {
+  border-bottom: none;
+}
+.entry-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 12rpx;
+  background: #F5F6F8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  flex-shrink: 0;
+}
+.entry-info {
+  flex: 1;
+  min-width: 0;
+  margin-left: 20rpx;
+}
+.entry-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1F2A38;
+}
+.entry-desc {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #8A94A0;
+}
+.entry-arrow {
+  flex-shrink: 0;
+  margin-left: 16rpx;
+  font-size: 36rpx;
+  color: #C4CBD3;
+}

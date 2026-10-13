@@ -1,0 +1,75 @@
+<!--签到管理：动态二维码（60s 轮换）+ 待核验队列 + 现场核验（§3.7）-->
+<view class="page">
+  <block wx:if="{{noPermission}}">
+    <view class="perm-box">
+      <text class="perm-icon">🔒</text>
+      <text class="perm-title">暂无权限</text>
+      <text class="perm-desc">需要「活动签到」权限，请联系管理员开通</text>
+    </view>
+  </block>
+
+  <block wx:else>
+    <!-- 到场汇总 -->
+    <view class="sum-card">
+      <text class="sum-num">{{checkinCount}}</text>
+      <text class="sum-slash">/</text>
+      <text class="sum-num muted">{{totalEnrolled}}</text>
+      <text class="sum-label">已到场 / 应到场</text>
+    </view>
+
+    <!-- 动态签到码 -->
+    <view class="qr-card">
+      <view class="qr-box">
+        <!-- canvas 常驻挂载，避免查询时机问题；未就绪时用遮罩覆盖 -->
+        <canvas type="2d" id="qr-canvas" class="qr-canvas"></canvas>
+        <view wx:if="{{!qrReady}}" class="qr-mask">
+          <block wx:if="{{qrError}}">
+            <text class="mask-icon">⏳</text>
+            <text class="mask-text">{{qrError}}</text>
+            <text class="mask-tip">{{countdown}}s 后自动重试</text>
+          </block>
+          <block wx:else>
+            <text class="mask-icon">…</text>
+            <text class="mask-text">生成签到码中</text>
+          </block>
+        </view>
+      </view>
+      <view class="qr-foot" bindtap="onRefreshTap">
+        <text class="qr-countdown">动态码 {{countdown}}s 后自动刷新</text>
+        <text class="qr-refresh">立即刷新</text>
+      </view>
+    </view>
+
+    <!-- 待核验队列 -->
+    <view class="wait-head">
+      <text class="wait-title">待核验</text>
+      <text class="wait-count">{{waiting.length}} 人</text>
+    </view>
+
+    <view class="card-list">
+      <view wx:for="{{waiting}}" wx:key="id" class="card">
+        <view class="row">
+          <image class="avatar" src="{{item.avatar}}" mode="aspectFill" />
+          <view class="info">
+            <view class="line1">
+              <text class="nickname">{{item.nickname}}</text>
+              <text class="pay-tag">{{item.payTypeLabel}}</text>
+            </view>
+            <view class="line2">
+              <text wx:if="{{item.requestedText}}" class="meta">{{item.requestedText}}</text>
+            </view>
+          </view>
+          <view class="ok-btn {{confirmBusy ? 'btn-busy' : ''}}"
+            data-id="{{item.id}}" data-nickname="{{item.nickname}}"
+            bindtap="onConfirmTap">核验</view>
+        </view>
+      </view>
+
+      <view wx:if="{{!waiting.length}}" class="empty">
+        <text class="empty-icon">✅</text>
+        <text class="empty-title">暂无待核验会员</text>
+        <text class="empty-desc">会员扫码或申请核验后会出现在这里</text>
+      </view>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,118 @@
+<!--战队主页（team-module §2.1-3 / §2.2）-->
+<view class="page detail-page">
+  <view wx:if="{{loading}}" class="loading-tip">加载中…</view>
+
+  <!-- 未登录引导（架构 §1.3：战队内容会员可见） -->
+  <view wx:elif="{{!logged}}" class="empty-block">
+    <view class="empty-emoji">🛡️</view>
+    <view class="empty-text">登录后即可查看战队信息</view>
+    <button class="btn-primary empty-btn" bindtap="retryLogin">立即登录</button>
+  </view>
+
+  <!-- 40401 统一提示（含已解散 / 非 normal 非创建者，§2.2） -->
+  <view wx:elif="{{notFound}}" class="empty-block">
+    <view class="empty-emoji">🔍</view>
+    <view class="empty-text">战队不存在或已解散</view>
+    <button class="btn-primary empty-btn" bindtap="goBack">返回战队列表</button>
+  </view>
+
+  <!-- 加载失败重试 -->
+  <view wx:elif="{{failed}}" class="empty-block">
+    <view class="empty-emoji">⚠️</view>
+    <view class="empty-text">加载失败，请重试</view>
+    <button class="btn-primary empty-btn" bindtap="retry">重新加载</button>
+  </view>
+
+  <block wx:elif="{{team}}">
+    <!-- 创建者视角横幅（§2.2） -->
+    <view wx:if="{{pendingBanner}}" class="state-banner">
+      <view class="state-banner-title">审核中，通过后战队对外展示</view>
+      <view class="state-banner-tip">创建资料已提交俱乐部管理员审核</view>
+    </view>
+    <view wx:if="{{rejectReason}}" class="reject-banner">
+      <view class="reject-title">创建申请未通过</view>
+      <view class="reject-reason">原因：{{rejectReason}}</view>
+      <view class="reject-tip" bindtap="goResubmit">修改后重新提交 ›</view>
+    </view>
+
+    <!-- 战队信息 -->
+    <view class="hero-card">
+      <image class="hero-logo" src="{{team.logo}}" mode="aspectFill" />
+      <view class="hero-info">
+        <view class="hero-name">{{team.name}}</view>
+        <view class="hero-slogan">{{team.slogan || '尚未设置口号'}}</view>
+        <view class="hero-meta">{{team.member_count}} 人在职 · 创建于 {{team.created_text || '-'}}</view>
+      </view>
+    </view>
+
+    <!-- 简介 -->
+    <view wx:if="{{team.intro}}" class="card intro-card">
+      <view class="section-title">战队简介</view>
+      <view class="intro-text">{{team.intro}}</view>
+    </view>
+
+    <!-- 战绩统计（stats 为 null → 暂无战绩，§2.2） -->
+    <view class="card stats-card">
+      <view class="section-title">战绩统计</view>
+      <view wx:if="{{stats}}" class="stats-row">
+        <view class="stat-item">
+          <view class="stat-num">{{stats.total_games}}</view>
+          <view class="stat-label">总场次</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-num">{{stats.wins}}</view>
+          <view class="stat-label">胜场</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-num">{{stats.win_rate_text}}</view>
+          <view class="stat-label">胜率</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-num">{{stats.participated_members}}</view>
+          <view class="stat-label">参与人次</view>
+        </view>
+      </view>
+      <view wx:else class="stats-empty">暂无战绩，参加活动后自动统计</view>
+    </view>
+
+    <!-- 成员（members_preview：队长置顶，≤10；完整名单见管理页） -->
+    <view class="card members-card">
+      <view class="section-title">战队成员（{{team.member_count}}）</view>
+      <view class="member-row" wx:for="{{members}}" wx:key="user_id">
+        <image class="member-avatar" src="{{item.avatar}}" mode="aspectFill" />
+        <view class="member-info">
+          <view class="member-name-line">
+            <text class="member-name">{{item.nickname}}</text>
+            <text wx:if="{{item.isCaptain}}" class="member-role">队长</text>
+          </view>
+          <view wx:if="{{item.joined_text}}" class="member-sub">{{item.joined_text}} 加入</view>
+        </view>
+        <view class="rank-badge">{{item.rankName}}</view>
+      </view>
+      <view wx:if="{{team.member_count > 10}}" class="members-more">仅展示部分成员</view>
+    </view>
+
+    <!-- 底部操作区（仅 normal 战队；按 my_relation 视角分流，§2.1） -->
+    <view wx:if="{{team.status === 'normal'}}" class="footer">
+      <block wx:if="{{isCaptain}}">
+        <button class="btn-primary footer-btn" bindtap="goManage">管理战队</button>
+      </block>
+      <block wx:elif="{{inTeam}}">
+        <button class="btn-plain footer-btn quit-btn" disabled="{{acting}}" bindtap="onQuit">退出战队</button>
+      </block>
+      <block wx:elif="{{memberStatus === 'applying'}}">
+        <button class="btn-plain footer-btn" disabled>已提交申请，等待队长处理</button>
+      </block>
+      <block wx:elif="{{memberStatus === 'invited'}}">
+        <button class="btn-plain footer-btn" disabled="{{acting}}" bindtap="onRejectInvite">拒绝邀请</button>
+        <button class="btn-primary footer-btn" disabled="{{acting}}" bindtap="onAcceptInvite">接受邀请</button>
+      </block>
+      <block wx:elif="{{memberFull}}">
+        <button class="btn-plain footer-btn" disabled>战队已满员（100/100）</button>
+      </block>
+      <block wx:else>
+        <button class="btn-primary footer-btn" disabled="{{acting}}" bindtap="onApplyJoin">申请加入</button>
+      </block>
+    </view>
+  </block>
+</view>

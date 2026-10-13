@@ -1,0 +1,103 @@
+<!--Excel 导入：模板列说明 → 活动ID + 选文件 → 上传提交（同步）→ 结果 + 失败明细（可复制）-->
+<view wx:if="{{checking}}" class="loading-tip">加载中…</view>
+
+<view wx:elif="{{noPermission}}" class="empty-block">
+  <text class="empty-emoji">🚫</text>
+  <text class="empty-text">无战绩录入权限</text>
+</view>
+
+<!-- 表单模式 -->
+<view wx:elif="{{mode === 'form'}}" class="page import-page">
+  <view class="card">
+    <view class="card-title-row">
+      <text class="card-title">导入模板</text>
+      <text class="tpl-btn" bindtap="onDownloadTemplate">下载模板</text>
+    </view>
+    <view class="tpl-tip">战绩导入 · 列顺序固定，数据行 ≤ 500 行，文件 ≤ 2MB</view>
+    <view wx:for="{{columns}}" wx:key="col" class="col-row">
+      <text class="col-tag">{{item.col}}</text>
+      <view class="col-info">
+        <text class="col-title">{{item.title}}<text wx:if="{{item.required}}" class="col-req">必填</text></text>
+        <text class="col-desc">{{item.desc}}（示例：{{item.example || '空'}}）</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <text class="card-title">提交导入</text>
+    <view class="form-item">
+      <text class="form-label">活动 ID</text>
+      <input
+        class="form-input"
+        value="{{bizId}}"
+        maxlength="64"
+        placeholder="从活动管理页进入将自动填入"
+        placeholder-class="input-ph"
+        bindinput="onBizIdInput"
+      />
+    </view>
+    <view class="form-tip">战绩将写入该活动，需活动处于进行中或已结束状态</view>
+
+    <view wx:if="{{file}}" class="file-card">
+      <text class="file-icon">📄</text>
+      <view class="file-info">
+        <text class="file-name">{{file.name}}</text>
+        <text class="file-size">{{file.sizeText}}</text>
+      </view>
+      <text class="file-remove" catchtap="onClearFile">移除</text>
+    </view>
+    <view wx:else class="file-picker" bindtap="onPickFile">
+      <text class="file-picker-icon">＋</text>
+      <text class="file-picker-text">点击选择 xlsx 文件</text>
+      <text class="file-picker-sub">从微信聊天记录中选择</text>
+    </view>
+
+    <button
+      class="btn-primary submit-btn"
+      disabled="{{!bizId || !file || submitting}}"
+      bindtap="onSubmit"
+    >{{submitting ? '导入中…' : '提交导入'}}</button>
+  </view>
+</view>
+
+<!-- 结果模式 -->
+<view wx:else class="page import-page">
+  <view class="card">
+    <view class="result-head">
+      <text class="result-status {{result.status_cls}}">{{result.status_label}}</text>
+      <text class="result-id">任务 {{result.import_id}}</text>
+    </view>
+    <view class="result-counts">
+      <view class="count-cell">
+        <text class="count-num">{{result.total}}</text>
+        <text class="count-label">总行数</text>
+      </view>
+      <view class="count-cell">
+        <text class="count-num count-ok">{{result.success_count}}</text>
+        <text class="count-label">成功</text>
+      </view>
+      <view class="count-cell">
+        <text class="count-num count-fail">{{result.fail_count}}</text>
+        <text class="count-label">失败</text>
+      </view>
+    </view>
+    <view wx:if="{{result.fail_count > 0}}" class="result-tip">失败行不影响已成功行；修正后可整表重新导入（成功行将被覆盖更新）</view>
+  </view>
+
+  <view wx:if="{{result.fail_count > 0}}" class="card">
+    <view class="card-title-row">
+      <text class="card-title">失败明细（前 50 条）</text>
+      <text class="tpl-btn" bindtap="onCopyFailRows">复制明细</text>
+    </view>
+    <view wx:if="{{loadingFailRows}}" class="fail-loading">明细加载中…</view>
+    <block wx:else>
+      <view wx:for="{{failedRows}}" wx:key="index" class="fail-row">
+        <text wx:if="{{item.row}}" class="fail-line">第{{item.row}}行</text>
+        <text class="fail-reason">{{item.reason}}</text>
+      </view>
+      <view wx:if="{{!failedRows.length}}" class="fail-loading">暂无明细数据</view>
+    </block>
+  </view>
+
+  <button class="btn-primary submit-btn" bindtap="onReset">修正后重新导入</button>
+</view>

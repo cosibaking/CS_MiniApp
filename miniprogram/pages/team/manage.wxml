@@ -1,0 +1,133 @@
+<!--成员管理（team-module §2.1-4 / §2.2）-->
+<view class="page manage-page">
+  <view wx:if="{{loading}}" class="loading-tip">加载中…</view>
+
+  <!-- 未登录引导 -->
+  <view wx:elif="{{!logged}}" class="empty-block">
+    <view class="empty-emoji">🛡️</view>
+    <view class="empty-text">登录后即可管理战队</view>
+    <button class="btn-primary empty-btn" bindtap="retryLogin">立即登录</button>
+  </view>
+
+  <!-- 40401 统一提示（含已解散，§2.2） -->
+  <view wx:elif="{{notFound}}" class="empty-block">
+    <view class="empty-emoji">🔍</view>
+    <view class="empty-text">战队不存在或已解散</view>
+    <button class="btn-primary empty-btn" bindtap="goBack">返回战队列表</button>
+  </view>
+
+  <!-- 非队长拦截 -->
+  <view wx:elif="{{forbidden}}" class="empty-block">
+    <view class="empty-emoji">🚫</view>
+    <view class="empty-text">仅队长可管理战队</view>
+    <button class="btn-primary empty-btn" bindtap="goBack">返回战队主页</button>
+  </view>
+
+  <!-- 加载失败重试 -->
+  <view wx:elif="{{failed}}" class="empty-block">
+    <view class="empty-emoji">⚠️</view>
+    <view class="empty-text">加载失败，请重试</view>
+    <button class="btn-primary empty-btn" bindtap="retry">重新加载</button>
+  </view>
+
+  <block wx:elif="{{team}}">
+    <!-- 头部：战队信息 + 人数条（§2.2）+ 邀请入口 -->
+    <view class="card head-card">
+      <view class="head-row">
+        <image class="head-logo" src="{{team.logo}}" mode="aspectFill" />
+        <view class="head-info">
+          <view class="head-name">{{team.name}}</view>
+          <view class="head-count {{memberFull ? 'count-full' : (countWarn ? 'count-warn' : '')}}">在职成员 {{team.member_count}}/100 人</view>
+        </view>
+        <button class="invite-btn" disabled="{{memberFull}}" bindtap="goInvite">邀请队员</button>
+      </view>
+      <view wx:if="{{memberFull}}" class="full-tip">战队已满员（100/100），已禁用邀请与通过申请入口</view>
+    </view>
+
+    <!-- Tab 三页（§2.1-4） -->
+    <view class="tabs">
+      <view class="tab {{activeTab === 'members' ? 'tab-active' : ''}}" data-tab="members" bindtap="onSwitchTab">成员</view>
+      <view class="tab {{activeTab === 'applies' ? 'tab-active' : ''}}" data-tab="applies" bindtap="onSwitchTab">入队申请</view>
+      <view class="tab {{activeTab === 'invites' ? 'tab-active' : ''}}" data-tab="invites" bindtap="onSwitchTab">已发邀请</view>
+    </view>
+
+    <!-- 当前 Tab 首次加载失败 -->
+    <view wx:if="{{tabFailed}}" class="empty-block tab-fail-block">
+      <view class="empty-text">列表加载失败，请重试</view>
+      <button class="btn-primary empty-btn" bindtap="retryTab">重新加载</button>
+    </view>
+
+    <!-- Tab 1 成员：军衔徽章 + 移除/转让队长（§2.1-4） -->
+    <block wx:if="{{!tabFailed && activeTab === 'members'}}">
+      <view wx:if="{{members.length === 0 && !listLoading}}" class="empty-block">
+        <view class="empty-emoji">👥</view>
+        <view class="empty-text">暂无在职成员</view>
+      </view>
+      <view wx:else class="card">
+        <view class="member-row" wx:for="{{members}}" wx:key="user_id">
+          <image class="member-avatar" src="{{item.avatar}}" mode="aspectFill" />
+          <view class="member-info">
+            <view class="member-name-line">
+              <text class="member-name">{{item.nickname}}</text>
+              <text wx:if="{{item.isCaptain}}" class="member-role">队长</text>
+              <text class="rank-badge">{{item.rankName}}</text>
+            </view>
+            <view class="member-sub">{{item.joined_text}}</view>
+          </view>
+          <view wx:if="{{!item.isCaptain}}" class="member-actions">
+            <view class="act-link" data-index="{{index}}" catchtap="onTransfer">转让队长</view>
+            <view class="act-link act-danger" data-index="{{index}}" catchtap="onRemove">移除</view>
+          </view>
+        </view>
+        <view wx:if="{{listLoading}}" class="list-more">加载中…</view>
+      </view>
+    </block>
+
+    <!-- Tab 2 入队申请：通过/拒绝（§2.2 失败行内标记，不打断列表） -->
+    <block wx:elif="{{!tabFailed && activeTab === 'applies'}}">
+      <view wx:if="{{applies.length === 0 && !listLoading}}" class="empty-block">
+        <view class="empty-emoji">📭</view>
+        <view class="empty-text">暂无入队申请</view>
+      </view>
+      <view wx:else class="card">
+        <view class="member-row" wx:for="{{applies}}" wx:key="record_id">
+          <image class="member-avatar" src="{{item.avatar}}" mode="aspectFill" />
+          <view class="member-info">
+            <view class="member-name-line">
+              <text class="member-name">{{item.nickname}}</text>
+              <text class="apply-time">{{item.applied_text}}</text>
+            </view>
+            <view wx:if="{{item.note}}" class="apply-note">留言：{{item.note}}</view>
+            <view wx:if="{{item.failMsg}}" class="apply-fail">{{item.failMsg}}</view>
+          </view>
+          <view class="member-actions">
+            <view class="act-link" data-index="{{index}}" catchtap="onRejectApply">拒绝</view>
+            <view class="act-link act-primary {{memberFull ? 'act-disabled' : ''}}" data-index="{{index}}" catchtap="onAcceptApply">通过</view>
+          </view>
+        </view>
+        <view wx:if="{{listLoading}}" class="list-more">加载中…</view>
+      </view>
+    </block>
+
+    <!-- Tab 3 已发邀请：状态查看（等待对方处理，无撤销操作） -->
+    <block wx:elif="{{!tabFailed && activeTab === 'invites'}}">
+      <view wx:if="{{invites.length === 0 && !listLoading}}" class="empty-block">
+        <view class="empty-emoji">✉️</view>
+        <view class="empty-text">暂无已发邀请</view>
+      </view>
+      <view wx:else class="card">
+        <view class="member-row" wx:for="{{invites}}" wx:key="user_id">
+          <image class="member-avatar" src="{{item.avatar}}" mode="aspectFill" />
+          <view class="member-info">
+            <view class="member-name-line">
+              <text class="member-name">{{item.nickname}}</text>
+              <text class="rank-badge">{{item.rankName}}</text>
+            </view>
+            <view class="member-sub">{{item.joined_text}}</view>
+          </view>
+        </view>
+        <view wx:if="{{listLoading}}" class="list-more">加载中…</view>
+      </view>
+    </block>
+  </block>
+</view>

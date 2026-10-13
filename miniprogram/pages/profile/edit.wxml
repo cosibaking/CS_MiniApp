@@ -1,0 +1,72 @@
+<!--编辑资料（user-module §2.2）-->
+<view class="page">
+  <view wx:if="{{loading}}" class="loading-tip">加载中…</view>
+
+  <block wx:else>
+    <!-- 头像 -->
+    <view class="card avatar-card">
+      <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+        <image wx:if="{{avatarTemp || avatar}}" class="avatar-img" src="{{avatarTemp || avatar}}" mode="aspectFill" />
+        <view wx:else class="avatar-img avatar-empty">＋</view>
+        <view class="avatar-tip">点击更换头像</view>
+      </button>
+    </view>
+
+    <!-- form 包裹：type="nickname" 快捷填充不触发 bindinput/blur，只有 bindsubmit 能可靠取到最终值 -->
+    <form bindsubmit="onSave">
+    <!-- 基础资料 -->
+    <view class="card">
+      <view class="form-row">
+        <text class="form-label">昵称</text>
+        <input class="form-input" name="nickname" type="nickname" value="{{nickname}}" bindinput="onNickname" placeholder="1-20 个字符" maxlength="20" />
+      </view>
+      <view class="form-row">
+        <text class="form-label">性别</text>
+        <view class="gender-group">
+          <view
+            wx:for="{{genders}}"
+            wx:key="value"
+            class="gender-item {{gender === item.value ? 'on' : ''}}"
+            data-value="{{item.value}}"
+            bindtap="onGender"
+          >{{item.label}}</view>
+        </view>
+      </view>
+      <view class="form-row form-last">
+        <text class="form-label">出生日期</text>
+        <picker mode="date" value="{{birthdayStr}}" start="1900-01-01" end="{{todayStr}}" bindchange="onBirthdayChange">
+          <view class="form-value {{birthdayStr ? '' : 'placeholder'}}">{{birthdayStr || '选填，用于成年判定'}}</view>
+        </picker>
+      </view>
+      <view class="form-note">生日按周岁判定是否未成年（未满 18 岁需监护人签署协议）</view>
+    </view>
+
+    <!-- 紧急联系人 -->
+    <view class="card">
+      <view class="card-title">紧急联系人（选填）</view>
+      <view class="form-row">
+        <text class="form-label">姓名</text>
+        <input class="form-input" name="ecName" value="{{ecName}}" bindinput="onEcName" placeholder="1-20 个字符" maxlength="20" />
+      </view>
+      <view class="form-row form-last">
+        <text class="form-label">手机号</text>
+        <input
+          class="form-input"
+          name="ecPhone"
+          value="{{ecPhone}}"
+          bindinput="onEcPhone"
+          type="number"
+          maxlength="11"
+          placeholder="{{ecPhoneMasked ? '当前 ' + ecPhoneMasked + '，修改请输入完整号码' : '11 位手机号'}}"
+        />
+      </view>
+      <view wx:if="{{hasEc}}" class="form-note">姓名与手机号留空并保存，可清除紧急联系人</view>
+    </view>
+
+    <!-- 保存 -->
+    <view class="save-area">
+      <button class="btn-primary save-btn" form-type="submit" disabled="{{saving}}">{{saving ? '保存中…' : '保存'}}</button>
+    </view>
+    </form>
+  </block>
+</view>

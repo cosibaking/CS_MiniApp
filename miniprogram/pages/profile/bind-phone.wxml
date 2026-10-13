@@ -1,0 +1,54 @@
+<!--绑定手机号（user-module §2.2、§5.5）-->
+<view class="page">
+  <view wx:if="{{loading}}" class="loading-tip">加载中…</view>
+
+  <block wx:else>
+    <!-- 已绑定态：脱敏号码 + 换绑 -->
+    <view wx:if="{{bound}}" class="bound-card">
+      <view class="bound-label">当前绑定{{boundOwner === 'guardian' ? '（监护人手机号）' : ''}}</view>
+      <view class="bound-phone">{{boundMasked}}</view>
+      <view class="bound-tip">手机号已加密存储，仅用于报名核验与紧急联系；仅支持换绑，不可解绑</view>
+      <button wx:if="{{!showForm}}" class="rebind-btn" bindtap="startRebind">换绑手机号</button>
+    </view>
+
+    <block wx:if="{{showForm}}">
+      <!-- 流程切换：本人 / 监护人 -->
+      <view class="mode-tabs">
+        <view class="mode-tab {{mode === 'self' ? 'on' : ''}}" data-mode="self" bindtap="switchMode">本人手机号</view>
+        <view class="mode-tab {{mode === 'guardian' ? 'on' : ''}}" data-mode="guardian" bindtap="switchMode">监护人手机号</view>
+      </view>
+
+      <!-- 成年流程：微信一键获取 -->
+      <view class="card" wx:if="{{mode === 'self'}}">
+        <view class="flow-desc">使用微信手机号快捷验证，一键绑定本人手机号</view>
+        <button
+          class="btn-primary flow-btn"
+          open-type="getPhoneNumber"
+          bindgetphonenumber="onGetPhone"
+          disabled="{{submitting}}"
+        >{{bound ? '一键绑定新号码' : '一键绑定微信手机号'}}</button>
+        <view class="flow-note">获取失败可切换到监护人方式，或联系俱乐部工作人员人工办理</view>
+      </view>
+
+      <!-- 未成年人流程：监护人表单 -->
+      <view class="card" wx:else>
+        <view class="flow-desc">适用于未成年人：填写监护人手机号完成绑定</view>
+        <view class="form-row form-last">
+          <text class="form-label">监护人手机号</text>
+          <input class="form-input" value="{{phone}}" bindinput="onPhone" type="number" maxlength="11" placeholder="11 位手机号" />
+        </view>
+        <view class="agree-row" bindtap="toggleDeclared">
+          <view class="agree-box {{declared ? 'checked' : ''}}">{{declared ? '✓' : ''}}</view>
+          <text class="agree-text">我确认为未成年人，该号码为监护人手机号</text>
+        </view>
+        <button class="btn-primary flow-btn" disabled="{{submitting}}" bindtap="onBindGuardian">{{submitting ? '绑定中…' : '绑定监护人手机号'}}</button>
+      </view>
+    </block>
+
+    <!-- 说明 -->
+    <view class="why-card">
+      <view class="why-title">为什么需要绑定手机号？</view>
+      <view class="why-text">报名活动与购买会员卡均需预留手机号，便于现场签到核验与紧急联系。手机号将加密存储，仅用于俱乐部活动服务，不会对外泄露。</view>
+    </view>
+  </block>
+</view>

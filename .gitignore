@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# WeChat DevTools private config
+project.private.config.json
+
+# Demo runtime data
+demo/.data/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log

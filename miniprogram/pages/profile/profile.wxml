@@ -1,0 +1,112 @@
+<!--我的（user-module §2.1）-->
+<view class="page">
+  <view wx:if="{{loading}}" class="loading-tip">加载中…</view>
+
+  <view wx:elif="{{guest}}" class="login-card">
+    <text class="login-title">未登录</text>
+    <text class="login-desc">登录后可查看个人信息、报名活动与签署协议</text>
+    <button class="btn-primary retry-btn" bindtap="relogin">重新登录</button>
+  </view>
+
+  <view wx:elif="{{banned}}" class="login-card">
+    <text class="login-title">账号已被封禁</text>
+    <text class="login-desc">如有疑问请联系俱乐部工作人员</text>
+  </view>
+
+  <block wx:else>
+    <!-- 用户卡 -->
+    <view class="user-card" data-url="/pages/profile/edit" bindtap="go">
+      <image wx:if="{{user.avatar}}" class="avatar" src="{{user.avatar}}" mode="aspectFill" />
+      <view wx:else class="avatar avatar-fallback">{{avatarText}}</view>
+      <view class="user-main">
+        <view class="user-name-row">
+          <text class="user-name">{{user.nickname}}</text>
+          <text class="badge level-badge">{{level.name}}</text>
+        </view>
+        <view class="user-sub">
+          <text class="badge rank-badge">{{rank.name}}</text>
+          <text class="user-sub-text">已参加 {{user.total_games}} 场活动</text>
+        </view>
+      </view>
+      <text class="arrow arrow-light">›</text>
+    </view>
+
+    <!-- 前置任务条 -->
+    <view class="task-bar" wx:if="{{tasks.length}}">
+      <view class="task-title">待完成</view>
+      <view class="task-list">
+        <view
+          wx:for="{{tasks}}"
+          wx:key="key"
+          class="task-chip {{item.highlight ? 'task-hot' : ''}}"
+          data-url="{{item.url}}"
+          catchtap="go"
+        >{{item.label}}</view>
+      </view>
+    </view>
+
+    <!-- 会员卡概要 -->
+    <view class="card-summary" data-url="/pages/profile/card/list" bindtap="go">
+      <view class="cs-head">
+        <text class="cs-title">我的会员卡</text>
+        <text class="cs-more">{{cards.length ? '管理 ›' : '去购卡 ›'}}</text>
+      </view>
+      <block wx:if="{{cards.length}}">
+        <view wx:for="{{cards}}" wx:key="card_id" class="cs-item">
+          <text class="cs-name">{{item.card_name}}</text>
+          <text class="cs-info" wx:if="{{item.card_type === 'count'}}">剩余 {{item.remain_times}} 次 · {{item.expireText}} 到期</text>
+          <text class="cs-info" wx:else>{{item.expireText}} 到期</text>
+        </view>
+      </block>
+      <text wx:else class="cs-empty">暂无可用会员卡</text>
+    </view>
+
+    <!-- 入口列表 -->
+    <view class="entry-list">
+      <view class="entry" data-url="/pages/order/list" bindtap="go">
+        <text class="entry-label">我的订单</text>
+        <text class="arrow">›</text>
+      </view>
+      <view class="entry" data-url="/pages/activity/my-enrollments" bindtap="go">
+        <text class="entry-label">我的报名</text>
+        <text class="arrow">›</text>
+      </view>
+      <view class="entry" data-url="/pages/profile/stats" bindtap="go">
+        <text class="entry-label">我的战绩</text>
+        <text class="arrow">›</text>
+      </view>
+      <view class="entry" data-url="/pages/team/list" bindtap="go">
+        <text class="entry-label">我的战队</text>
+        <text class="arrow">›</text>
+      </view>
+      <view class="entry" data-url="/pages/profile/card/list" bindtap="go">
+        <text class="entry-label">会员卡</text>
+        <text class="arrow">›</text>
+      </view>
+      <view class="entry" data-url="/pages/profile/waiver" bindtap="go">
+        <text class="entry-label">免责协议</text>
+        <view class="entry-right">
+          <text wx:if="{{waiver.need_resign}}" class="entry-tag">待签署</text>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+      <view class="entry" data-url="/pages/profile/level" bindtap="go">
+        <text class="entry-label">等级与军衔</text>
+        <text class="arrow">›</text>
+      </view>
+      <view class="entry" data-url="/pages/profile/address/list" bindtap="go">
+        <text class="entry-label">收货地址</text>
+        <text class="arrow">›</text>
+      </view>
+      <view class="entry" data-url="/pages/profile/edit" bindtap="go">
+        <text class="entry-label">编辑资料</text>
+        <text class="arrow">›</text>
+      </view>
+      <!-- 管理后台：仅命中任一权限点（管理员）可见 -->
+      <view wx:if="{{isAdmin}}" class="entry entry-admin" data-url="/pages/admin/index" bindtap="go">
+        <text class="entry-label">管理后台</text>
+        <text class="arrow">›</text>
+      </view>
+    </view>
+  </block>
+</view>

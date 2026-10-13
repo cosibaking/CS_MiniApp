@@ -1,0 +1,83 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/activity/list",
+    "pages/activity/detail",
+    "pages/activity/signup-confirm",
+    "pages/activity/my-enrollments",
+    "pages/activity/checkin-verify",
+    "pages/activity/review",
+    "pages/activity/album",
+    "pages/team/list",
+    "pages/team/create",
+    "pages/team/detail",
+    "pages/team/manage",
+    "pages/team/invite",
+    "pages/team/ranking",
+    "pages/team/enroll-select",
+    "pages/profile/profile",
+    "pages/profile/edit",
+    "pages/profile/bind-phone",
+    "pages/profile/waiver",
+    "pages/profile/card/list",
+    "pages/profile/card/buy",
+    "pages/profile/card/detail",
+    "pages/profile/level",
+    "pages/profile/stats",
+    "pages/profile/address/list",
+    "pages/profile/address/edit",
+    "pages/order/confirm",
+    "pages/order/cashier",
+    "pages/order/list",
+    "pages/order/detail",
+    "pages/order/refund-apply",
+    "pages/order/refund-progress"
+  ],
+  "subPackages": [
+    {
+      "root": "pages/admin",
+      "pages": [
+        "index",
+        "role-list",
+        "role-edit",
+        "user-role",
+        "log-list",
+        "log-detail",
+        "import-excel",
+        "team-audit",
+        "refund-audit",
+        "activity/list",
+        "activity/edit",
+        "activity/enroll-list",
+        "activity/checkin",
+        "activity/stats-record",
+        "activity/stats-list",
+        "activity/album-manage",
+        "activity/review-list",
+        "user/list",
+        "user/detail"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTitleText": "真人CS俱乐部",
+    "navigationBarBackgroundColor": "#1F2A38",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F5F6F8"
+  },
+  "tabBar": {
+    "color": "#8A94A0",
+    "selectedColor": "#C8552F",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/activity/list", "text": "活动" },
+      { "pagePath": "pages/team/list", "text": "战队" },
+      { "pagePath": "pages/profile/profile", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

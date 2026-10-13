@@ -1,0 +1,34 @@
+/* pages/order/cashier.wxss — 收银台（复用 app.wxss 的 .page / 设计令牌） */
+.page { padding: 24rpx 24rpx calc(24rpx + env(safe-area-inset-bottom)); }
+
+/* 订单摘要卡 */
+.card { background: #fff; border-radius: 16rpx; padding: 28rpx; margin-bottom: 20rpx; box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06); }
+.row { display: flex; align-items: flex-start; margin-bottom: 16rpx; }
+.row:last-child { margin-bottom: 0; }
+.label { flex-shrink: 0; width: 120rpx; font-size: 24rpx; color: #8A94A0; line-height: 1.5; }
+.value { flex: 1; font-size: 26rpx; color: #1F2A38; line-height: 1.5; word-break: break-all; }
+.value.strong { font-weight: 600; }
+
+/* 金额卡 */
+.amount-card { display: flex; flex-direction: column; align-items: center; padding: 48rpx 28rpx; }
+.amount { font-size: 64rpx; font-weight: 700; color: #C8552F; line-height: 1.2; }
+.amount-label { margin-top: 12rpx; font-size: 24rpx; color: #8A94A0; }
+
+/* 倒计时 */
+.countdown { text-align: center; padding: 20rpx 0; font-size: 26rpx; color: #8A6D1F; font-weight: 600; }
+.countdown.expired { color: #B03030; font-weight: 400; font-size: 24rpx; }
+
+/* 操作按钮 */
+.btns { display: flex; flex-direction: column; }
+.btn-lg { margin-top: 20rpx; height: 88rpx; line-height: 88rpx; font-size: 30rpx; border-radius: 44rpx; border: none; }
+.btn-lg::after { border: none; }
+.btn-lg.btn-primary { background: #C8552F; color: #fff; font-weight: 600; }
+.btn-lg.btn-primary[disabled] { background: #E9EDF2; color: #C4CBD4; }
+.btn-lg.btn-plain { background: #fff; color: #5A6572; border: 1rpx solid #D9DEE4; }
+
+/* 终态 */
+.status-card { background: #fff; border-radius: 16rpx; padding: 80rpx 28rpx 48rpx; box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06); display: flex; flex-direction: column; align-items: center; }
+.status-text { font-size: 40rpx; font-weight: 700; color: #2E7D5B; }
+.status-card .btn-lg { width: 100%; }
+
+.loading-tip { padding: 40rpx 0; text-align: center; font-size: 26rpx; color: #8A94A0; }

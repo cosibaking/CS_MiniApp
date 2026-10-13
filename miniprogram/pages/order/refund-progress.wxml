@@ -1,0 +1,44 @@
+<!--退款进度（payment-module §2 页面6）：金额/原因/驳回理由 + 状态时间线-->
+<view class="page">
+  <view wx:if="{{loading}}" class="loading-tip">加载中…</view>
+
+  <view wx:elif="{{empty}}" class="empty-block">
+    <text class="empty-icon">💸</text>
+    <text class="empty-text">暂无退款记录</text>
+  </view>
+
+  <!--wx:else 与 wx:for 不能同节点（编译器配对会被 for 展开隔断），故用 block 分层-->
+  <block wx:else>
+    <view class="card" wx:for="{{refunds}}" wx:for-item="refund" wx:key="refundNo">
+      <view class="refund-head">
+        <text class="refund-no">退款单 {{refund.refundNo}}</text>
+        <text class="refund-status {{refund.statusClass}}">{{refund.statusLabel}}</text>
+      </view>
+      <view class="row">
+        <text class="label">类型</text>
+        <text class="value">{{refund.typeLabel}}</text>
+      </view>
+      <view class="row">
+        <text class="label">退款金额</text>
+        <text class="value refund-amount">¥{{refund.amountText}}</text>
+      </view>
+      <view class="row" wx:if="{{refund.reason}}">
+        <text class="label">退款原因</text>
+        <text class="value">{{refund.reason}}</text>
+      </view>
+      <view class="row" wx:if="{{refund.remark}}">
+        <text class="label">审核备注</text>
+        <text class="value">{{refund.remark}}</text>
+      </view>
+      <view class="timeline">
+        <view class="tl-step tl-{{step.state}}" wx:for="{{refund.steps}}" wx:for-item="step" wx:key="title">
+          <view class="tl-dot"></view>
+          <view class="tl-body">
+            <view class="tl-title">{{step.title}}</view>
+            <view class="tl-desc" wx:if="{{step.desc}}">{{step.desc}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

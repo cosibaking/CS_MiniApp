@@ -1,0 +1,10 @@
+{
+  "name": "db-init",
+  "version": "1.0.0",
+  "private": true,
+  "description": "一次性数据库初始化：建 22 个集合 + 导入种子数据（幂等，云端测试运行后可删除）",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

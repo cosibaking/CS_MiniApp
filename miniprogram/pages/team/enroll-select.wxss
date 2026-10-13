@@ -1,0 +1,154 @@
+/* 战队报名选人 */
+.page {
+  padding-bottom: 180rpx; /* 给底部固定操作栏留空间 */
+}
+
+/* 概要卡片 */
+.head-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 20rpx 32rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+.head-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10rpx 0;
+}
+
+.head-label {
+  font-size: 26rpx;
+  color: #667085;
+}
+
+.head-value {
+  font-size: 26rpx;
+  color: #1f2a38;
+  font-weight: 600;
+}
+
+.head-value.warn {
+  color: #b03030;
+}
+
+/* 成员列表 */
+.member-list {
+  margin-top: 20rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+  overflow: hidden;
+}
+
+.member {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 32rpx;
+  border-bottom: 2rpx solid #f2f4f7;
+}
+
+.member:last-child {
+  border-bottom: none;
+}
+
+.member-disabled {
+  opacity: 0.55;
+}
+
+.avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: #f2f4f7;
+  flex-shrink: 0;
+}
+
+.member-main {
+  flex: 1;
+  min-width: 0;
+  margin-left: 20rpx;
+}
+
+.member-head {
+  display: flex;
+  align-items: center;
+}
+
+.member-name {
+  font-size: 28rpx;
+  color: #1f2a38;
+  font-weight: 500;
+}
+
+.role-tag {
+  margin-left: 12rpx;
+  font-size: 20rpx;
+  color: #c8552f;
+  border: 2rpx solid #c8552f;
+  border-radius: 6rpx;
+  padding: 0 8rpx;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.block-reason {
+  display: block;
+  font-size: 22rpx;
+  color: #98a2b3;
+  margin-top: 6rpx;
+}
+
+/* 单选圆点（选中实心，与 buy 页 radio 口径一致） */
+.checkbox {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  border: 2rpx solid #d0d5dd;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.checkbox.checked {
+  border: 12rpx solid #c8552f;
+}
+
+/* 底部固定操作栏：左已选人数右提交按钮 */
+.footer-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 20rpx 24rpx calc(20rpx + env(safe-area-inset-bottom));
+  background: #f7f8fa;
+}
+
+.sel-info {
+  flex: 1;
+  font-size: 26rpx;
+  color: #667085;
+  min-width: 0;
+}
+
+.sel-num {
+  color: #c8552f;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.submit-btn {
+  width: 240rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.submit-btn::after {
+  border: none;
+}

@@ -1,0 +1,45 @@
+/* pages/activity/my-enrollments.wxss — 复用 app.wxss 的 .page / 设计令牌 */
+.page { padding: 24rpx 24rpx calc(24rpx + env(safe-area-inset-bottom)); }
+
+/* 分组 tab */
+.tab-bar { display: flex; background: #fff; border-radius: 16rpx; padding: 8rpx; margin-bottom: 20rpx; box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06); }
+.tab { flex: 1; text-align: center; font-size: 26rpx; color: #5A6572; padding: 16rpx 0; border-radius: 12rpx; }
+.tab.on { background: #C8552F; color: #fff; font-weight: 600; }
+
+/* 空态 */
+.empty-block { padding: 160rpx 0; display: flex; flex-direction: column; align-items: center; }
+.empty-icon { font-size: 80rpx; line-height: 1; }
+.empty-text { margin-top: 24rpx; font-size: 26rpx; color: #8A94A0; }
+
+/* 报名卡片 */
+.enr-card { background: #fff; border-radius: 16rpx; padding: 24rpx 28rpx; margin-bottom: 20rpx; box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06); }
+.enr-main { display: flex; align-items: center; }
+.enr-cover { flex-shrink: 0; width: 160rpx; height: 120rpx; border-radius: 12rpx; background: #E9EDF2; margin-right: 20rpx; }
+.enr-info { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.enr-title-row { display: flex; align-items: flex-start; }
+.enr-title { flex: 1; font-size: 28rpx; font-weight: 600; color: #1F2A38; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.enr-status { flex-shrink: 0; margin-left: 12rpx; font-size: 22rpx; line-height: 1; padding: 8rpx 14rpx; border-radius: 8rpx; }
+.st-green { color: #2E7D5B; background: rgba(46, 125, 91, 0.12); }
+.st-blue { color: #2D6CA3; background: rgba(45, 108, 163, 0.12); }
+.st-red { color: #B03030; background: rgba(176, 48, 48, 0.12); }
+.st-orange { color: #8A6D1F; background: rgba(138, 109, 31, 0.12); }
+.st-grey { color: #8A94A0; background: #F0F2F4; }
+.enr-time { margin-top: 8rpx; font-size: 22rpx; color: #8A94A0; }
+.enr-meta { margin-top: 6rpx; display: flex; align-items: center; }
+.enr-price { font-size: 26rpx; font-weight: 600; color: #C8552F; margin-right: 12rpx; }
+.enr-paytype { font-size: 22rpx; color: #8A94A0; }
+.enr-position { margin-top: 6rpx; font-size: 22rpx; color: #2D6CA3; }
+.enr-cancel-reason { margin-top: 6rpx; font-size: 22rpx; color: #8A94A0; }
+
+/* 操作区 */
+.enr-actions { display: flex; align-items: center; margin-top: 20rpx; padding-top: 20rpx; border-top: 1rpx solid #F0F2F4; }
+.enr-countdown { font-size: 24rpx; color: #8A6D1F; font-weight: 600; }
+.enr-countdown.expired { color: #B03030; }
+.enr-btns { display: flex; align-items: center; margin-left: auto; }
+.btn-sm { margin-left: 16rpx; height: 60rpx; line-height: 60rpx; padding: 0 28rpx; font-size: 24rpx; border-radius: 30rpx; border: none; }
+.btn-sm::after { border: none; }
+.btn-sm.btn-primary { background: #C8552F; color: #fff; font-weight: 600; }
+.btn-sm.btn-plain { background: #fff; color: #5A6572; border: 1rpx solid #D9DEE4; }
+
+.loading-tip { padding: 40rpx 0; text-align: center; font-size: 26rpx; color: #8A94A0; }
+.load-end { padding: 32rpx 0; text-align: center; font-size: 22rpx; color: #C4CBD4; }

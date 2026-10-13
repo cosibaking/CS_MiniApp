@@ -1,0 +1,145 @@
+<!--活动创建/编辑：双模式表单 + 已发布受限编辑提示 + 保存草稿/发布-->
+<view class="page">
+  <block wx:if="{{noPermission}}">
+    <view class="perm-box">
+      <text class="perm-icon">🔒</text>
+      <text class="perm-title">暂无权限</text>
+      <text class="perm-desc">需要「发布活动」权限，请联系管理员开通</text>
+    </view>
+  </block>
+
+  <block wx:elif="{{loading}}">
+    <view class="load-tip">加载中...</view>
+  </block>
+
+  <block wx:else>
+    <!-- 状态横幅 -->
+    <view wx:if="{{!editable}}" class="banner banner-red">当前状态不可编辑，仅草稿/报名中的活动支持修改</view>
+    <view wx:if="{{isPublished}}" class="banner banner-orange">
+      已发布活动受限编辑：{{priceLocked ? '价格已锁定（存在有效报名）· ' : ''}}人数上限只能调大 · 报名截止只能延长{{timeLocked ? ' · 时间字段已锁定' : ''}}
+    </view>
+
+    <!-- 基本信息 -->
+    <view class="card">
+      <view class="form-item">
+        <view class="label required">活动标题</view>
+        <input class="input" value="{{title}}" maxlength="30" placeholder="1~30 字"
+          data-field="title" bindinput="onField" />
+      </view>
+      <view class="form-item">
+        <view class="label required">活动类型</view>
+        <picker mode="selector" range="{{typeOptions}}" value="{{typeIndex < 0 ? 0 : typeIndex}}" bindchange="onTypePick">
+          <view class="picker {{typeIndex >= 0 ? '' : 'placeholder'}}">
+            {{typeIndex >= 0 ? typeOptions[typeIndex] : '选择活动类型'}}
+          </view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <view class="label required">封面图</view>
+        <view class="cover-box">
+          <image wx:if="{{cover}}" class="cover-img" src="{{cover}}" mode="aspectFill" bindtap="onPreviewCover" />
+          <view wx:else class="cover-empty" bindtap="onChooseCover">
+            <text class="cover-plus">＋</text>
+            <text class="cover-hint">上传封面</text>
+          </view>
+          <view class="cover-btn" bindtap="onChooseCover">{{uploading ? '上传中...' : (cover ? '更换封面' : '选择图片')}}</view>
+        </view>
+      </view>
+      <view class="form-item">
+        <view class="label required">场馆名称</view>
+        <input class="input" value="{{venue}}" placeholder="如：XX 战术基地"
+          data-field="venue" bindinput="onField" />
+      </view>
+      <view class="form-item">
+        <view class="label required">详细地址</view>
+        <input class="input" value="{{address}}" placeholder="省市区 + 街道门牌"
+          data-field="address" bindinput="onField" />
+      </view>
+    </view>
+
+    <!-- 时间设置 -->
+    <view class="card">
+      <view class="card-title">时间设置</view>
+      <view class="form-item {{timeLocked ? 'locked' : ''}}">
+        <view class="label">开始时间</view>
+        <view class="time-row">
+          <picker mode="date" value="{{startDate}}" data-field="startDate" bindchange="onDatePick" disabled="{{timeLocked}}">
+            <view class="picker half {{startDate ? '' : 'placeholder'}}">{{startDate || '选择日期'}}</view>
+          </picker>
+          <picker mode="time" value="{{startTime}}" data-field="startTime" bindchange="onTimePick" disabled="{{timeLocked}}">
+            <view class="picker half {{startTime ? '' : 'placeholder'}}">{{startTime || '时间'}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="form-item {{timeLocked ? 'locked' : ''}}">
+        <view class="label">结束时间</view>
+        <view class="time-row">
+          <picker mode="date" value="{{endDate}}" data-field="endDate" bindchange="onDatePick" disabled="{{timeLocked}}">
+            <view class="picker half {{endDate ? '' : 'placeholder'}}">{{endDate || '选择日期'}}</view>
+          </picker>
+          <picker mode="time" value="{{endTime}}" data-field="endTime" bindchange="onTimePick" disabled="{{timeLocked}}">
+            <view class="picker half {{endTime ? '' : 'placeholder'}}">{{endTime || '时间'}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="form-item {{timeLocked ? 'locked' : ''}}">
+        <view class="label">报名截止</view>
+        <view class="time-row">
+          <picker mode="date" value="{{deadlineDate}}" data-field="deadlineDate" bindchange="onDatePick" disabled="{{timeLocked}}">
+            <view class="picker half {{deadlineDate ? '' : 'placeholder'}}">{{deadlineDate || '选择日期'}}</view>
+          </picker>
+          <picker mode="time" value="{{deadlineTime}}" data-field="deadlineTime" bindchange="onTimePick" disabled="{{timeLocked}}">
+            <view class="picker half {{deadlineTime ? '' : 'placeholder'}}">{{deadlineTime || '时间'}}</view>
+          </picker>
+        </view>
+        <view class="field-hint">截止需晚于当前、不晚于开始时间；发布需开始时间晚于当前至少 30 分钟</view>
+      </view>
+    </view>
+
+    <!-- 报名设置 -->
+    <view class="card">
+      <view class="card-title">报名设置</view>
+      <view class="form-item">
+        <view class="label">报名费（元）</view>
+        <input class="input" type="digit" value="{{priceYuan}}" placeholder="0 为免费"
+          data-field="priceYuan" bindinput="onField" disabled="{{priceLocked}}" />
+        <view wx:if="{{priceLocked}}" class="field-hint warn">已有有效报名，价格不可修改</view>
+      </view>
+      <view class="form-item">
+        <view class="label">人数上限</view>
+        <input class="input" type="number" value="{{maxNum}}" placeholder="1~500"
+          data-field="maxNum" bindinput="onField" />
+        <view wx:if="{{isPublished}}" class="field-hint warn">已发布活动人数上限只能调大</view>
+      </view>
+      <view class="form-item">
+        <view class="label">成团人数</view>
+        <input class="input" type="number" value="{{minNum}}" placeholder="≥1，未达标自动退款"
+          data-field="minNum" bindinput="onField" />
+      </view>
+      <view class="form-item">
+        <view class="label">支付方式</view>
+        <view class="pay-row">
+          <view wx:for="{{payTypeOptions}}" wx:key="value"
+            class="pay-chip {{payTypes[item.value] ? 'pay-on' : ''}}"
+            data-value="{{item.value}}" bindtap="onPayToggle">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 简介 -->
+    <view class="card">
+      <view class="form-item">
+        <view class="label">图文简介</view>
+        <textarea class="textarea" value="{{intro}}" maxlength="5000" placeholder="活动玩法、装备说明、注意事项等，≤5000 字"
+          data-field="intro" bindinput="onField" />
+      </view>
+    </view>
+
+    <!-- 底部操作栏 -->
+    <view class="bottom-bar">
+      <view class="bar-btn bar-line {{editable && !submitting ? '' : 'disabled'}}" bindtap="onSaveDraft">保存草稿</view>
+      <view wx:if="{{mode === 'create' || !isPublished}}"
+        class="bar-btn bar-main {{editable && !submitting ? '' : 'disabled'}}" bindtap="onPublish">发布</view>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,70 @@
+<!--日志详情：基础信息 + before/after 变更对比（差异高亮）+ detail 附加信息（已脱敏原样展示）-->
+<view wx:if="{{checking}}" class="loading-tip">加载中…</view>
+
+<view wx:elif="{{noPermission}}" class="empty-block">
+  <text class="empty-emoji">🚫</text>
+  <text class="empty-text">无操作日志查看权限</text>
+</view>
+
+<view wx:elif="{{notFound}}" class="empty-block">
+  <text class="empty-emoji">📄</text>
+  <text class="empty-text">日志不存在或已被归档</text>
+</view>
+
+<view wx:else class="page log-detail-page">
+  <view class="card">
+    <view class="detail-head">
+      <text class="detail-op">{{log.operator_name}}</text>
+      <text class="log-result {{log.result === 'success' ? 'result-ok' : 'result-fail'}}">{{log.result === 'success' ? '成功' : '失败'}}</text>
+    </view>
+    <view class="kv-row">
+      <text class="kv-label">操作角色</text>
+      <text class="kv-value">{{log.operator_role_name}}</text>
+    </view>
+    <view class="kv-row">
+      <text class="kv-label">模块 / 操作</text>
+      <text class="kv-value">{{log.module_label}} · {{log.action}}</text>
+    </view>
+    <view class="kv-row">
+      <text class="kv-label">操作对象</text>
+      <text class="kv-value">{{log.target_text}}</text>
+    </view>
+    <view class="kv-row">
+      <text class="kv-label">时间</text>
+      <text class="kv-value">{{log.created_text}}</text>
+    </view>
+    <view class="kv-row">
+      <text class="kv-label">日志编号</text>
+      <text class="kv-value kv-id">{{log.log_id}}</text>
+    </view>
+    <view wx:if="{{log.error_msg}}" class="kv-row">
+      <text class="kv-label">错误信息</text>
+      <text class="kv-value kv-error">{{log.error_msg}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{diffRows}}" class="card">
+    <text class="card-title">变更对比</text>
+    <view
+      wx:for="{{diffRows}}"
+      wx:key="index"
+      class="diff-row {{item.changed ? 'diff-changed' : ''}}"
+    >
+      <text class="diff-field">{{item.field || '值'}}</text>
+      <view class="diff-values">
+        <text class="diff-old">{{item.old}}</text>
+        <text class="diff-arrow">→</text>
+        <text class="diff-new {{item.changed ? 'diff-new-changed' : ''}}">{{item.new}}</text>
+      </view>
+    </view>
+    <view wx:if="{{!hasDiffChange}}" class="diff-tip">本次无字段变化</view>
+  </view>
+
+  <view wx:if="{{extraRows.length}}" class="card">
+    <text class="card-title">附加信息</text>
+    <view wx:for="{{extraRows}}" wx:key="label" class="kv-row">
+      <text class="kv-label">{{item.label}}</text>
+      <text class="kv-value">{{item.value}}</text>
+    </view>
+  </view>
+</view>

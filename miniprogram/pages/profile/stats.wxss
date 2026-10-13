@@ -1,0 +1,179 @@
+/* 我的战绩页 — 军衔卡（深色）+ 统计卡 + 荣誉墙 */
+
+/* 军衔卡（深色底，与「我的」用户卡同风格） */
+.rank-card {
+  background: #1F2A38;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.2);
+}
+.rank-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28rpx;
+}
+.rank-badge {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #E8A87C;
+  background: #39465A;
+  border: 1rpx solid #5A6572;
+  border-radius: 10rpx;
+  padding: 10rpx 28rpx;
+}
+.rank-nums {
+  display: flex;
+}
+.rank-num-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 40rpx;
+}
+.rank-num {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+.rank-num-label {
+  font-size: 22rpx;
+  color: #8A94A0;
+  margin-top: 4rpx;
+}
+
+/* 双进度条（R15 下一档门槛） */
+.prog-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.prog-label {
+  width: 72rpx;
+  font-size: 24rpx;
+  color: #B0B8C1;
+  flex-shrink: 0;
+}
+.prog-bar {
+  flex: 1;
+  height: 14rpx;
+  background: #39465A;
+  border-radius: 999rpx;
+  overflow: hidden;
+}
+.prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #E8A87C, #C8552F);
+  border-radius: 999rpx;
+}
+.prog-val {
+  width: 130rpx;
+  text-align: right;
+  font-size: 22rpx;
+  color: #8A94A0;
+  flex-shrink: 0;
+}
+.rank-next {
+  font-size: 22rpx;
+  color: #8A94A0;
+  margin-top: 8rpx;
+}
+
+/* 统计卡 */
+.stat-card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 28rpx 32rpx;
+  margin-top: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.sc-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1F2A38;
+  margin-bottom: 24rpx;
+}
+.stat-grid {
+  display: flex;
+}
+.stat-cell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.stat-num {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #1F2A38;
+}
+.stat-num.win {
+  color: #2E9E5B;
+}
+.stat-num.lose {
+  color: #B03030;
+}
+.stat-label {
+  font-size: 24rpx;
+  color: #8A94A0;
+  margin-top: 8rpx;
+}
+
+/* 荣誉墙（5 项一行） */
+.honor-grid {
+  display: flex;
+}
+.honor-cell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.honor-icon {
+  font-size: 44rpx;
+  line-height: 1.2;
+}
+.honor-count {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #C8552F;
+  margin-top: 8rpx;
+}
+.honor-label {
+  font-size: 20rpx;
+  color: #8A94A0;
+  margin-top: 4rpx;
+}
+
+/* 空态 / 失败态 */
+.empty-card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 80rpx 40rpx;
+  margin-top: 24rpx;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.empty-text {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1F2A38;
+}
+.empty-desc {
+  font-size: 26rpx;
+  color: #8A94A0;
+  margin-top: 16rpx;
+  line-height: 1.6;
+}
+.retry-btn {
+  width: 320rpx;
+  line-height: 2.4;
+  font-size: 28rpx;
+  margin-top: 32rpx;
+}
+.retry-btn::after {
+  border: none;
+}

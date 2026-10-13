@@ -1,0 +1,70 @@
+<!--相册管理：容量汇总 + 九宫格（image 直接渲染 cloud://）+ 多选删除 + 上传（§5.26/§5.27）-->
+<view class="page">
+  <block wx:if="{{noPermission}}">
+    <view class="perm-box">
+      <text class="perm-icon">🔒</text>
+      <text class="perm-title">暂无权限</text>
+      <text class="perm-desc">需要「相册管理」权限，请联系管理员开通</text>
+    </view>
+  </block>
+
+  <block wx:else>
+    <!-- 容量汇总 -->
+    <view class="cap-card">
+      <view class="cap-item">
+        <text class="cap-num">{{imageTotal}}/{{imgLimit}}</text>
+        <text class="cap-label">图片</text>
+        <view class="cap-bar">
+          <view class="cap-fill" style="width: {{imageTotal * 100 / imgLimit}}%"></view>
+        </view>
+      </view>
+      <view class="cap-divider"></view>
+      <view class="cap-item">
+        <text class="cap-num">{{videoTotal}}/{{videoLimit}}</text>
+        <text class="cap-label">视频</text>
+        <view class="cap-bar">
+          <view class="cap-fill fill-blue" style="width: {{videoTotal * 100 / videoLimit}}%"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作条 -->
+    <view class="op-bar">
+      <view class="op-btn {{pickMode ? 'op-on' : ''}}" bindtap="onManageTap">
+        {{pickMode ? '取消' : '批量删除'}}
+      </view>
+      <view class="op-btn primary {{uploading ? 'btn-busy' : ''}}" bindtap="onUploadTap">上传图片/视频</view>
+    </view>
+
+    <!-- 九宫格 -->
+    <view class="grid">
+      <view wx:for="{{list}}" wx:key="id" class="cell"
+        data-id="{{item.id}}" bindtap="onItemTap">
+        <image wx:if="{{item.mediaType === 'image'}}" class="thumb"
+          src="{{item.fileId}}" mode="aspectFill" lazy-load />
+        <view wx:else class="thumb video-cell">
+          <text class="video-icon">▶</text>
+        </view>
+        <view wx:if="{{pickMode && picked[item.id]}}" class="pick-mask">✓</view>
+        <view wx:elif="{{pickMode}}" class="pick-ring"></view>
+        <view wx:if="{{!pickMode}}" class="cell-meta">
+          <text class="cell-size">{{item.mediaType === 'video' ? '视频 ' : ''}}{{item.sizeText}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空态 / loading -->
+    <view wx:if="{{empty}}" class="empty">
+      <text class="empty-icon">🖼</text>
+      <text class="empty-title">相册为空</text>
+      <text class="empty-desc">点击「上传图片/视频」添加，会员端活动相册可见</text>
+    </view>
+    <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+    <!-- 批量删除操作条 -->
+    <view wx:if="{{pickMode}}" class="del-bar">
+      <text class="del-count">已选 {{pickedCount}} 项</text>
+      <view class="del-btn {{(!pickedCount || deleting) ? 'btn-busy' : ''}}" bindtap="onDeleteTap">删除所选</view>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,11 @@
+{
+  "name": "team",
+  "version": "0.1.0",
+  "private": true,
+  "description": "战队模块云函数（docs/design/team-module.md）",
+  "main": "index.js",
+  "dependencies": {
+    "@club/admin-common": "file:../common",
+    "wx-server-sdk": "~2.6.3"
+  }
+}

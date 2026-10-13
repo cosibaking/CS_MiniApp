@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!-- demo/runtime/index.html — 浏览器演示壳：左工具条（身份/快捷入口/云调用日志）+ 右手机（小程序运行时） -->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>真人CS俱乐部 · 本地演示</title>
+  <link rel="stylesheet" href="/runtime/demo.css?v=20261013b" />
+</head>
+<body>
+  <script>window.MP = {};</script>
+
+  <div id="demo-shell">
+    <!-- ===== 左侧演示工具条 ===== -->
+    <aside id="demo-toolbar">
+      <h1 id="demo-title">真人CS俱乐部 · 本地演示</h1>
+      <div class="sub">小程序原码零改动 · 云函数由本地模拟器执行</div>
+
+      <h2>身份切换</h2>
+      <div class="actor-list"></div>
+      <div style="margin-top: 8px">
+        <button id="demo-reset" class="danger">重置演示数据</button>
+      </div>
+
+      <h2>快捷直达</h2>
+      <div class="quick-links">
+        <button data-url="/pages/index/index">首页</button>
+        <button data-url="/pages/activity/list">活动</button>
+        <button data-url="/pages/team/list">战队</button>
+        <button data-url="/pages/profile/profile">我的</button>
+        <button data-url="/pages/activity/detail?id=act_1">活动详情</button>
+        <button data-url="/pages/order/list">订单列表</button>
+        <button data-url="/pages/admin/index">管理端</button>
+      </div>
+
+      <h2>云调用日志</h2>
+      <div class="cloud-log"></div>
+
+      <div class="demo-note">
+        演示账号：管理员老王（全部权限）/ 现场小张（签到核销）/ 氪金玩家阿伟（有待付订单）/
+        新兵小李（普通成员）。切换身份后页面自动刷新；重置数据将恢复 seed 脚本生成的初始状态。
+      </div>
+
+      <div id="demo-error"></div>
+    </aside>
+
+    <!-- ===== 右侧手机 ===== -->
+    <div id="demo-phone">
+      <div id="mp-screen">
+        <div id="mp-statusbar"><span>9:41</span><span>本地演示</span></div>
+        <div id="mp-navbar">
+          <button id="mp-back">‹</button>
+          <div id="mp-title"></div>
+          <button id="mp-refresh">↻</button>
+        </div>
+        <div id="mp-pages"></div>
+        <div id="mp-tabbar"></div>
+
+        <!-- 浮层（内容均由运行时填充） -->
+        <div id="mp-toast"></div>
+        <div id="mp-mask"></div>
+        <div id="mp-modal">
+          <div class="m-title"></div>
+          <div class="m-content"></div>
+          <div class="m-btns"></div>
+        </div>
+        <div id="mp-lightbox"></div>
+        <div id="mp-picker-layer">
+          <div class="pk-mask"></div>
+          <div class="pk-panel"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <input id="mp-file-input" type="file" hidden />
+
+  <!-- 运行时（顺序敏感：MP 命名空间 → WXML → WXSS → wx API → 路由/启动） -->
+  <script src="/runtime/wxml.js?v=20261013b"></script>
+  <script src="/runtime/wxss.js?v=20261013a"></script>
+  <script src="/runtime/wx.js?v=20261013a"></script>
+  <script src="/runtime/runtime.js?v=20261013d"></script>
+</body>
+</html>

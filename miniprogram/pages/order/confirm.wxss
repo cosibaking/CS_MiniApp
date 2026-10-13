@@ -1,0 +1,158 @@
+/* 订单确认（会员卡购买） */
+.page {
+  padding-bottom: 180rpx; /* 给底部固定操作栏留空间 */
+}
+
+/* 商品快照卡片 */
+.goods-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+.goods-head {
+  display: flex;
+  align-items: center;
+}
+
+.goods-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1f2a38;
+}
+
+.goods-type {
+  font-size: 22rpx;
+  color: #c8552f;
+  margin-left: 16rpx;
+}
+
+.goods-benefit {
+  display: block;
+  font-size: 24rpx;
+  color: #98a2b3;
+  margin-top: 12rpx;
+}
+
+/* 费用明细 */
+.fee-rows {
+  margin-top: 24rpx;
+  border-top: 2rpx solid #f2f4f7;
+  padding-top: 8rpx;
+}
+
+.fee-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 0;
+}
+
+.fee-label {
+  font-size: 26rpx;
+  color: #667085;
+}
+
+.fee-label-strong {
+  color: #1f2a38;
+  font-weight: 600;
+}
+
+.fee-value {
+  font-size: 26rpx;
+  color: #1f2a38;
+}
+
+.fee-total {
+  border-top: 2rpx dashed #f2f4f7;
+  margin-top: 8rpx;
+}
+
+.fee-price {
+  display: flex;
+  align-items: baseline;
+  color: #c8552f;
+}
+
+.fee-symbol {
+  font-size: 24rpx;
+}
+
+.fee-num {
+  font-size: 36rpx;
+  font-weight: 600;
+}
+
+/* 温馨提示 */
+.tips-card {
+  margin-top: 20rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+.tips-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #1f2a38;
+  margin-bottom: 12rpx;
+}
+
+.tips-item {
+  font-size: 24rpx;
+  color: #98a2b3;
+  line-height: 1.8;
+}
+
+/* 底部固定操作栏：左金额右按钮 */
+.footer-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 20rpx 24rpx calc(20rpx + env(safe-area-inset-bottom));
+  background: #f7f8fa;
+}
+
+.pay-amount {
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+  color: #c8552f;
+  min-width: 0;
+}
+
+.pay-label {
+  font-size: 24rpx;
+  color: #667085;
+  margin-right: 8rpx;
+}
+
+.pay-symbol {
+  font-size: 24rpx;
+}
+
+.pay-num {
+  font-size: 40rpx;
+  font-weight: 600;
+}
+
+.submit-btn {
+  width: 240rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.submit-btn::after {
+  border: none;
+}

@@ -1,0 +1,38 @@
+<!--评价活动（§2.1 页面6）：星级 1~5 + 文字 ≤200 字，仅已参加者-->
+<view class="page review-page">
+
+  <view wx:if="{{activityTitle}}" class="act-name">{{activityTitle}}</view>
+
+  <!-- 星级 -->
+  <view class="card star-card">
+    <view class="card-label">活动评分</view>
+    <view class="stars">
+      <text
+        wx:for="{{starList}}"
+        wx:key="*this"
+        class="star {{stars >= item ? 'on' : ''}}"
+        data-star="{{item}}"
+        bindtap="onStarTap"
+      >★</text>
+    </view>
+    <text wx:if="{{starText}}" class="star-text">{{starText}}</text>
+    <text wx:else class="star-hint">点击星星评分</text>
+  </view>
+
+  <!-- 文字评价 -->
+  <view class="card">
+    <view class="card-label">想说的话（可选）</view>
+    <textarea
+      class="content-input"
+      value="{{content}}"
+      maxlength="{{maxContent}}"
+      placeholder="分享您的参赛体验：组织、场地、氛围…"
+      bindinput="onContentInput"
+    />
+    <view class="counter {{content.length >= maxContent ? 'full' : ''}}">{{content.length}}/{{maxContent}}</view>
+  </view>
+
+  <!-- 提交 -->
+  <button class="btn-submit" disabled="{{submitting}}" bindtap="onSubmit">{{submitting ? '提交中…' : '提交评价'}}</button>
+  <view class="page-tip">评价提交后不可修改 · 仅限已参加者评价</view>
+</view>

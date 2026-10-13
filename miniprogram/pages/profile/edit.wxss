@@ -1,0 +1,128 @@
+/* 编辑资料页 — 卡片 + 表单行 + 底部保存 */
+
+.page {
+  padding: 24rpx 24rpx calc(24rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+
+.card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 8rpx 32rpx 24rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+.card-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1F2A38;
+  padding: 24rpx 0 8rpx;
+}
+
+/* 头像选择（button 重置样式） */
+.avatar-card {
+  display: flex;
+  justify-content: center;
+  padding: 40rpx 0;
+}
+.avatar-btn {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+}
+.avatar-btn::after {
+  border: none;
+}
+.avatar-img {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  background: #F0F2F4;
+}
+.avatar-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #B0B8C1;
+  font-size: 56rpx;
+}
+.avatar-tip {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #8A94A0;
+}
+
+/* 表单行（与协议页风格一致） */
+.form-row {
+  display: flex;
+  align-items: center;
+  padding: 26rpx 0;
+  border-bottom: 1rpx solid #F0F2F4;
+}
+.form-row.form-last {
+  border-bottom: none;
+}
+.form-label {
+  width: 190rpx;
+  color: #5A6572;
+  font-size: 28rpx;
+  flex-shrink: 0;
+}
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #1F2A38;
+}
+.form-value {
+  font-size: 28rpx;
+  color: #1F2A38;
+}
+.placeholder {
+  color: #B0B8C1;
+}
+.form-note {
+  font-size: 24rpx;
+  color: #8A94A0;
+  line-height: 1.6;
+}
+
+/* 性别选择 */
+.gender-group {
+  flex: 1;
+  display: flex;
+}
+.gender-item {
+  flex: 1;
+  text-align: center;
+  font-size: 26rpx;
+  color: #5A6572;
+  background: #F5F6F8;
+  border-radius: 8rpx;
+  padding: 10rpx 0;
+  margin-right: 16rpx;
+}
+.gender-item:last-child {
+  margin-right: 0;
+}
+.gender-item.on {
+  background: #C8552F;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* 保存按钮 */
+.save-area {
+  padding: 16rpx 8rpx 0;
+}
+.save-btn {
+  width: 100%;
+}
+.save-btn::after {
+  border: none;
+}

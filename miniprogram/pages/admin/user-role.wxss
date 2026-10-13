@@ -1,0 +1,219 @@
+/* 用户角色授权（admin-module §2.2-4）— 设计语言对齐 team-audit */
+.user-role-page .card {
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+  overflow: hidden;
+}
+
+/* 搜索栏 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 12rpx 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+.search-input {
+  flex: 1;
+  min-width: 0;
+  font-size: 28rpx;
+  color: #1f2a38;
+  min-height: 52rpx;
+}
+
+.input-ph {
+  color: #b0b8c1;
+}
+
+.search-btn {
+  flex-shrink: 0;
+  margin-left: 16rpx;
+  padding: 8rpx 28rpx;
+  font-size: 26rpx;
+  color: #fff;
+  background: #c8552f;
+  border-radius: 10rpx;
+}
+
+/* 角色筛选 chips */
+.chips-scroll {
+  margin-top: 20rpx;
+  white-space: nowrap;
+}
+
+.chip {
+  display: inline-block;
+  margin-right: 16rpx;
+  padding: 8rpx 24rpx;
+  font-size: 24rpx;
+  color: #5a6572;
+  background: #fff;
+  border-radius: 28rpx;
+  box-shadow: 0 4rpx 12rpx rgba(31, 42, 56, 0.05);
+}
+
+.chip-on {
+  color: #fff;
+  background: #c8552f;
+}
+
+/* 用户行 */
+.user-row {
+  padding: 24rpx 28rpx;
+  border-bottom: 1rpx solid #f0f2f4;
+}
+
+.user-row:last-of-type {
+  border-bottom: none;
+}
+
+.row-head {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+}
+
+.user-avatar-ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f2f4;
+  font-size: 44rpx;
+}
+
+.user-info {
+  flex: 1;
+  min-width: 0;
+  margin-left: 20rpx;
+}
+
+.user-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1f2a38;
+}
+
+.banned-tag {
+  margin-left: 12rpx;
+  font-size: 20rpx;
+  color: #b03030;
+  background: rgba(176, 48, 48, 0.08);
+  border-radius: 6rpx;
+  padding: 2rpx 10rpx;
+}
+
+.user-sub {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #8a94a0;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+
+.act-link {
+  font-size: 26rpx;
+  padding: 6rpx 0;
+}
+
+.act-primary {
+  color: #c8552f;
+}
+
+.act-danger {
+  color: #b03030;
+}
+
+.user-meta {
+  margin-top: 14rpx;
+  font-size: 22rpx;
+  color: #8a94a0;
+}
+
+.list-more {
+  padding: 20rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #8a94a0;
+}
+
+/* 角色选择弹层 */
+.sheet-mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(31, 42, 56, 0.5);
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+}
+
+.sheet {
+  width: 100%;
+  background: #fff;
+  border-radius: 24rpx 24rpx 0 0;
+  padding: 32rpx 28rpx calc(32rpx + env(safe-area-inset-bottom));
+}
+
+.sheet-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1f2a38;
+}
+
+.sheet-sub {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: #8a94a0;
+}
+
+.sheet-list {
+  margin-top: 24rpx;
+  max-height: 50vh;
+}
+
+.sheet-item {
+  padding: 24rpx 8rpx;
+  border-bottom: 1rpx solid #f0f2f4;
+}
+
+.sheet-item:last-child {
+  border-bottom: none;
+}
+
+.sheet-item-name {
+  font-size: 30rpx;
+  color: #1f2a38;
+}
+
+.sheet-item-sub {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #8a94a0;
+}
+
+.sheet-cancel {
+  margin-top: 24rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #5a6572;
+  padding: 16rpx 0;
+  background: #f5f6f8;
+  border-radius: 12rpx;
+}

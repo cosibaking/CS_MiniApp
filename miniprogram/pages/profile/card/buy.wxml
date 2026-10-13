@@ -1,0 +1,37 @@
+<!--购买会员卡-->
+<view class="page">
+  <view
+    class="shop-card {{item.product_id === selectedId ? 'shop-active' : ''}}"
+    wx:for="{{products}}"
+    wx:key="product_id"
+    data-id="{{item.product_id}}"
+    bindtap="onSelect"
+  >
+    <view class="radio {{item.product_id === selectedId ? 'radio-on' : ''}}"></view>
+    <view class="shop-main">
+      <view class="shop-head">
+        <text class="shop-name">{{item.name}}</text>
+        <text class="shop-type">{{item.card_type === 'count' ? '次卡' : '期限卡'}}</text>
+      </view>
+      <text class="shop-benefit">{{item.benefit_desc}}</text>
+    </view>
+    <view class="shop-price">
+      <text class="price-symbol">¥</text>
+      <text class="price-num">{{item.priceText}}</text>
+    </view>
+  </view>
+
+  <view class="empty-block" wx:if="{{loaded && !products.length}}">
+    <text class="empty-text">暂无在售卡种</text>
+  </view>
+
+  <view class="footer-bar">
+    <button
+      class="btn-lg btn-primary"
+      disabled="{{!products.length}}"
+      bindtap="onTapBuy"
+    >
+      立即购买
+    </button>
+  </view>
+</view>

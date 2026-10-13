@@ -1,0 +1,55 @@
+<!--创建战队（team-module §2.1-2 / §2.2）-->
+<view class="page">
+  <view wx:if="{{loading}}" class="loading-tip">加载中…</view>
+
+  <block wx:else>
+    <!-- 拦截态（在职 40901 / 审核中 40904） -->
+    <view wx:if="{{blocked}}" class="blocked-block">
+      <view class="blocked-emoji">🛡️</view>
+      <view class="blocked-text">{{blocked}}</view>
+      <button class="btn-primary blocked-btn" bindtap="goBack">返回战队列表</button>
+    </view>
+
+    <block wx:else>
+      <!-- R1 被拒重提横幅 -->
+      <view wx:if="{{rejected}}" class="reject-banner">
+        <view class="reject-title">上次创建申请未通过</view>
+        <view wx:if="{{rejected.reject_reason}}" class="reject-reason">原因：{{rejected.reject_reason}}</view>
+        <view class="reject-tip">修改资料后重新提交即可</view>
+      </view>
+
+      <view class="card">
+        <!-- 队徽 -->
+        <view class="logo-row">
+          <view class="logo-box" bindtap="chooseLogo">
+            <image wx:if="{{logoTemp || logoFileID}}" class="logo-img" src="{{logoTemp || logoFileID}}" mode="aspectFill" />
+            <view wx:else class="logo-img logo-empty">＋</view>
+          </view>
+          <view class="logo-tip">
+            <view class="logo-tip-text">上传队徽</view>
+            <view class="logo-tip-sub">JPG/PNG，不超过 2MB，点击更换</view>
+          </view>
+        </view>
+
+        <view class="form-row">
+          <text class="form-label">队名</text>
+          <input class="form-input" value="{{name}}" bindinput="onName" bindblur="onNameBlur" placeholder="2-20 个字符" maxlength="20" />
+        </view>
+        <view wx:if="{{nameTaken}}" class="form-error">该队名已被使用</view>
+        <view class="form-row">
+          <text class="form-label">口号</text>
+          <input class="form-input" value="{{slogan}}" bindinput="onSlogan" placeholder="选填，不超过 30 字" maxlength="30" />
+        </view>
+        <view class="form-row form-row-top form-last">
+          <text class="form-label">简介</text>
+          <textarea class="form-textarea" value="{{intro}}" bindinput="onIntro" placeholder="选填，不超过 200 字" maxlength="200" />
+        </view>
+        <view class="form-note">提交后进入审核，通过后战队对外展示，你将自动成为队长</view>
+      </view>
+
+      <view class="save-area">
+        <button class="btn-primary save-btn" disabled="{{saving}}" bindtap="onSubmit">{{saving ? '提交中…' : (rejected ? '重新提交审核' : '提交审核')}}</button>
+      </view>
+    </block>
+  </block>
+</view>

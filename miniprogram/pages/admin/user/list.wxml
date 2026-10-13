@@ -1,0 +1,74 @@
+<!--用户管理列表（user-module §5.20 / admin-module §2.3）-->
+<view class="page user-list-page">
+  <view wx:if="{{checking}}" class="loading-tip">加载中…</view>
+
+  <!-- 权限门控（user_manage；入口体验层，云函数侧硬校验） -->
+  <view wx:elif="{{noPermission}}" class="empty-block">
+    <view class="empty-emoji">🚫</view>
+    <view class="empty-text">无用户管理权限</view>
+    <button class="btn-primary empty-btn" bindtap="goBack">返回首页</button>
+  </view>
+
+  <block wx:else>
+    <!-- 筛选条：关键词 + 角色 + 状态（§2.4） -->
+    <view class="filter-bar">
+      <view class="search-box">
+        <input
+          class="search-input"
+          value="{{keyword}}"
+          placeholder="昵称 / 完整手机号"
+          confirm-type="search"
+          bindinput="onKeywordInput"
+          bindconfirm="onSearch"
+        />
+        <view class="search-btn" bindtap="onSearch">搜索</view>
+      </view>
+      <view class="filter-row">
+        <picker class="filter-picker" range="{{roleOptions}}" range-key="name" value="{{roleIndex}}" bindchange="onRoleChange">
+          <view class="filter-value">{{roleOptions[roleIndex].name}}</view>
+        </picker>
+        <picker class="filter-picker" range="{{statusOptions}}" range-key="name" value="{{statusIndex}}" bindchange="onStatusChange">
+          <view class="filter-value">{{statusOptions[statusIndex].name}}</view>
+        </picker>
+        <view class="filter-total">共 {{total}} 人</view>
+      </view>
+    </view>
+
+    <!-- 首屏加载失败 -->
+    <view wx:if="{{failed}}" class="empty-block">
+      <view class="empty-emoji">⚠️</view>
+      <view class="empty-text">列表加载失败，请重试</view>
+      <button class="btn-primary empty-btn" bindtap="onRetry">重新加载</button>
+    </view>
+
+    <block wx:else>
+      <!-- 空态 -->
+      <view wx:if="{{list.length === 0 && !listLoading}}" class="empty-block">
+        <view class="empty-emoji">🔍</view>
+        <view class="empty-text">未找到匹配用户</view>
+      </view>
+
+      <!-- 用户列表 -->
+      <view wx:else class="card">
+        <view class="user-row" wx:for="{{list}}" wx:key="user_id" data-id="{{item.user_id}}" bindtap="goDetail">
+          <view class="row-head">
+            <view class="row-info">
+              <view class="row-name">
+                {{item.nickname}}
+                <text wx:if="{{item.is_minor}}" class="minor-tag">未成年</text>
+              </view>
+              <view class="row-sub">{{item.phone_text}}</view>
+            </view>
+            <view class="row-badges">
+              <view class="role-badge role-{{item.role}}">{{item.role_text}}</view>
+              <view class="status-badge {{item.banned ? 'badge-banned' : 'badge-normal'}}">{{item.status_text}}</view>
+            </view>
+          </view>
+          <view class="row-meta">{{item.level_text}} · 累计 {{item.games_text}} 场{{item.created_text ? ' · 注册于 ' + item.created_text : ''}}</view>
+        </view>
+        <view wx:if="{{listLoading}}" class="list-more">加载中…</view>
+        <view wx:elif="{{finished && list.length > 0}}" class="list-more">没有更多了</view>
+      </view>
+    </block>
+  </block>
+</view>

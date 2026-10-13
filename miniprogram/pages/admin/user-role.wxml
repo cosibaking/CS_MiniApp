@@ -1,0 +1,74 @@
+<!--用户角色授权（admin-module §2.2-4：搜索 + 角色筛选 + 设角色/撤销）-->
+<view class="page user-role-page">
+  <view wx:if="{{checking}}" class="loading-tip">加载中…</view>
+
+  <!-- 权限门控（user_role_assign） -->
+  <view wx:elif="{{noPermission}}" class="empty-block">
+    <view class="empty-emoji">🚫</view>
+    <view class="empty-text">无用户授权权限</view>
+  </view>
+
+  <block wx:else>
+    <!-- 搜索栏：昵称模糊 / 11 位手机号 -->
+    <view class="search-bar">
+      <input class="search-input" value="{{keyword}}" maxlength="32" placeholder="搜索昵称或手机号"
+        placeholder-class="input-ph" confirm-type="search" bindinput="onKeywordInput" bindconfirm="onSearch" />
+      <view class="search-btn" bindtap="onSearch">搜索</view>
+    </view>
+
+    <!-- 角色筛选 chips（用于迁移某角色下用户） -->
+    <scroll-view class="chips-scroll" scroll-x enable-flex>
+      <view class="chip {{activeRole === '' ? 'chip-on' : ''}}" data-key="" bindtap="onPickRole">全部用户</view>
+      <view class="chip {{activeRole === item.role_key ? 'chip-on' : ''}}" wx:for="{{roles}}" wx:key="role_key"
+        data-key="{{item.role_key}}" bindtap="onPickRole">{{item.name}} {{item.user_count}}</view>
+    </scroll-view>
+
+    <!-- 用户卡列表（分页 20/页，触底加载） -->
+    <view wx:if="{{list.length === 0 && !listLoading && firstLoaded}}" class="empty-block">
+      <view class="empty-emoji">🔍</view>
+      <view class="empty-text">未找到匹配用户</view>
+    </view>
+
+    <view wx:else class="card">
+      <view class="user-row" wx:for="{{list}}" wx:key="user_id">
+        <view class="row-head">
+          <image wx:if="{{item.avatar}}" class="user-avatar" src="{{item.avatar}}" mode="aspectFill" />
+          <view wx:else class="user-avatar user-avatar-ph">👤</view>
+          <view class="user-info">
+            <view class="user-name">
+              {{item.nickname}}
+              <text wx:if="{{item.is_banned}}" class="banned-tag">已封禁</text>
+            </view>
+            <view class="user-sub">{{item.phone || '未绑定手机'}} · {{item.role_name}}</view>
+          </view>
+          <view class="user-actions">
+            <view class="act-link act-primary" data-index="{{index}}" catchtap="onOpenSheet">设角色</view>
+            <view wx:if="{{item.role !== 'member'}}" class="act-link act-danger" data-index="{{index}}" catchtap="onRevoke">撤销</view>
+          </view>
+        </view>
+        <view class="user-meta">
+          注册 {{item.created_text}}{{item.role_updated_text ? ' · 角色更新 ' + item.role_updated_text : ''}}
+        </view>
+      </view>
+      <view wx:if="{{listLoading}}" class="list-more">加载中…</view>
+      <view wx:elif="{{hasMore && list.length > 0}}" class="list-more">上拉加载更多（{{list.length}}/{{total}}）</view>
+      <view wx:elif="{{!hasMore && list.length > 0}}" class="list-more">已全部加载（共 {{total}} 人）</view>
+    </view>
+
+    <!-- 角色选择弹层（自绘：不受 showActionSheet 6 项限制） -->
+    <view wx:if="{{showRoleSheet}}" class="sheet-mask" bindtap="onCloseSheet">
+      <view class="sheet" catchtap="noop">
+        <view class="sheet-title">为「{{sheetUser.nickname}}」设置角色</view>
+        <view class="sheet-sub">当前角色：{{sheetUser.role_name}}，操作将记入操作日志</view>
+        <scroll-view class="sheet-list" scroll-y>
+          <view class="sheet-item" wx:for="{{sheetRoles}}" wx:key="role_key" data-key="{{item.role_key}}"
+            bindtap="onGrant">
+            <view class="sheet-item-name">{{item.name}}</view>
+            <view class="sheet-item-sub">{{item.role_key}} · {{item.user_count}} 人使用</view>
+          </view>
+        </scroll-view>
+        <view class="sheet-cancel" bindtap="onCloseSheet">取消</view>
+      </view>
+    </view>
+  </block>
+</view>

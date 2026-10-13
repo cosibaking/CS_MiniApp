@@ -1,0 +1,51 @@
+/* pages/order/detail.wxss — 复用设计令牌（卡片/状态徽章/行式信息/大按钮） */
+.page { padding: 24rpx 24rpx calc(24rpx + env(safe-area-inset-bottom)); }
+
+/* 状态卡 */
+.status-card { background: #fff; border-radius: 16rpx; padding: 48rpx 32rpx; margin-bottom: 20rpx; box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06); display: flex; flex-direction: column; align-items: center; }
+.status-main { font-size: 40rpx; font-weight: 700; }
+.status-main.tx-green { color: #2E7D5B; }
+.status-main.tx-blue { color: #2D6CA3; }
+.status-main.tx-grey { color: #8A94A0; }
+.status-main.tx-orange { color: #8A6D1F; }
+.status-countdown { margin-top: 16rpx; font-size: 26rpx; color: #8A6D1F; font-weight: 600; }
+.status-sub { margin-top: 16rpx; font-size: 24rpx; color: #8A94A0; }
+
+/* 信息卡（label-value 行） */
+.card { background: #fff; border-radius: 16rpx; padding: 28rpx; margin-bottom: 20rpx; box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06); }
+.card-title { font-size: 26rpx; font-weight: 600; color: #1F2A38; margin-bottom: 12rpx; }
+.row { display: flex; align-items: flex-start; padding: 10rpx 0; }
+.label { flex-shrink: 0; width: 140rpx; font-size: 24rpx; color: #8A94A0; }
+.value { flex: 1; font-size: 24rpx; color: #1F2A38; line-height: 1.5; word-break: break-all; }
+.value.strong { font-weight: 600; }
+
+/* 报名明细（按人） */
+.item-row { display: flex; align-items: center; justify-content: space-between; padding: 16rpx 0; border-bottom: 1rpx solid #F0F2F4; }
+.item-row:last-child { border-bottom: none; }
+.item-name { font-size: 26rpx; color: #1F2A38; }
+.item-right { display: flex; align-items: center; }
+.item-refund-label { font-size: 22rpx; color: #2D6CA3; margin-right: 12rpx; }
+.item-price { font-size: 26rpx; font-weight: 600; color: #C8552F; }
+.item-refunded .item-name { color: #8A94A0; }
+.item-refunded .item-price { color: #8A94A0; font-weight: 400; }
+
+/* 支付流水/退款记录分组 */
+.sub-block { padding: 16rpx 0 8rpx; border-top: 1rpx solid #F0F2F4; }
+.sub-block:first-of-type { border-top: none; }
+.refund-head { display: flex; align-items: center; justify-content: space-between; padding: 6rpx 0 10rpx; }
+.refund-no { font-size: 22rpx; color: #8A94A0; word-break: break-all; }
+.refund-status { flex-shrink: 0; margin-left: 12rpx; font-size: 22rpx; line-height: 1; padding: 8rpx 14rpx; border-radius: 8rpx; }
+.st-green { color: #2E7D5B; background: rgba(46, 125, 91, 0.12); }
+.st-blue { color: #2D6CA3; background: rgba(45, 108, 163, 0.12); }
+.st-red { color: #B03030; background: rgba(176, 48, 48, 0.12); }
+.st-orange { color: #8A6D1F; background: rgba(138, 109, 31, 0.12); }
+.st-grey { color: #8A94A0; background: #F0F2F4; }
+
+/* 操作按钮 */
+.btns { display: flex; flex-direction: column; padding: 8rpx 0 24rpx; }
+.btn-lg { margin-top: 20rpx; height: 88rpx; line-height: 88rpx; font-size: 30rpx; border-radius: 44rpx; border: none; }
+.btn-lg::after { border: none; }
+.btn-lg.btn-primary { background: #C8552F; color: #fff; font-weight: 600; }
+.btn-lg.btn-plain { background: #fff; color: #5A6572; border: 1rpx solid #D9DEE4; }
+
+.loading-tip { padding: 80rpx 0; text-align: center; font-size: 26rpx; color: #8A94A0; }

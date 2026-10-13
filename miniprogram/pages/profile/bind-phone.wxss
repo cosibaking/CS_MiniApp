@@ -1,0 +1,166 @@
+/* 绑定手机号页 — 已绑定卡 + 流程切换 + 表单/一键获取 + 说明卡 */
+
+.page {
+  padding: 24rpx 24rpx calc(24rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+
+/* 已绑定态 */
+.bound-card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 48rpx 40rpx;
+  margin-bottom: 24rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.bound-label {
+  font-size: 26rpx;
+  color: #8A94A0;
+}
+.bound-phone {
+  font-size: 48rpx;
+  font-weight: 600;
+  color: #1F2A38;
+  margin: 16rpx 0 24rpx;
+  letter-spacing: 2rpx;
+}
+.bound-tip {
+  font-size: 24rpx;
+  color: #B0B8C1;
+  line-height: 1.6;
+  margin-bottom: 32rpx;
+}
+.rebind-btn {
+  background: #FFFFFF;
+  border: 2rpx solid #C8552F;
+  color: #C8552F;
+  font-size: 28rpx;
+  border-radius: 44rpx;
+  line-height: 2.6;
+  padding: 0 48rpx;
+  display: inline-block;
+}
+.rebind-btn::after {
+  border: none;
+}
+
+/* 流程切换 tab */
+.mode-tabs {
+  display: flex;
+  background: #FFFFFF;
+  border-radius: 12rpx;
+  padding: 8rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.mode-tab {
+  flex: 1;
+  text-align: center;
+  font-size: 28rpx;
+  color: #5A6572;
+  border-radius: 8rpx;
+  padding: 14rpx 0;
+}
+.mode-tab.on {
+  background: #C8552F;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* 流程卡片 */
+.card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.flow-desc {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1F2A38;
+  margin-bottom: 24rpx;
+}
+.flow-note {
+  font-size: 24rpx;
+  color: #8A94A0;
+  line-height: 1.6;
+  margin-top: 20rpx;
+}
+.flow-btn {
+  width: 100%;
+}
+.flow-btn::after {
+  border: none;
+}
+
+/* 表单行（与协议页风格一致） */
+.form-row {
+  display: flex;
+  align-items: center;
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid #F0F2F4;
+}
+.form-row.form-last {
+  border-bottom: none;
+  margin-bottom: 8rpx;
+}
+.form-label {
+  width: 190rpx;
+  color: #5A6572;
+  font-size: 28rpx;
+  flex-shrink: 0;
+}
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #1F2A38;
+}
+
+/* 声明勾选 */
+.agree-row {
+  display: flex;
+  align-items: center;
+  margin: 8rpx 0 24rpx;
+}
+.agree-box {
+  width: 36rpx;
+  height: 36rpx;
+  border: 2rpx solid #C8552F;
+  border-radius: 8rpx;
+  margin-right: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #C8552F;
+  font-size: 26rpx;
+  flex-shrink: 0;
+}
+.agree-box.checked {
+  background: #C8552F;
+  color: #FFFFFF;
+}
+.agree-text {
+  font-size: 26rpx;
+  color: #1F2A38;
+  line-height: 1.5;
+}
+
+/* 底部说明卡 */
+.why-card {
+  background: #F5F6F8;
+  border-radius: 16rpx;
+  padding: 32rpx;
+}
+.why-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #5A6572;
+  margin-bottom: 12rpx;
+}
+.why-text {
+  font-size: 24rpx;
+  color: #8A94A0;
+  line-height: 1.7;
+}

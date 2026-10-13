@@ -1,0 +1,62 @@
+{
+  "version": "1.0",
+  "_readme": [
+    "种子数据（M1 部署时写入，幂等 upsert：_id 均为业务唯一键，重复导入不产生重复记录）",
+    "role_permission 5 条预置角色：admin-module §6.1（user-module §6.4 对齐）",
+    "permission_point 13 条：admin-module §1.4 权限点总表（与 cloudfunctions/common/lib/constants.js 保持一致）",
+    "agreement 2 条：user-module §8 上线清单「至少插入 v1.0 成人版/监护人版两条」；content_file_id 需上传协议正文后替换",
+    "card_product 5 条：user-module R7 卡种规格；价格为占位示例（R7 边界①：具体定价由俱乐部方提供），上线前管理端改价",
+    "时间戳统一为 0，部署脚本写入时应替换为当前毫秒时间戳"
+  ],
+  "collections": [
+    {
+      "name": "role_permission",
+      "description": "预置角色（架构 §1.3 五种；预置角色不可删除，admin 不可移除 *）",
+      "initData": [
+        { "_id": "guest", "role_key": "guest", "name": "游客", "permissions": [], "is_preset": true, "description": "游客（未登录/未注册，不进入管理端）", "user_count": 0, "updated_at": 0 },
+        { "_id": "member", "role_key": "member", "name": "会员", "permissions": [], "is_preset": true, "description": "普通会员", "user_count": 0, "updated_at": 0 },
+        { "_id": "captain", "role_key": "captain", "name": "战队队长", "permissions": [], "is_preset": true, "description": "队长权限走战队自身归属校验，不走权限点（admin-module §1.4 说明）", "user_count": 0, "updated_at": 0 },
+        { "_id": "staff", "role_key": "staff", "name": "工作人员", "permissions": ["checkin_activity", "record_stats", "upload_album"], "is_preset": true, "description": "现场工作人员（Q2：教练/裁判与签到/录入/相册权限合并进单一 staff）", "user_count": 0, "updated_at": 0 },
+        { "_id": "admin", "role_key": "admin", "name": "管理员", "permissions": ["*"], "is_preset": true, "description": "超级管理员（* 通配仅预置 admin 可配置）", "user_count": 0, "updated_at": 0 }
+      ]
+    },
+    {
+      "name": "permission_point",
+      "description": "权限点登记（13 项，部署幂等 upsert 以 key 为准）",
+      "initData": [
+        { "_id": "publish_activity", "key": "publish_activity", "name": "发布活动", "module_group": "activity", "created_at": 0 },
+        { "_id": "cancel_activity", "key": "cancel_activity", "name": "取消活动", "module_group": "activity", "created_at": 0 },
+        { "_id": "audit_team", "key": "audit_team", "name": "战队审核", "module_group": "team", "created_at": 0 },
+        { "_id": "record_stats", "key": "record_stats", "name": "战绩录入", "module_group": "activity", "created_at": 0 },
+        { "_id": "upload_album", "key": "upload_album", "name": "相册上传", "module_group": "activity", "created_at": 0 },
+        { "_id": "checkin_activity", "key": "checkin_activity", "name": "现场签到核验", "module_group": "activity", "created_at": 0 },
+        { "_id": "audit_refund", "key": "audit_refund", "name": "退款审核", "module_group": "order", "created_at": 0 },
+        { "_id": "view_operation_log", "key": "view_operation_log", "name": "操作日志查询", "module_group": "admin", "created_at": 0 },
+        { "_id": "role_manage", "key": "role_manage", "name": "角色与权限配置", "module_group": "admin", "created_at": 0 },
+        { "_id": "user_role_assign", "key": "user_role_assign", "name": "用户角色分配", "module_group": "admin", "created_at": 0 },
+        { "_id": "user_manage", "key": "user_manage", "name": "用户管理", "module_group": "user", "created_at": 0 },
+        { "_id": "user_ban", "key": "user_ban", "name": "封禁/解封", "module_group": "user", "created_at": 0 },
+        { "_id": "user_card_adjust", "key": "user_card_adjust", "name": "会员卡人工调整", "module_group": "user", "created_at": 0 }
+      ]
+    },
+    {
+      "name": "agreement",
+      "description": "协议 v1.0 成人版/监护人版（user-module §6.7；_id 为 'type:version' 组合键，见 §6.8）",
+      "initData": [
+        { "_id": "adult:v1.0", "type": "adult", "version": "v1.0", "title": "真人CS活动参与免责声明（成人版）", "content_file_id": "", "status": "published", "published_at": 0, "created_at": 0, "updated_at": 0 },
+        { "_id": "minor:v1.0", "type": "minor", "version": "v1.0", "title": "真人CS活动参与免责声明（未成年人监护人版）", "content_file_id": "", "status": "published", "published_at": 0, "created_at": 0, "updated_at": 0 }
+      ]
+    },
+    {
+      "name": "card_product",
+      "description": "会员卡种（user-module R7：次卡 10/30 次 12 个月有效 + 期限卡月/季/年；价格为占位示例，上线前由俱乐部方确认改价）",
+      "initData": [
+        { "_id": "card_count_10", "name": "次卡·10次", "card_type": "count", "times": 10, "valid_months": 12, "price": 19900, "discount_percent": null, "status": "on", "sort": 1, "created_at": 0, "updated_at": 0 },
+        { "_id": "card_count_30", "name": "次卡·30次", "card_type": "count", "times": 30, "valid_months": 12, "price": 49900, "discount_percent": null, "status": "on", "sort": 2, "created_at": 0, "updated_at": 0 },
+        { "_id": "card_period_1", "name": "月卡", "card_type": "period", "period_months": 1, "price": 29900, "discount_percent": null, "status": "on", "sort": 3, "created_at": 0, "updated_at": 0 },
+        { "_id": "card_period_3", "name": "季卡", "card_type": "period", "period_months": 3, "price": 79900, "discount_percent": 95, "status": "on", "sort": 4, "created_at": 0, "updated_at": 0 },
+        { "_id": "card_period_12", "name": "年卡", "card_type": "period", "period_months": 12, "price": 259900, "discount_percent": 90, "status": "on", "sort": 5, "created_at": 0, "updated_at": 0 }
+      ]
+    }
+  ]
+}

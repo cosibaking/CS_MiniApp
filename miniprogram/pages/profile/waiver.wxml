@@ -1,0 +1,65 @@
+<!--免责协议签署（user-module §2.2）-->
+<view class="waiver-page">
+  <view wx:if="{{loading}}" class="loading-tip">正在加载协议…</view>
+
+  <view wx:elif="{{noActive}}" class="empty-card">
+    <text class="empty-title">暂无生效协议</text>
+    <text class="empty-desc">当前没有生效的协议版本，请联系俱乐部工作人员。</text>
+  </view>
+
+  <block wx:else>
+    <!-- 签署状态横幅 -->
+    <view class="status-bar {{needResign ? 'status-todo' : 'status-done'}}">
+      <text wx:if="{{!needResign && signed}}">已签署 {{signed.agreement_version}}（{{signed.agreement_type === 'minor' ? '监护人版' : '成人版'}}）· {{signedText}}</text>
+      <text wx:elif="{{needResign && signed}}">协议已更新至 {{latest.agreement_version}}，需重新签署</text>
+      <text wx:else>参与活动前需签署免责协议</text>
+    </view>
+
+    <!-- 协议正文（滚动到底解锁签署） -->
+    <scroll-view scroll-y class="waiver-scroll" id="waiver-scroll" bindscrolltolower="onScrollToLower" lower-threshold="80">
+      <view class="waiver-content" id="waiver-content">
+        <view class="doc-title">{{latest.title}}</view>
+        <view class="doc-meta">版本 {{latest.agreement_version}} · 发布于 {{publishedText || '—'}}</view>
+        <view wx:if="{{contentLoading}}" class="loading-tip">正文加载中…</view>
+        <block wx:else>
+          <view wx:for="{{contentLines}}" wx:key="index" class="clause {{item.heading ? 'clause-h' : ''}}">{{item.text}}</view>
+          <view class="doc-end">—— 以下无正文 ——</view>
+        </block>
+      </view>
+    </scroll-view>
+
+    <!-- 签署区 -->
+    <view class="sign-area" wx:if="{{needResign}}">
+      <view class="type-row" bindtap="switchType">
+        <text class="type-cur">{{isMinor ? '未成年人监护人版' : '成人版'}}</text>
+        <text class="type-switch">切换为{{isMinor ? '成人版' : '监护人版'}} ›</text>
+      </view>
+
+      <view class="form-row">
+        <text class="form-label">出生日期</text>
+        <picker mode="date" value="{{birthdayStr}}" start="1900-01-01" end="{{todayStr}}" bindchange="onBirthdayChange">
+          <view class="form-value {{birthdayStr ? '' : 'placeholder'}}">{{birthdayStr || '选填，用于成年判定'}}</view>
+        </picker>
+      </view>
+
+      <block wx:if="{{isMinor}}">
+        <view class="form-row">
+          <text class="form-label">监护人姓名</text>
+          <input class="form-input" value="{{guardianName}}" bindinput="onGuardianName" placeholder="1-20 个字符" maxlength="20" />
+        </view>
+        <view class="form-row">
+          <text class="form-label">监护人手机号</text>
+          <input class="form-input" value="{{guardianPhone}}" bindinput="onGuardianPhone" type="number" maxlength="11" placeholder="11 位手机号" />
+        </view>
+      </block>
+
+      <view class="agree-row" bindtap="toggleAgree">
+        <view class="agree-box {{agreeChecked ? 'checked' : ''}}">{{agreeChecked ? '✓' : ''}}</view>
+        <text class="agree-text">我已阅读并同意上述免责声明</text>
+      </view>
+
+      <button class="btn-primary sign-btn" disabled="{{submitting || !readDone || !agreeChecked}}" bindtap="onSign">{{submitting ? '签署中…' : '同意并签署'}}</button>
+      <view wx:if="{{!readDone && !contentLoading}}" class="read-tip">请继续阅读至协议底部</view>
+    </view>
+  </block>
+</view>

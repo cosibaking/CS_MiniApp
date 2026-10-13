@@ -1,0 +1,39 @@
+<!--活动相册（§2.1 页面7）：会员登录可见，俱乐部统一上传，仅浏览无上传入口-->
+<view class="page">
+  <!-- 头部：活动标题 + 数量统计 -->
+  <view class="alb-head">
+    <text class="alb-title">{{title || '活动相册'}}</text>
+    <text class="alb-sub" wx:if="{{imageTotal || videoTotal}}">图片 {{imageTotal}} · 视频 {{videoTotal}}</text>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading-tip">加载中…</view>
+
+  <view wx:elif="{{loadError}}" class="empty-card">
+    <text class="empty-text">相册加载失败</text>
+    <button class="btn-primary retry-btn" bindtap="onRetry">重新加载</button>
+  </view>
+
+  <!-- 九宫格（流式加载） -->
+  <view wx:elif="{{items.length}}" class="grid">
+    <view wx:for="{{items}}" wx:key="id" class="grid-cell" data-index="{{index}}" bindtap="onItemTap">
+      <image
+        wx:if="{{item.mediaType === 'image'}}"
+        class="cell-img" src="{{item.url}}" mode="aspectFill" lazy-load
+      />
+      <view wx:else class="cell-video">
+        <text class="cell-play">▶</text>
+        <text class="cell-video-label">视频</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空态 -->
+  <view wx:elif="{{!loadError}}" class="empty-card">
+    <text class="empty-text">暂无照片</text>
+    <text class="empty-desc">活动结束后由俱乐部统一上传</text>
+  </view>
+
+  <!-- 底部状态 -->
+  <view wx:if="{{loadingMore}}" class="load-more">加载中…</view>
+  <view wx:elif="{{finished && items.length}}" class="load-more">已加载全部（{{items.length}}）</view>
+</view>

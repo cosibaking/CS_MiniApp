@@ -1,0 +1,27 @@
+<!--收货地址：默认置顶列表，点卡片编辑，底部新增-->
+<view class="page">
+  <view class="loading-tip" wx:if="{{loading}}">加载中…</view>
+
+  <block wx:if="{{!loading}}">
+    <view class="empty-tip" wx:if="{{!list.length}}">还没有收货地址，点击下方按钮新增</view>
+
+    <view class="addr-card" wx:for="{{list}}" wx:key="address_id">
+      <view class="addr-main" data-id="{{item.address_id}}" bindtap="goEdit">
+        <view class="addr-line1">
+          <text class="addr-receiver">{{item.receiver}}</text>
+          <text class="addr-phone">{{item.phone_masked}}</text>
+          <text wx:if="{{item.is_default}}" class="default-tag">默认</text>
+        </view>
+        <view class="addr-text">{{item.region}} {{item.detail}}</view>
+      </view>
+      <view class="addr-ops">
+        <view class="op-btn" data-id="{{item.address_id}}" data-receiver="{{item.receiver}}" bindtap="onDelete">删除</view>
+        <view class="op-btn op-edit" data-id="{{item.address_id}}" bindtap="goEdit">编辑</view>
+      </view>
+    </view>
+
+    <view class="add-area">
+      <button class="btn-primary add-btn" bindtap="goAdd">＋ 新增收货地址</button>
+    </view>
+  </block>
+</view>

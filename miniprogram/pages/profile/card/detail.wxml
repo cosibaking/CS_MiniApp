@@ -1,0 +1,48 @@
+<!--会员卡详情-->
+<view class="page" wx:if="{{loaded && card}}">
+  <!-- 卡面 -->
+  <view class="vip-card {{card.valid ? (card.isCount ? 'vip-count' : 'vip-period') : 'vip-disabled'}}">
+    <view class="vip-top">
+      <text class="vip-name">{{card.card_name}}</text>
+      <text class="vip-type">{{card.typeLabel}}</text>
+    </view>
+    <view class="vip-remain">{{card.remainText}}</view>
+    <view class="vip-bottom">
+      <text class="vip-expire">{{card.expireText}}</text>
+      <text class="vip-status">{{card.statusLabel}}</text>
+    </view>
+  </view>
+
+  <!-- 卡信息 -->
+  <view class="info-card">
+    <view class="row">
+      <text class="label">激活日期</text>
+      <text class="value">{{card.activatedText}}</text>
+    </view>
+    <view class="row" wx:if="{{card.order_no}}">
+      <text class="label">购买订单</text>
+      <text class="value order-no">{{card.order_no}}</text>
+    </view>
+  </view>
+
+  <!-- 核销记录（仅次卡） -->
+  <view class="section" wx:if="{{card.isCount}}">
+    <view class="section-title">核销记录</view>
+    <view class="rec-card" wx:for="{{records}}" wx:key="index">
+      <view class="rec-main">
+        <text class="rec-title">{{item.activity_title}}</text>
+        <text class="rec-time">{{item.timeText}}</text>
+      </view>
+      <text class="rec-deduct">-1 次</text>
+    </view>
+    <view class="rec-card rec-empty" wx:if="{{!records.length}}">
+      <text class="rec-time">暂无核销记录</text>
+    </view>
+  </view>
+
+  <!-- 失效卡引导 -->
+  <view class="buy-entry" wx:if="{{!card.valid}}" bindtap="goBuy">
+    <text class="buy-entry-text">卡已失效，去购买新卡</text>
+    <text class="buy-entry-arrow">›</text>
+  </view>
+</view>

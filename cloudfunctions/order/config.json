@@ -1,0 +1,14 @@
+{
+  "triggers": [
+    {
+      "name": "order-close-timeout",
+      "type": "timer",
+      "config": "0 * * * * * *"
+    },
+    {
+      "name": "order-reconcile",
+      "type": "timer",
+      "config": "0 0 5 * * * *"
+    }
+  ]
+}

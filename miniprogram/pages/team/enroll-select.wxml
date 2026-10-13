@@ -1,0 +1,56 @@
+<!--战队报名选人（§4.3）：勾选本队可报名成员 → 提交清单（支付由收银台处理）-->
+<view class="page">
+  <view class="loading-tip" wx:if="{{loading}}">加载中…</view>
+
+  <block wx:if="{{!loading}}">
+    <!-- 概要：剩余名额 / 在职成员 -->
+    <view class="head-card">
+      <view class="head-row">
+        <text class="head-label">活动剩余名额</text>
+        <text class="head-value {{leftQuota <= 0 ? 'warn' : ''}}">{{leftQuota}} 人</text>
+      </view>
+      <view class="head-row">
+        <text class="head-label">本队在职成员</text>
+        <text class="head-value">{{members.length}} 人</text>
+      </view>
+    </view>
+
+    <!-- 成员列表（enrollable=false 禁选并标注原因 §5.18） -->
+    <view class="member-list" wx:if="{{members.length}}">
+      <view
+        class="member {{item.enrollable ? '' : 'member-disabled'}}"
+        wx:for="{{members}}"
+        wx:key="user_id"
+        data-index="{{index}}"
+        bindtap="onToggle"
+      >
+        <image class="avatar" src="{{item.avatar}}" mode="aspectFill" />
+        <view class="member-main">
+          <view class="member-head">
+            <text class="member-name">{{item.nickname}}</text>
+            <text wx:if="{{item.isCaptain}}" class="role-tag">队长</text>
+          </view>
+          <text wx:if="{{item.block_reason}}" class="block-reason">{{item.block_reason}}，不可报名</text>
+        </view>
+        <view class="checkbox {{item.selected ? 'checked' : ''}}"></view>
+      </view>
+    </view>
+    <view class="empty-tip" wx:else>暂无可报名成员</view>
+
+    <!-- 底部操作栏 -->
+    <view class="footer-bar">
+      <view class="sel-info">
+        <text>已选 </text>
+        <text class="sel-num">{{selectedCount}}</text>
+        <text> 人</text>
+      </view>
+      <button
+        class="submit-btn btn-primary"
+        disabled="{{submitting || selectedCount < 1}}"
+        bindtap="onSubmit"
+      >
+        {{submitting ? '提交中…' : '提交报名'}}
+      </button>
+    </view>
+  </block>
+</view>

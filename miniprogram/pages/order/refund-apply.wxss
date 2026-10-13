@@ -1,0 +1,48 @@
+/* pages/order/refund-apply.wxss — 复用设计令牌（卡片/行式信息/大按钮） */
+.page { padding: 24rpx 24rpx calc(24rpx + env(safe-area-inset-bottom)); }
+
+/* 信息卡（label-value 行） */
+.card { background: #fff; border-radius: 16rpx; padding: 28rpx; margin-bottom: 20rpx; box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06); }
+.card-title { font-size: 26rpx; font-weight: 600; color: #1F2A38; margin-bottom: 12rpx; }
+.row { display: flex; align-items: flex-start; padding: 10rpx 0; }
+.label { flex-shrink: 0; width: 140rpx; font-size: 24rpx; color: #8A94A0; }
+.value { flex: 1; font-size: 24rpx; color: #1F2A38; line-height: 1.5; word-break: break-all; }
+.value.strong { font-weight: 600; }
+.refund-amount { font-weight: 700; color: #C8552F; font-size: 28rpx; }
+
+/* 退款规则提示块 */
+.tip-block { border-radius: 12rpx; padding: 20rpx 24rpx; margin-bottom: 20rpx; }
+.tip-block.tip-orange { background: rgba(138, 109, 31, 0.08); }
+.tip-block.tip-grey { background: #F0F2F4; }
+.tip-text { font-size: 24rpx; color: #8A6D1F; line-height: 1.6; }
+.tip-grey .tip-text { color: #5A6572; }
+
+/* 退款原因输入 */
+.reason-input { width: 100%; min-height: 160rpx; font-size: 26rpx; color: #1F2A38; line-height: 1.6; }
+.reason-count { margin-top: 8rpx; text-align: right; font-size: 22rpx; color: #C4CBD4; }
+
+/* 提交按钮 */
+.btns { padding: 8rpx 0 24rpx; }
+.btn-lg { height: 88rpx; line-height: 88rpx; font-size: 30rpx; border-radius: 44rpx; border: none; }
+.btn-lg::after { border: none; }
+.btn-lg.btn-primary { background: #C8552F; color: #fff; font-weight: 600; }
+
+/* 按人勾选（§3.9 批量单：默认全选，已退款成员置灰禁选） */
+.member-row { display: flex; align-items: center; padding: 20rpx 0; border-bottom: 1rpx solid #F0F2F5; }
+.member-row:last-child { border-bottom: none; }
+.member-check {
+  width: 36rpx; height: 36rpx; border-radius: 50%;
+  border: 2rpx solid #C9CFD8; margin-right: 20rpx;
+  display: flex; align-items: center; justify-content: center;
+  box-sizing: border-box; flex-shrink: 0;
+}
+.member-check.checked { background: #C8552F; border-color: #C8552F; }
+.member-check-icon { color: #fff; font-size: 22rpx; line-height: 1; }
+.member-name { flex: 1; font-size: 28rpx; color: #1F2A38; }
+.member-amount { font-size: 28rpx; color: #C8552F; font-weight: 600; }
+.member-tag { font-size: 24rpx; color: #8A94A0; }
+.member-disabled .member-name { color: #B0B8C3; }
+.member-disabled .member-check { border-color: #E4E8EE; background: #F5F7FA; }
+.member-refunded { color: #B0B8C3; text-decoration: line-through; }
+
+.loading-tip { padding: 80rpx 0; text-align: center; font-size: 26rpx; color: #8A94A0; }

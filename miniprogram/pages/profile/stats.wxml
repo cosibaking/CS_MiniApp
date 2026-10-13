@@ -1,0 +1,124 @@
+<!--我的战绩（activity-module §5.1.8）-->
+<view class="page">
+  <view wx:if="{{loading}}" class="loading-tip">加载中…</view>
+
+  <view wx:elif="{{loadError}}" class="empty-card">
+    <text class="empty-text">战绩加载失败</text>
+    <button class="btn-primary retry-btn" bindtap="onRetry">重新加载</button>
+  </view>
+
+  <block wx:else>
+    <!-- 军衔卡（读 user 冗余字段，R15 双门槛与门） -->
+    <view class="rank-card" wx:if="{{rank}}">
+      <view class="rank-head">
+        <view class="rank-badge">{{rank.name}}</view>
+        <view class="rank-nums">
+          <view class="rank-num-item">
+            <text class="rank-num">{{rank.total_kills}}</text>
+            <text class="rank-num-label">总击杀</text>
+          </view>
+          <view class="rank-num-item">
+            <text class="rank-num">{{rank.total_wins}}</text>
+            <text class="rank-num-label">胜场</text>
+          </view>
+        </view>
+      </view>
+      <view class="prog-row">
+        <text class="prog-label">击杀</text>
+        <view class="prog-bar">
+          <view class="prog-fill" style="width: {{killsPct}}%"></view>
+        </view>
+        <text class="prog-val">{{rank.total_kills}}/{{nextKills}}</text>
+      </view>
+      <view class="prog-row">
+        <text class="prog-label">胜场</text>
+        <view class="prog-bar">
+          <view class="prog-fill" style="width: {{winsPct}}%"></view>
+        </view>
+        <text class="prog-val">{{rank.total_wins}}/{{nextWins}}</text>
+      </view>
+      <view class="rank-next">{{nextText}}</view>
+    </view>
+
+    <!-- 无战绩空态 -->
+    <view wx:if="{{!hasData}}" class="empty-card">
+      <text class="empty-text">暂无战绩</text>
+      <text class="empty-desc">参加活动并等工作人员录入战绩后，即可在这里查看您的对抗数据与荣誉</text>
+    </view>
+
+    <block wx:else>
+      <!-- 对抗概览 -->
+      <view class="stat-card">
+        <view class="sc-title">对抗概览</view>
+        <view class="stat-grid">
+          <view class="stat-cell">
+            <text class="stat-num">{{stats.total_matches}}</text>
+            <text class="stat-label">总场次</text>
+          </view>
+          <view class="stat-cell">
+            <text class="stat-num win">{{stats.wins}}</text>
+            <text class="stat-label">胜场</text>
+          </view>
+          <view class="stat-cell">
+            <text class="stat-num lose">{{stats.losses}}</text>
+            <text class="stat-label">负场</text>
+          </view>
+          <view class="stat-cell">
+            <text class="stat-num">{{winRateText}}</text>
+            <text class="stat-label">胜率</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 战斗数据 -->
+      <view class="stat-card">
+        <view class="sc-title">战斗数据</view>
+        <view class="stat-grid">
+          <view class="stat-cell">
+            <text class="stat-num">{{stats.total_kills}}</text>
+            <text class="stat-label">总击杀</text>
+          </view>
+          <view class="stat-cell">
+            <text class="stat-num">{{stats.total_deaths}}</text>
+            <text class="stat-label">总阵亡</text>
+          </view>
+          <view class="stat-cell">
+            <text class="stat-num">{{stats.kd}}</text>
+            <text class="stat-label">K/D</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 支援数据 -->
+      <view class="stat-card">
+        <view class="sc-title">支援数据</view>
+        <view class="stat-grid">
+          <view class="stat-cell">
+            <text class="stat-num">{{stats.total_heals}}</text>
+            <text class="stat-label">治疗量</text>
+          </view>
+          <view class="stat-cell">
+            <text class="stat-num">{{stats.total_supplies}}</text>
+            <text class="stat-label">补给量</text>
+          </view>
+          <view class="stat-cell">
+            <text class="stat-num">{{stats.total_captures}}</text>
+            <text class="stat-label">占领点</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 荣誉墙 -->
+      <view class="stat-card">
+        <view class="sc-title">荣誉墙</view>
+        <view class="honor-grid">
+          <view wx:for="{{honors}}" wx:key="key" class="honor-cell">
+            <text class="honor-icon">{{item.icon}}</text>
+            <text class="honor-count">×{{item.count}}</text>
+            <text class="honor-label">{{item.label}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+  </block>
+</view>

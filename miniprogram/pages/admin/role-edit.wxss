@@ -1,0 +1,141 @@
+/* 角色编辑（admin-module §2.2-3）— 设计语言对齐 team-audit */
+.role-edit-page .card {
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+/* 基本信息表单 */
+.form-item {
+  padding: 24rpx 28rpx;
+  border-bottom: 1rpx solid #f0f2f4;
+}
+
+.form-item-last {
+  border-bottom: none;
+}
+
+.form-label {
+  font-size: 26rpx;
+  color: #5a6572;
+  margin-bottom: 16rpx;
+}
+
+.form-req {
+  color: #b03030;
+}
+
+.form-input {
+  font-size: 30rpx;
+  color: #1f2a38;
+  min-height: 44rpx;
+}
+
+.form-static {
+  font-size: 30rpx;
+  color: #8a94a0;
+}
+
+.form-tip {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: #8a94a0;
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 120rpx;
+  font-size: 28rpx;
+  color: #1f2a38;
+}
+
+.input-ph {
+  color: #b0b8c1;
+}
+
+/* 预置角色受限提示 */
+.preset-notice {
+  margin-top: 20rpx;
+  padding: 16rpx 24rpx;
+  font-size: 22rpx;
+  color: #c8552f;
+  background: rgba(200, 85, 47, 0.08);
+  border-radius: 12rpx;
+}
+
+/* 权限点勾选 */
+.perm-section-title {
+  margin: 32rpx 0 16rpx;
+  font-size: 26rpx;
+  color: #8a94a0;
+}
+
+.perm-card {
+  margin-bottom: 20rpx;
+}
+
+.perm-group-label {
+  padding: 24rpx 28rpx 12rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1f2a38;
+}
+
+.perm-point {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 28rpx;
+}
+
+.perm-locked {
+  opacity: 0.75;
+}
+
+.perm-point-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.perm-point-name {
+  font-size: 28rpx;
+  color: #1f2a38;
+}
+
+.perm-lock-tag {
+  margin-left: 12rpx;
+  font-size: 20rpx;
+  color: #c8552f;
+  background: rgba(200, 85, 47, 0.1);
+  border-radius: 6rpx;
+  padding: 2rpx 10rpx;
+}
+
+.perm-point-key {
+  margin-top: 4rpx;
+  font-size: 22rpx;
+  color: #8a94a0;
+}
+
+.perm-check {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 8rpx;
+  border: 2rpx solid #c4cbd3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 26rpx;
+  flex-shrink: 0;
+}
+
+.perm-check-on {
+  background: #c8552f;
+  border-color: #c8552f;
+}
+
+/* 保存按钮 */
+.save-btn {
+  margin-top: 32rpx;
+}

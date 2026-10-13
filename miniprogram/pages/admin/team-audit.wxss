@@ -1,0 +1,183 @@
+/* 战队审核（Tab + 申请卡片 + 行内操作；与 team/manage 同设计语言） */
+
+.audit-page {
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+}
+
+/* 空态/引导块（与 manage 页同结构） */
+.empty-block {
+  text-align: center;
+  padding: 120rpx 32rpx 0;
+}
+.empty-emoji {
+  font-size: 88rpx;
+  line-height: 1;
+}
+.empty-text {
+  margin-top: 24rpx;
+  font-size: 28rpx;
+  color: #5A6572;
+}
+.empty-btn {
+  width: 320rpx;
+  margin: 40rpx auto 0;
+}
+.empty-btn::after {
+  border: none;
+}
+.tab-fail-block {
+  padding-top: 64rpx;
+}
+
+/* 白卡 */
+.card {
+  margin-top: 24rpx;
+  padding: 8rpx 32rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+/* Tab：待审核 / 已拒绝 */
+.tabs {
+  display: flex;
+  margin-top: 24rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx 0;
+  font-size: 28rpx;
+  color: #5A6572;
+  border-bottom: 4rpx solid transparent;
+}
+.tab-active {
+  font-weight: 600;
+  color: #C8552F;
+  border-bottom-color: #C8552F;
+}
+
+/* 审核条目：头部（队徽/队名/操作）+ 详情（口号/简介/创建人） */
+.audit-row {
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #F0F2F4;
+}
+.audit-row:last-of-type {
+  border-bottom: none;
+}
+.row-head {
+  display: flex;
+  align-items: center;
+}
+.audit-logo {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+  background: #F5F6F8;
+}
+.row-info {
+  flex: 1;
+  min-width: 0;
+  margin-left: 20rpx;
+}
+.row-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1F2A38;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.row-sub {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #8A94A0;
+}
+
+/* 行内操作（小链接，右侧；同 manage） */
+.row-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+.act-link {
+  padding: 8rpx 18rpx;
+  font-size: 24rpx;
+  color: #5A6572;
+  border: 1rpx solid #D8DCE1;
+  border-radius: 10rpx;
+}
+.act-link + .act-link {
+  margin-left: 12rpx;
+}
+.act-danger {
+  color: #B03030;
+  border-color: rgba(176, 48, 48, 0.3);
+}
+.act-primary {
+  color: #C8552F;
+  border-color: rgba(200, 85, 47, 0.35);
+}
+
+/* 详情行 */
+.row-slogan {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #5A6572;
+  line-height: 1.5;
+}
+.row-intro {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #5A6572;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+.row-creator {
+  margin-top: 12rpx;
+  font-size: 22rpx;
+  color: #8A94A0;
+}
+.row-fail {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: #B03030;
+}
+
+/* 已拒绝 Tab：状态徽标 + 拒绝理由 */
+.status-badge {
+  flex-shrink: 0;
+  margin-left: 16rpx;
+  padding: 2rpx 12rpx;
+  font-size: 20rpx;
+  border-radius: 8rpx;
+}
+.status-rejected {
+  color: #B03030;
+  background: rgba(176, 48, 48, 0.08);
+}
+.row-reason {
+  margin-top: 16rpx;
+  padding: 14rpx 20rpx;
+  font-size: 22rpx;
+  color: #B03030;
+  background: rgba(176, 48, 48, 0.06);
+  border-radius: 10rpx;
+  line-height: 1.5;
+}
+
+/* 列表底部加载 */
+.list-more {
+  padding-top: 16rpx;
+  font-size: 22rpx;
+  color: #B0B8C1;
+  text-align: center;
+}

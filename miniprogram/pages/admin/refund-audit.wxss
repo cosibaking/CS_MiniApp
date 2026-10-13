@@ -1,0 +1,192 @@
+/* 退款审核（Tab + 退款单卡片 + 行内操作；与 team-audit 同设计语言） */
+
+.audit-page {
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+}
+
+/* 空态/引导块（与 team-audit 同结构） */
+.empty-block {
+  text-align: center;
+  padding: 120rpx 32rpx 0;
+}
+.empty-emoji {
+  font-size: 88rpx;
+  line-height: 1;
+}
+.empty-text {
+  margin-top: 24rpx;
+  font-size: 28rpx;
+  color: #5A6572;
+}
+.empty-btn {
+  width: 320rpx;
+  margin: 40rpx auto 0;
+}
+.empty-btn::after {
+  border: none;
+}
+.tab-fail-block {
+  padding-top: 64rpx;
+}
+
+/* 白卡 */
+.card {
+  margin-top: 24rpx;
+  padding: 8rpx 32rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+/* Tab：待审核 / 已处理 */
+.tabs {
+  display: flex;
+  margin-top: 24rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx 0;
+  font-size: 28rpx;
+  color: #5A6572;
+  border-bottom: 4rpx solid transparent;
+}
+.tab-active {
+  font-weight: 600;
+  color: #C8552F;
+  border-bottom-color: #C8552F;
+}
+
+/* 审核条目：头部（活动名/时间/金额/操作）+ 详情（单号/付款方/理由） */
+.audit-row {
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #F0F2F4;
+}
+.audit-row:last-of-type {
+  border-bottom: none;
+}
+.row-head {
+  display: flex;
+  align-items: center;
+}
+.row-info {
+  flex: 1;
+  min-width: 0;
+}
+.row-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1F2A38;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.row-sub {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #8A94A0;
+}
+.row-amount {
+  flex-shrink: 0;
+  margin: 0 16rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1F2A38;
+}
+
+/* 行内操作（小链接，右侧；同 team-audit） */
+.row-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.act-link {
+  padding: 8rpx 18rpx;
+  font-size: 24rpx;
+  color: #5A6572;
+  border: 1rpx solid #D8DCE1;
+  border-radius: 10rpx;
+}
+.act-link + .act-link {
+  margin-left: 12rpx;
+}
+.act-danger {
+  color: #B03030;
+  border-color: rgba(176, 48, 48, 0.3);
+}
+.act-primary {
+  color: #C8552F;
+  border-color: rgba(200, 85, 47, 0.35);
+}
+
+/* 详情行：单号 / 付款方 */
+.row-meta {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: #8A94A0;
+  word-break: break-all;
+}
+.row-fail {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: #B03030;
+}
+
+/* 理由 / 备注 块 */
+.row-reason {
+  margin-top: 16rpx;
+  padding: 14rpx 20rpx;
+  font-size: 22rpx;
+  color: #B03030;
+  background: rgba(176, 48, 48, 0.06);
+  border-radius: 10rpx;
+  line-height: 1.5;
+}
+.row-reason-neutral {
+  color: #5A6572;
+  background: #F5F6F8;
+}
+.row-remark {
+  margin-top: 16rpx;
+  padding: 14rpx 20rpx;
+  font-size: 22rpx;
+  color: #5A6572;
+  background: #F5F6F8;
+  border-radius: 10rpx;
+  line-height: 1.5;
+}
+
+/* 已处理 Tab：状态徽标 */
+.status-badge {
+  flex-shrink: 0;
+  margin-left: 16rpx;
+  padding: 2rpx 12rpx;
+  font-size: 20rpx;
+  border-radius: 8rpx;
+  color: #5A6572;
+  background: #F0F2F4;
+}
+.badge-processing {
+  color: #B26B00;
+  background: rgba(178, 107, 0, 0.08);
+}
+.badge-success {
+  color: #1E7F4F;
+  background: rgba(30, 127, 79, 0.08);
+}
+.badge-failed,
+.badge-rejected {
+  color: #B03030;
+  background: rgba(176, 48, 48, 0.08);
+}
+
+/* 列表底部加载 */
+.list-more {
+  padding-top: 16rpx;
+  font-size: 22rpx;
+  color: #B0B8C1;
+  text-align: center;
+}

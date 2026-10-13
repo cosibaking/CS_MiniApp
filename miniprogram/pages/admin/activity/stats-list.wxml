@@ -1,0 +1,58 @@
+<!--战绩查询：荣誉汇总 + 全员战绩明细 + 修改入口（§5.25/§3.9）-->
+<view class="page">
+  <block wx:if="{{noPermission}}">
+    <view class="perm-box">
+      <text class="perm-icon">🔒</text>
+      <text class="perm-title">暂无权限</text>
+      <text class="perm-desc">需要「战绩录入」权限，请联系管理员开通</text>
+    </view>
+  </block>
+
+  <block wx:else>
+    <!-- 荣誉汇总 -->
+    <view wx:if="{{honorRows.length}}" class="card">
+      <view class="card-title">本场荣誉</view>
+      <view wx:for="{{honorRows}}" wx:key="key" class="honor-row">
+        <view class="honor-badge {{item.cls}}">{{item.label}}</view>
+        <text class="honor-names">{{item.names}}</text>
+      </view>
+    </view>
+
+    <!-- 战绩明细 -->
+    <view class="list-head">
+      <text class="list-title">战绩明细</text>
+      <text class="list-count">共 {{total}} 条</text>
+    </view>
+
+    <view wx:for="{{list}}" wx:key="id" class="card stat-card">
+      <view class="row-top">
+        <text class="nickname">{{item.nickname}}</text>
+        <text class="tag {{item.winClass}}">{{item.winText}}</text>
+      </view>
+      <view class="nums">
+        <view class="num-item"><text class="num-val">{{item.kills}}</text><text class="num-label">击杀</text></view>
+        <view class="num-item"><text class="num-val">{{item.deaths}}</text><text class="num-label">阵亡</text></view>
+        <view class="num-item"><text class="num-val">{{item.heals}}</text><text class="num-label">治疗</text></view>
+        <view class="num-item"><text class="num-val">{{item.supplies}}</text><text class="num-label">补给</text></view>
+        <view class="num-item"><text class="num-val">{{item.captures}}</text><text class="num-label">占领</text></view>
+      </view>
+      <view wx:if="{{item.honors.length}}" class="honors">
+        <text wx:for="{{item.honors}}" wx:for-item="h" wx:key="label"
+          class="honor-badge sm {{h.cls}}">{{h.label}}</text>
+      </view>
+      <view class="row-foot">
+        <text class="meta">{{item.sourceText}} · {{item.createdAtText}}</text>
+        <view class="edit-btn" data-item="{{item}}" bindtap="onEditTap">修改</view>
+      </view>
+    </view>
+
+    <!-- 空态 -->
+    <view wx:if="{{empty}}" class="empty">
+      <text class="empty-icon">📋</text>
+      <text class="empty-title">暂无战绩</text>
+      <text class="empty-desc">在「战绩录入」页保存或通过 Excel 导入后展示</text>
+    </view>
+
+    <view wx:if="{{loading}}" class="loading">加载中...</view>
+  </block>
+</view>

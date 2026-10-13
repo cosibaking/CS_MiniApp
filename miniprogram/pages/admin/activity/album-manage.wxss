@@ -1,0 +1,171 @@
+/* 相册管理 — 与管理页同一套设计令牌 */
+page {
+  background: #F5F6F8;
+  font-size: 28rpx;
+  color: #1F2A38;
+}
+
+.page {
+  padding: 20rpx 24rpx 160rpx;
+}
+
+/* 无权限 */
+.perm-box {
+  margin-top: 200rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.perm-icon { font-size: 88rpx; }
+.perm-title { margin-top: 24rpx; font-size: 32rpx; font-weight: 600; }
+.perm-desc { margin-top: 12rpx; font-size: 26rpx; color: #8A94A0; }
+
+/* 容量汇总 */
+.cap-card {
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 28rpx 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.cap-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cap-divider {
+  width: 1rpx;
+  height: 72rpx;
+  background: #F0F2F4;
+}
+.cap-num { font-size: 34rpx; font-weight: 600; }
+.cap-label { margin-top: 4rpx; font-size: 22rpx; color: #8A94A0; }
+.cap-bar {
+  margin-top: 12rpx;
+  width: 180rpx;
+  height: 8rpx;
+  background: #F0F2F4;
+  border-radius: 4rpx;
+  overflow: hidden;
+}
+.cap-fill { height: 100%; background: #C8552F; border-radius: 4rpx; }
+.cap-fill.fill-blue { background: #2D6CA3; }
+
+/* 操作条 */
+.op-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 24rpx 4rpx 16rpx;
+}
+.op-btn {
+  padding: 14rpx 28rpx;
+  border-radius: 32rpx;
+  background: #FFFFFF;
+  font-size: 26rpx;
+  color: #5A6572;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.op-btn.op-on {
+  background: #F0F2F4;
+  color: #B03030;
+}
+.op-btn.primary {
+  background: #C8552F;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+.op-btn.btn-busy { opacity: 0.5; }
+
+/* 九宫格 */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -12rpx;
+}
+.cell {
+  position: relative;
+  width: 218rpx;
+  height: 218rpx;
+  margin: 0 12rpx 12rpx 0;
+  border-radius: 12rpx;
+  overflow: hidden;
+  background: #EDEFF2;
+}
+.thumb { width: 100%; height: 100%; }
+.video-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1F2A38;
+}
+.video-icon { color: #FFFFFF; font-size: 48rpx; }
+
+/* 多选标记 */
+.pick-mask {
+  position: absolute;
+  left: 0; top: 0; right: 0; bottom: 0;
+  background: rgba(46, 125, 91, 0.45);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56rpx;
+  font-weight: 700;
+}
+.pick-ring {
+  position: absolute;
+  left: 0; top: 0; right: 0; bottom: 0;
+  border: 4rpx solid rgba(255, 255, 255, 0.9);
+  box-sizing: border-box;
+}
+
+/* 角标信息 */
+.cell-meta {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 4rpx 10rpx;
+  background: rgba(0, 0, 0, 0.35);
+}
+.cell-size { font-size: 20rpx; color: #FFFFFF; }
+
+/* 底部删除条 */
+.del-bar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 32rpx;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  background: #FFFFFF;
+  box-shadow: 0 -4rpx 16rpx rgba(31, 42, 56, 0.08);
+}
+.del-count { font-size: 26rpx; color: #5A6572; }
+.del-btn {
+  padding: 16rpx 48rpx;
+  background: #B03030;
+  color: #FFFFFF;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+}
+.del-btn.btn-busy { opacity: 0.5; }
+
+/* 空态 / loading */
+.empty {
+  margin-top: 120rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.empty-icon { font-size: 80rpx; }
+.empty-title { margin-top: 20rpx; font-size: 30rpx; font-weight: 600; }
+.empty-desc { margin-top: 10rpx; font-size: 24rpx; color: #8A94A0; }
+.loading {
+  margin-top: 40rpx;
+  text-align: center;
+  color: #8A94A0;
+  font-size: 24rpx;
+}

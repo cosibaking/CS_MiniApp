@@ -1,0 +1,150 @@
+/* 战绩查询 — 与管理页同一套设计令牌 */
+page {
+  background: #F5F6F8;
+  font-size: 28rpx;
+  color: #1F2A38;
+}
+
+.page {
+  padding: 20rpx 24rpx 60rpx;
+}
+
+/* 无权限 */
+.perm-box {
+  margin-top: 200rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.perm-icon { font-size: 88rpx; }
+.perm-title { margin-top: 24rpx; font-size: 32rpx; font-weight: 600; }
+.perm-desc { margin-top: 12rpx; font-size: 26rpx; color: #8A94A0; }
+
+/* 卡片 */
+.card {
+  margin-top: 20rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.card-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+/* 荣誉汇总 */
+.honor-row {
+  display: flex;
+  align-items: center;
+  padding: 14rpx 0;
+}
+.honor-names {
+  flex: 1;
+  font-size: 26rpx;
+  color: #5A6572;
+  margin-left: 8rpx;
+}
+
+/* 荣誉徽标 */
+.honor-badge {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+  margin-right: 12rpx;
+}
+.honor-badge.sm {
+  margin-right: 8rpx;
+  margin-bottom: 8rpx;
+}
+.h-gold { background: rgba(154, 123, 28, 0.12); color: #9A7B1C; }
+.h-silver { background: rgba(107, 118, 131, 0.14); color: #5A6572; }
+.h-green { background: rgba(46, 125, 91, 0.10); color: #2E7D5B; }
+.h-blue { background: rgba(45, 108, 163, 0.10); color: #2D6CA3; }
+.h-orange { background: rgba(200, 85, 47, 0.10); color: #C8552F; }
+
+/* 列表头 */
+.list-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 28rpx 4rpx 4rpx;
+}
+.list-title { font-size: 30rpx; font-weight: 600; }
+.list-count { font-size: 24rpx; color: #8A94A0; }
+
+/* 战绩卡 */
+.stat-card { margin-top: 16rpx; }
+.row-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nickname { font-size: 30rpx; font-weight: 600; }
+.tag {
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+}
+.st-green { background: rgba(46, 125, 91, 0.10); color: #2E7D5B; }
+.st-red { background: rgba(176, 48, 48, 0.10); color: #B03030; }
+
+/* 五项数值 */
+.nums {
+  display: flex;
+  margin-top: 20rpx;
+  background: #F5F6F8;
+  border-radius: 12rpx;
+  padding: 16rpx 0;
+}
+.num-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.num-val { font-size: 30rpx; font-weight: 600; }
+.num-label { margin-top: 4rpx; font-size: 20rpx; color: #8A94A0; }
+
+/* 个人荣誉 */
+.honors {
+  margin-top: 16rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* 底部：来源 + 修改 */
+.row-foot {
+  margin-top: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.meta { font-size: 22rpx; color: #8A94A0; }
+.edit-btn {
+  padding: 8rpx 28rpx;
+  border: 1rpx solid #C8552F;
+  color: #C8552F;
+  border-radius: 28rpx;
+  font-size: 24rpx;
+}
+
+/* 空态 / loading */
+.empty {
+  margin-top: 120rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.empty-icon { font-size: 80rpx; }
+.empty-title { margin-top: 20rpx; font-size: 30rpx; font-weight: 600; }
+.empty-desc { margin-top: 10rpx; font-size: 24rpx; color: #8A94A0; }
+.loading {
+  margin-top: 40rpx;
+  text-align: center;
+  color: #8A94A0;
+  font-size: 24rpx;
+}

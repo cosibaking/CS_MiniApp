@@ -1,0 +1,99 @@
+<!--等级与军衔：上等级区（R14）下军衔区（R15）-->
+<view class="page">
+  <view class="loading-tip" wx:if="{{loading}}">加载中…</view>
+
+  <block wx:if="{{!loading}}">
+    <!-- 等级区（R14）：徽章 + 折扣权益 + 距下一级进度条 -->
+    <view class="card" wx:if="{{level}}">
+      <view class="card-title">会员等级</view>
+      <view class="hero">
+        <view class="badge badge-level">{{level.key}}</view>
+        <view class="hero-main">
+          <view class="hero-line1">
+            <text class="hero-name">{{level.name}}</text>
+            <text class="discount-tag" wx:if="{{level.discountText !== '暂无折扣'}}">{{level.discountText}}</text>
+          </view>
+          <text class="hero-sub">累计 {{level.current}} 场</text>
+        </view>
+      </view>
+      <view class="progress-block" wx:if="{{!level.isMax}}">
+        <view class="progress-track">
+          <view class="progress-fill" style="width: {{level.percent}}%;"></view>
+        </view>
+        <view class="progress-text">
+          <text>{{level.current}} 场</text>
+          <text>{{level.nextThreshold}} 场</text>
+        </view>
+      </view>
+      <view class="guide">{{level.guideText}}</view>
+    </view>
+
+    <!-- 等级规则表（R14 LV1–LV4） -->
+    <view class="card">
+      <view class="card-title">等级规则</view>
+      <view class="rule-head">
+        <text class="rule-col0">等级</text>
+        <text class="rule-col1">累计场次</text>
+        <text class="rule-col2">报名折扣</text>
+      </view>
+      <view class="rule-row {{item.key === level.key ? 'rule-row-current' : ''}}" wx:for="{{levelRules}}" wx:key="key">
+        <text class="rule-col0 rule-name">{{item.key}} {{item.name}}</text>
+        <text class="rule-col1">{{item.rangeText}}</text>
+        <text class="rule-col2">{{item.discountText}}</text>
+      </view>
+    </view>
+
+    <!-- 军衔区（R15）：徽章 + 击杀/胜场双进度条（块缺失时隐藏 §2） -->
+    <block wx:if="{{rank}}">
+      <view class="card">
+        <view class="card-title">个人军衔</view>
+        <view class="hero">
+          <view class="badge badge-rank">{{rank.name}}</view>
+          <view class="hero-main">
+            <view class="hero-line1">
+              <text class="hero-name">{{rank.name}}</text>
+            </view>
+            <text class="hero-sub">击杀 {{rank.kills}} · 胜场 {{rank.wins}}</text>
+          </view>
+        </view>
+
+        <block wx:if="{{!rank.isMax}}">
+          <view class="progress-block">
+            <view class="progress-label">
+              <text>总击杀</text>
+              <text>{{rank.kills}} / {{rank.next.total_kills}}</text>
+            </view>
+            <view class="progress-track">
+              <view class="progress-fill" style="width: {{rank.killPercent}}%;"></view>
+            </view>
+          </view>
+          <view class="progress-block">
+            <view class="progress-label">
+              <text>胜场</text>
+              <text>{{rank.wins}} / {{rank.next.total_wins}}</text>
+            </view>
+            <view class="progress-track">
+              <view class="progress-fill" style="width: {{rank.winPercent}}%;"></view>
+            </view>
+          </view>
+        </block>
+        <view class="guide">{{rank.guideText}}</view>
+      </view>
+
+      <!-- 军衔晋升规则表（R15 十四档，与门：击杀与胜场双达标） -->
+      <view class="card">
+        <view class="card-title">晋升规则</view>
+        <view class="rule-head">
+          <text class="rule-col0">军衔</text>
+          <text class="rule-col1">击杀门槛</text>
+          <text class="rule-col2">胜场门槛</text>
+        </view>
+        <view class="rule-row {{item.current ? 'rule-row-current' : ''}}" wx:for="{{rankRules}}" wx:key="name">
+          <text class="rule-col0 rule-name">{{item.name}}</text>
+          <text class="rule-col1">{{item.kills}}</text>
+          <text class="rule-col2">{{item.wins}}</text>
+        </view>
+      </view>
+    </block>
+  </block>
+</view>

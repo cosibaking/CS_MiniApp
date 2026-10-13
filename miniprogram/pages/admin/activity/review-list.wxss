@@ -1,0 +1,117 @@
+/* 评价管理 — 与管理页同一套设计令牌 */
+page {
+  background: #F5F6F8;
+  font-size: 28rpx;
+  color: #1F2A38;
+}
+
+.page {
+  padding: 20rpx 24rpx 60rpx;
+}
+
+/* 卡片 */
+.card {
+  margin-top: 20rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+/* 汇总卡 */
+.sum-card {
+  display: flex;
+  align-items: center;
+}
+.sum-left {
+  width: 200rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.avg-num { font-size: 56rpx; font-weight: 700; }
+.avg-stars {
+  margin-top: 6rpx;
+  color: #C8552F;
+  font-size: 24rpx;
+  letter-spacing: 2rpx;
+}
+.avg-count { margin-top: 6rpx; font-size: 22rpx; color: #8A94A0; }
+
+/* 星级分布 */
+.dist {
+  flex: 1;
+  margin-left: 24rpx;
+}
+.dist-row {
+  display: flex;
+  align-items: center;
+  padding: 6rpx 0;
+}
+.dist-star {
+  width: 64rpx;
+  font-size: 22rpx;
+  color: #5A6572;
+}
+.dist-bar {
+  flex: 1;
+  height: 10rpx;
+  background: #F0F2F4;
+  border-radius: 5rpx;
+  overflow: hidden;
+}
+.dist-fill { height: 100%; background: #C8552F; border-radius: 5rpx; }
+.dist-count {
+  width: 56rpx;
+  text-align: right;
+  font-size: 22rpx;
+  color: #8A94A0;
+}
+
+/* 评价卡 */
+.rv-head {
+  display: flex;
+  align-items: center;
+}
+.avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: #F0F2F4;
+}
+.rv-info {
+  flex: 1;
+  margin-left: 16rpx;
+  display: flex;
+  flex-direction: column;
+}
+.nickname { font-size: 28rpx; font-weight: 500; }
+.rv-time { margin-top: 4rpx; font-size: 22rpx; color: #8A94A0; }
+.rv-stars {
+  color: #C8552F;
+  font-size: 26rpx;
+  letter-spacing: 2rpx;
+}
+.rv-content {
+  display: block;
+  margin-top: 16rpx;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+/* 空态 / loading */
+.empty {
+  margin-top: 120rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.empty-icon { font-size: 80rpx; }
+.empty-title { margin-top: 20rpx; font-size: 30rpx; font-weight: 600; }
+.empty-desc { margin-top: 10rpx; font-size: 24rpx; color: #8A94A0; }
+.loading {
+  margin-top: 40rpx;
+  text-align: center;
+  color: #8A94A0;
+  font-size: 24rpx;
+}

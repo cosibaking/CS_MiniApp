@@ -1,0 +1,38 @@
+<!--角色列表（admin-module §2.2-2：卡片列表 + 新建 + 删除仅自定义）-->
+<view class="page role-list-page">
+  <view wx:if="{{checking}}" class="loading-tip">加载中…</view>
+
+  <!-- 权限门控（role_manage；入口体验层，云函数侧硬校验） -->
+  <view wx:elif="{{noPermission}}" class="empty-block">
+    <view class="empty-emoji">🚫</view>
+    <view class="empty-text">无角色管理权限</view>
+  </view>
+
+  <block wx:else>
+    <view wx:if="{{list.length === 0 && !loading}}" class="empty-block">
+      <view class="empty-emoji">🎭</view>
+      <view class="empty-text">暂无角色，点击下方新建</view>
+    </view>
+
+    <view wx:else class="card">
+      <view class="role-row" wx:for="{{list}}" wx:key="role_key" data-key="{{item.role_key}}" bindtap="onNav">
+        <view class="role-head">
+          <view class="role-name-wrap">
+            <view class="role-name">{{item.name}}</view>
+            <view class="role-key">{{item.role_key}}</view>
+          </view>
+          <view class="role-tags">
+            <view wx:if="{{item.is_preset}}" class="tag tag-preset">预置</view>
+            <view wx:if="{{item.has_wildcard}}" class="tag tag-wildcard">全权限</view>
+            <view wx:if="{{!item.is_preset}}" class="tag-del" data-index="{{index}}" catchtap="onDelete">删除</view>
+          </view>
+        </view>
+        <view wx:if="{{item.description}}" class="role-desc">{{item.description}}</view>
+        <view class="role-meta">{{item.perm_count}} 个权限点 · {{item.user_count}} 人使用 · {{item.updated_text}}</view>
+      </view>
+      <view wx:if="{{loading}}" class="list-more">加载中…</view>
+    </view>
+
+    <button class="btn-primary role-create-btn" bindtap="onCreate">新建角色</button>
+  </block>
+</view>

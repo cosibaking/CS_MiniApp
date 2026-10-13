@@ -1,0 +1,39 @@
+<!--管理工作台（admin-module §2.1 / §2.2-1：按权限点动态渲染分组入口卡片）-->
+<view class="page wb-page">
+  <view wx:if="{{loading}}" class="loading-tip">加载中…</view>
+
+  <block wx:else>
+    <!-- 当前操作员与角色名（§2.2-1） -->
+    <view class="wb-header">
+      <view class="wb-title">管理工作台</view>
+      <view class="wb-user">{{operatorName || '当前用户'}}<text class="wb-role"> · {{roleName}}</text></view>
+    </view>
+
+    <!-- 无任何管理权限点：空态（入口本不可见，此为直达/降权兜底） -->
+    <view wx:if="{{groups.length === 0}}" class="empty-block">
+      <view class="empty-emoji">🛡️</view>
+      <view class="empty-text">暂无管理权限，请联系管理员分配角色</view>
+    </view>
+
+    <!-- 功能入口分组卡片（未命中权限点的入口不渲染，R1） -->
+    <view wx:for="{{groups}}" wx:for-item="group" wx:for-index="gIndex" wx:key="name" class="wb-group">
+      <view class="group-name">{{group.name}}</view>
+      <view class="group-card">
+        <view
+          wx:for="{{group.items}}"
+          wx:key="perm"
+          class="entry"
+          data-url="{{item.url}}"
+          bindtap="onNav"
+        >
+          <view class="entry-icon">{{item.icon}}</view>
+          <view class="entry-info">
+            <view class="entry-name">{{item.name}}</view>
+            <view class="entry-desc">{{item.desc}}</view>
+          </view>
+          <view class="entry-arrow">›</view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

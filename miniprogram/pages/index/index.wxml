@@ -1,0 +1,71 @@
+<!--首页（TabBar）：品牌 Hero + 快捷入口宫格 + 近期活动-->
+<view class="index-page">
+
+  <!-- 品牌 Hero -->
+  <view class="hero">
+    <view class="hero-name">真人CS俱乐部</view>
+    <view class="hero-slogan">真人对抗 · 团队竞技 · 荣誉成长</view>
+  </view>
+
+  <view class="body">
+
+    <!-- 快捷入口 -->
+    <view class="quick-grid">
+      <view class="quick-item" bindtap="goActivities">
+        <view class="quick-icon">🎯</view>
+        <view class="quick-label">活动报名</view>
+      </view>
+      <view class="quick-item" bindtap="goEnrollments">
+        <view class="quick-icon">📋</view>
+        <view class="quick-label">我的报名</view>
+      </view>
+      <view class="quick-item" bindtap="goCards">
+        <view class="quick-icon">💳</view>
+        <view class="quick-label">会员卡</view>
+      </view>
+      <view class="quick-item" bindtap="goTeam">
+        <view class="quick-icon">🛡️</view>
+        <view class="quick-label">我的战队</view>
+      </view>
+    </view>
+
+    <!-- 近期活动 -->
+    <view class="sec-head">
+      <text class="sec-title">近期活动</text>
+      <text class="sec-more" bindtap="goActivities">全部 ›</text>
+    </view>
+
+    <!-- 空态 -->
+    <view wx:if="{{empty && !loading}}" class="empty-block">
+      <view class="empty-emoji">🎯</view>
+      <view class="empty-text">近期暂无报名中的活动</view>
+      <view class="empty-sub">下拉刷新或到「活动」页看看</view>
+    </view>
+
+    <!-- 活动卡片（复用活动 tab 样式） -->
+    <view class="act-list">
+      <view
+        wx:for="{{list}}"
+        wx:key="id"
+        class="act-card"
+        data-id="{{item.id}}"
+        bindtap="goDetail"
+      >
+        <image class="act-cover" src="{{item.cover}}" mode="aspectFill" />
+        <view class="act-info">
+          <view class="act-title-row">
+            <text class="act-type {{item.typeClass}}">{{item.typeLabel}}</text>
+            <text class="act-title">{{item.title}}</text>
+          </view>
+          <view class="act-time">{{item.timeText}}</view>
+          <view class="act-meta">
+            <text class="act-price">{{item.priceText}}</text>
+            <text wx:if="{{item.badge}}" class="act-badge {{item.badgeClass}}">{{item.badge}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{loading}}" class="loading-tip">加载中…</view>
+  </view>
+</view>

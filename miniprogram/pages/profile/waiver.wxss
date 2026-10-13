@@ -1,0 +1,177 @@
+/* 免责协议签署页 — 整页 flex 布局：状态条 + 正文滚动区 + 底部签署区 */
+
+.waiver-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #F5F6F8;
+  box-sizing: border-box;
+}
+
+/* 签署状态横幅 */
+.status-bar {
+  padding: 20rpx 24rpx;
+  font-size: 26rpx;
+  flex-shrink: 0;
+}
+.status-todo {
+  background: #FFF7E8;
+  color: #B25E00;
+}
+.status-done {
+  background: #EAF7EE;
+  color: #2E7D46;
+}
+
+/* 协议正文滚动区 */
+.waiver-scroll {
+  flex: 1;
+  min-height: 0;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+}
+.waiver-content {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 40rpx 32rpx;
+  margin: 24rpx 0;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.doc-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  text-align: center;
+  color: #1F2A38;
+}
+.doc-meta {
+  text-align: center;
+  color: #8A94A0;
+  font-size: 24rpx;
+  margin: 12rpx 0 32rpx;
+}
+.clause {
+  font-size: 28rpx;
+  line-height: 1.7;
+  margin-bottom: 20rpx;
+  color: #1F2A38;
+}
+.clause-h {
+  font-weight: 600;
+  margin-top: 12rpx;
+}
+.doc-end {
+  text-align: center;
+  color: #B0B8C1;
+  font-size: 24rpx;
+  margin-top: 32rpx;
+}
+
+/* 签署区（固定底部） */
+.sign-area {
+  flex-shrink: 0;
+  background: #FFFFFF;
+  padding: 24rpx 32rpx calc(24rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 16rpx rgba(31, 42, 56, 0.08);
+}
+.type-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+.type-cur {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1F2A38;
+}
+.type-switch {
+  color: #C8552F;
+  font-size: 26rpx;
+}
+.form-row {
+  display: flex;
+  align-items: center;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #F0F2F4;
+}
+.form-label {
+  width: 190rpx;
+  color: #5A6572;
+  font-size: 28rpx;
+  flex-shrink: 0;
+}
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #1F2A38;
+}
+.form-value {
+  font-size: 28rpx;
+  color: #1F2A38;
+}
+.placeholder {
+  color: #B0B8C1;
+}
+
+/* 勾选与提交 */
+.agree-row {
+  display: flex;
+  align-items: center;
+  margin: 24rpx 0 8rpx;
+}
+.agree-box {
+  width: 36rpx;
+  height: 36rpx;
+  border: 2rpx solid #C8552F;
+  border-radius: 8rpx;
+  margin-right: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #C8552F;
+  font-size: 26rpx;
+  flex-shrink: 0;
+}
+.agree-box.checked {
+  background: #C8552F;
+  color: #FFFFFF;
+}
+.agree-text {
+  font-size: 28rpx;
+  color: #1F2A38;
+}
+.sign-btn {
+  width: 100%;
+  margin-top: 8rpx;
+}
+.sign-btn::after {
+  border: none;
+}
+.read-tip {
+  text-align: center;
+  color: #B0B8C1;
+  font-size: 24rpx;
+  margin-top: 16rpx;
+}
+
+/* 空态（1005 无生效协议） */
+.empty-card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 80rpx 40rpx;
+  text-align: center;
+  margin: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+.empty-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+  color: #1F2A38;
+}
+.empty-desc {
+  color: #8A94A0;
+  font-size: 26rpx;
+}

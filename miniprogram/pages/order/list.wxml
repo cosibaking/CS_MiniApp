@@ -1,0 +1,42 @@
+<!--pages/order/list.wxml — 我的订单（§2 页面3：状态 Tab/分页/待支付去支付）-->
+<view class="page">
+  <!-- 状态 tab：全部/待支付/已支付/已退款/已关闭 -->
+  <view class="tab-bar">
+    <view wx:for="{{tabs}}" wx:key="key" class="tab {{activeTab === item.key ? 'on' : ''}}" data-key="{{item.key}}" bindtap="onTabTap">{{item.label}}</view>
+  </view>
+
+  <!-- 空态 -->
+  <view wx:if="{{empty}}" class="empty-block">
+    <view class="empty-icon">🧾</view>
+    <view class="empty-text">暂无订单</view>
+  </view>
+
+  <!-- 订单卡片 -->
+  <view wx:for="{{list}}" wx:key="orderNo" class="ord-card" data-index="{{index}}" bindtap="goDetail">
+    <view class="ord-main">
+      <image class="ord-cover" src="{{item.cover}}" mode="aspectFill" />
+      <view class="ord-info">
+        <view class="ord-title-row">
+          <text class="ord-title">{{item.title}}</text>
+          <text class="ord-status {{item.statusClass}}">{{item.statusLabel}}</text>
+        </view>
+        <text class="ord-time">{{item.timeText}}</text>
+        <view class="ord-meta">
+          <text class="ord-amount">¥{{item.amountText}}</text>
+          <text wx:if="{{item.itemCount > 1}}" class="ord-count">{{item.itemCount}} 人</text>
+          <text wx:if="{{item.refundedText}}" class="ord-refund-tip">{{item.refundedText}}</text>
+        </view>
+      </view>
+    </view>
+    <!-- 操作区：待支付倒计时 + 去支付 -->
+    <view class="ord-actions">
+      <view wx:if="{{item.status === 'pending'}}" class="ord-countdown {{item.countdownText === '已超时，系统释放中' ? 'expired' : ''}}">{{item.countdownText}}</view>
+      <view class="ord-btns">
+        <button wx:if="{{item.status === 'pending'}}" class="btn-sm btn-primary" data-index="{{index}}" catchtap="goPay">去支付</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+  <view wx:if="{{!loading && !empty && finished && list.length}}" class="load-end">没有更多了</view>
+</view>

@@ -1,0 +1,78 @@
+<!--战队列表（team-module §2.1-1）-->
+<view class="page list-page">
+
+  <!-- 未登录引导（§2.2：登录后可见战队广场） -->
+  <view wx:if="{{!logged}}" class="empty-block">
+    <view class="empty-emoji">🛡️</view>
+    <view class="empty-text">登录后即可浏览战队广场</view>
+    <view class="empty-sub">创建或加入战队，与队友并肩作战</view>
+    <button class="btn-primary empty-btn" bindtap="retryLogin">立即登录</button>
+  </view>
+
+  <block wx:else>
+    <!-- 搜索 + 创建入口 -->
+    <view class="filter-bar">
+      <view class="search-box">
+        <input
+          class="search-input"
+          placeholder="搜索队名"
+          placeholder-class="search-ph"
+          value="{{keyword}}"
+          confirm-type="search"
+          bindinput="onKeyword"
+          bindconfirm="onSearch"
+        />
+      </view>
+      <view class="create-entry" bindtap="goCreate">＋ 创建战队</view>
+    </view>
+
+    <!-- 我的战队置顶卡（§2.2 已在职） -->
+    <view wx:if="{{myTeam}}" class="my-team-card" data-id="{{myTeam.team_id}}" bindtap="goDetail">
+      <image class="my-team-logo" src="{{myTeam.logo}}" mode="aspectFill" />
+      <view class="my-team-info">
+        <view class="my-team-name-row">
+          <text class="my-team-tag">我的战队</text>
+          <text class="my-team-name">{{myTeam.name}}</text>
+        </view>
+        <view class="my-team-meta">{{myTeam.roleLabel}} · {{myTeam.member_count}} 人在职<text wx:if="{{myTeam.win_rate_text}}"> · 胜率 {{myTeam.win_rate_text}}</text></view>
+      </view>
+      <view wx:if="{{myTeam.isCaptain}}" class="my-team-manage" catchtap="goManage">管理</view>
+    </view>
+
+    <!-- 空态（§2.2） -->
+    <view wx:if="{{empty && !loading && !hasKeyword}}" class="empty-block">
+      <view class="empty-emoji">🛡️</view>
+      <view class="empty-text">暂无战队，来创建第一支战队</view>
+      <button class="btn-primary empty-btn" bindtap="goCreate">创建战队</button>
+    </view>
+    <view wx:if="{{empty && !loading && hasKeyword}}" class="empty-block">
+      <view class="empty-emoji">🔍</view>
+      <view class="empty-text">未找到相关战队，换个关键词试试</view>
+      <button class="empty-btn-plain" bindtap="clearSearch">清空关键词</button>
+    </view>
+
+    <!-- 战队卡片流 -->
+    <view class="team-list">
+      <view
+        wx:for="{{list}}"
+        wx:key="team_id"
+        class="team-card"
+        data-id="{{item.team_id}}"
+        bindtap="goDetail"
+      >
+        <image class="team-logo" src="{{item.logo}}" mode="aspectFill" />
+        <view class="team-info">
+          <view class="team-name">{{item.name}}</view>
+          <view wx:if="{{item.slogan}}" class="team-slogan">{{item.slogan}}</view>
+          <view class="team-meta">
+            <text class="team-count">{{item.member_count}} 人在职</text>
+            <text wx:if="{{item.win_rate_text}}" class="team-winrate">胜率 {{item.win_rate_text}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{loading}}" class="loading-tip">加载中…</view>
+    <view wx:if="{{!loading && !empty && finished}}" class="loading-tip">没有更多了</view>
+  </block>
+</view>

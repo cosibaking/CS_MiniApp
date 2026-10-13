@@ -1,0 +1,82 @@
+<!--退款审核（payment-module §5.9 / admin-module §2.3）-->
+<view class="page audit-page">
+  <view wx:if="{{checking}}" class="loading-tip">加载中…</view>
+
+  <!-- 权限门控（audit_refund；入口体验层，云函数侧硬校验） -->
+  <view wx:elif="{{noPermission}}" class="empty-block">
+    <view class="empty-emoji">🚫</view>
+    <view class="empty-text">无退款审核权限</view>
+    <button class="btn-primary empty-btn" bindtap="goBack">返回首页</button>
+  </view>
+
+  <block wx:else>
+    <!-- Tab：待审核 / 已处理（§5.9 审核列表页） -->
+    <view class="tabs">
+      <view class="tab {{activeTab === 'pending' ? 'tab-active' : ''}}" data-tab="pending" bindtap="onSwitchTab">待审核</view>
+      <view class="tab {{activeTab === 'processed' ? 'tab-active' : ''}}" data-tab="processed" bindtap="onSwitchTab">已处理</view>
+    </view>
+
+    <!-- 当前 Tab 首次加载失败 -->
+    <view wx:if="{{tabFailed}}" class="empty-block tab-fail-block">
+      <view class="empty-text">列表加载失败，请重试</view>
+      <button class="btn-primary empty-btn" bindtap="retryTab">重新加载</button>
+    </view>
+
+    <!-- 待审核：退款单 + 驳回/同意（同意二次确认，驳回必填理由） -->
+    <block wx:if="{{!tabFailed && activeTab === 'pending'}}">
+      <view wx:if="{{pending.length === 0 && !listLoading}}" class="empty-block">
+        <view class="empty-emoji">🕊️</view>
+        <view class="empty-text">暂无待审核退款单</view>
+      </view>
+      <view wx:else class="card">
+        <view class="audit-row" wx:for="{{pending}}" wx:key="refund_no">
+          <view class="row-head">
+            <view class="row-info">
+              <view class="row-name">{{item.order_title}}</view>
+              <view class="row-sub">{{item.created_text}}</view>
+            </view>
+            <view class="row-amount">{{item.amount_text}}</view>
+            <view class="row-actions">
+              <view class="act-link act-danger" data-index="{{index}}" catchtap="onReject">驳回</view>
+              <view class="act-link act-primary" data-index="{{index}}" catchtap="onApprove">同意</view>
+            </view>
+          </view>
+          <view class="row-meta">单号 {{item.refund_no}} · 订单 {{item.order_no}}{{item.start_text ? ' · ' + item.start_text : ''}}</view>
+          <view class="row-meta">付款方 {{item.payer_name}}{{item.pay_text ? ' · ' + item.pay_text : ''}}{{item.refunded_total_text ? ' · ' + item.refunded_total_text : ''}}</view>
+          <view wx:if="{{item.refund_members}}" class="row-meta">按人退款（{{item.refund_members}}）</view>
+          <view wx:if="{{item.reason}}" class="row-reason row-reason-neutral">申请理由：{{item.reason}}</view>
+          <view wx:if="{{item.failMsg}}" class="row-fail">{{item.failMsg}}</view>
+        </view>
+        <view wx:if="{{listLoading}}" class="list-more">加载中…</view>
+      </view>
+    </block>
+
+    <!-- 已处理：状态徽标 + 审核备注 / 失败原因（只读） -->
+    <block wx:elif="{{!tabFailed && activeTab === 'processed'}}">
+      <view wx:if="{{processed.length === 0 && !listLoading}}" class="empty-block">
+        <view class="empty-emoji">🗂️</view>
+        <view class="empty-text">暂无已处理记录</view>
+      </view>
+      <view wx:else class="card">
+        <view class="audit-row" wx:for="{{processed}}" wx:key="refund_no">
+          <view class="row-head">
+            <view class="row-info">
+              <view class="row-name">{{item.order_title}}</view>
+              <view class="row-sub">{{item.audit_text || item.refunded_text || item.created_text}}</view>
+            </view>
+            <view class="row-amount">{{item.amount_text}}</view>
+            <view class="status-badge badge-{{item.status}}">{{item.status_text}}</view>
+          </view>
+          <view class="row-meta">单号 {{item.refund_no}} · 订单 {{item.order_no}}{{item.start_text ? ' · ' + item.start_text : ''}}</view>
+          <view class="row-meta">付款方 {{item.payer_name}}{{item.pay_text ? ' · ' + item.pay_text : ''}}{{item.refunded_total_text ? ' · ' + item.refunded_total_text : ''}}</view>
+          <view wx:if="{{item.refund_members}}" class="row-meta">按人退款（{{item.refund_members}}）</view>
+          <view wx:if="{{item.reason}}" class="row-reason row-reason-neutral">申请理由：{{item.reason}}</view>
+          <view wx:if="{{item.status === 'rejected' && item.audit_remark}}" class="row-reason">驳回理由：{{item.audit_remark}}</view>
+          <view wx:elif="{{item.audit_remark}}" class="row-remark">审核备注：{{item.audit_remark}}</view>
+          <view wx:if="{{item.fail_reason}}" class="row-fail">失败原因：{{item.fail_reason}}</view>
+        </view>
+        <view wx:if="{{listLoading}}" class="list-more">加载中…</view>
+      </view>
+    </block>
+  </block>
+</view>

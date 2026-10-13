@@ -1,0 +1,158 @@
+/* 等级与军衔 */
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+
+.card-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1f2a38;
+  margin-bottom: 24rpx;
+}
+
+/* 当前等级/军衔英雄区 */
+.hero {
+  display: flex;
+  align-items: center;
+}
+
+.badge {
+  flex-shrink: 0;
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #fff;
+}
+
+.badge-level {
+  background: #c8552f;
+}
+
+.badge-rank {
+  background: #1f2a38;
+}
+
+.hero-main {
+  margin-left: 24rpx;
+  min-width: 0;
+}
+
+.hero-line1 {
+  display: flex;
+  align-items: center;
+}
+
+.hero-name {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1f2a38;
+}
+
+.discount-tag {
+  margin-left: 16rpx;
+  font-size: 20rpx;
+  color: #c8552f;
+  background: #f9ede8;
+  border-radius: 8rpx;
+  padding: 4rpx 12rpx;
+}
+
+.hero-sub {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #8a94a0;
+}
+
+/* 进度条 */
+.progress-block {
+  margin-top: 28rpx;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+  color: #667085;
+  margin-bottom: 10rpx;
+}
+
+.progress-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 22rpx;
+  color: #98a2b3;
+  margin-top: 10rpx;
+}
+
+.progress-track {
+  height: 14rpx;
+  background: #f2f4f7;
+  border-radius: 7rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #c8552f;
+  border-radius: 7rpx;
+}
+
+.guide {
+  margin-top: 24rpx;
+  font-size: 24rpx;
+  color: #c8552f;
+}
+
+/* 规则表 */
+.rule-head {
+  display: flex;
+  font-size: 22rpx;
+  color: #98a2b3;
+  padding: 8rpx 0 12rpx;
+  border-bottom: 2rpx solid #f2f4f7;
+}
+
+.rule-row {
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+  color: #5a6572;
+  padding: 16rpx 0;
+  border-bottom: 2rpx solid #f7f8fa;
+}
+
+.rule-row:last-child {
+  border-bottom: none;
+}
+
+.rule-row-current {
+  color: #c8552f;
+  font-weight: 600;
+}
+
+.rule-col0 {
+  flex: 1.2;
+}
+
+.rule-col1 {
+  flex: 1;
+}
+
+.rule-col2 {
+  flex: 1;
+  text-align: right;
+}
+
+.rule-name {
+  color: inherit;
+}

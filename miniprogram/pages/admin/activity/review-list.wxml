@@ -1,0 +1,41 @@
+<!--评价管理：均分/星级分布汇总 + 评价列表（仅查看，§5.29）-->
+<view class="page">
+  <!-- 汇总 -->
+  <view wx:if="{{summary}}" class="card sum-card">
+    <view class="sum-left">
+      <text class="avg-num">{{summary.avgText}}</text>
+      <text class="avg-stars">{{summary.avgStarsText}}</text>
+      <text class="avg-count">{{summary.count}} 条评价</text>
+    </view>
+    <view class="dist">
+      <view wx:for="{{distRows}}" wx:key="star" class="dist-row">
+        <text class="dist-star">{{item.star}}星</text>
+        <view class="dist-bar">
+          <view class="dist-fill" style="width: {{item.pct}}%"></view>
+        </view>
+        <text class="dist-count">{{item.count}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 评价列表 -->
+  <view wx:for="{{list}}" wx:key="id" class="card rv-card">
+    <view class="rv-head">
+      <image class="avatar" src="{{item.avatar}}" mode="aspectFill" />
+      <view class="rv-info">
+        <text class="nickname">{{item.nickname}}</text>
+        <text class="rv-time">{{item.createdAtText}}</text>
+      </view>
+      <text class="rv-stars">{{item.starsText}}</text>
+    </view>
+    <text wx:if="{{item.content}}" class="rv-content">{{item.content}}</text>
+  </view>
+
+  <!-- 空态 / loading -->
+  <view wx:if="{{empty}}" class="empty">
+    <text class="empty-icon">💬</text>
+    <text class="empty-title">暂无评价</text>
+    <text class="empty-desc">活动结束后会员提交的评价会展示在这里</text>
+  </view>
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+</view>

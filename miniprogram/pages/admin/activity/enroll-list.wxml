@@ -1,0 +1,77 @@
+<!--报名/候补名单：分组 chips + 汇总条 + 名单列表（手机号服务端脱敏）-->
+<view class="page">
+  <block wx:if="{{noPermission}}">
+    <view class="perm-box">
+      <text class="perm-icon">🔒</text>
+      <text class="perm-title">暂无权限</text>
+      <text class="perm-desc">需要「发布活动」权限，请联系管理员开通</text>
+    </view>
+  </block>
+
+  <block wx:else>
+    <!-- 分组筛选 -->
+    <scroll-view class="chips" scroll-x enhanced show-scrollbar="{{false}}">
+      <view class="chips-row">
+        <view wx:for="{{groups}}" wx:key="value"
+          class="chip {{group === item.value ? 'chip-on' : ''}}"
+          data-value="{{item.value}}" bindtap="onGroupTap">{{item.label}}</view>
+      </view>
+    </scroll-view>
+
+    <!-- 汇总条 -->
+    <view wx:if="{{summary}}" class="sum-card">
+      <view class="sum-row">
+        <text class="sum-num">{{summary.pending}}</text>
+        <text class="sum-num">{{summary.enrolled}}</text>
+        <text class="sum-num">{{summary.waitlist}}</text>
+        <text class="sum-num">{{summary.checked_in}}</text>
+      </view>
+      <view class="sum-row">
+        <text class="sum-label">待支付</text>
+        <text class="sum-label">已报名</text>
+        <text class="sum-label">候补</text>
+        <text class="sum-label">已签到</text>
+      </view>
+      <view class="sum-rate">{{checkinRateText}}</view>
+      <view class="sum-total">当前分组共 {{total}} 条</view>
+    </view>
+
+    <!-- 名单 -->
+    <view class="card-list">
+      <view wx:for="{{list}}" wx:key="id" class="card">
+        <view class="row">
+          <image class="avatar" src="{{item.avatar}}" mode="aspectFill" />
+          <view class="info">
+            <view class="line1">
+              <text class="nickname">{{item.nickname}}</text>
+              <text class="tag {{item.statusClass}}">{{item.statusLabel}}</text>
+            </view>
+            <view class="line2">
+              <text class="meta">{{item.phone || '未绑定手机号'}}</text>
+              <text class="meta">{{item.payTypeLabel}}</text>
+            </view>
+            <view class="line2">
+              <text wx:if="{{item.positionText}}" class="meta warn">{{item.positionText}}</text>
+              <text wx:if="{{item.checkinText}}" class="meta ok">{{item.checkinText}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="foot">
+          <text>报名时间 {{item.createdAtText}}</text>
+          <view wx:if="{{item.isWaitlist}}" class="promote-btn"
+            data-user-id="{{item.userId}}" data-nickname="{{item.nickname}}"
+            bindtap="onPromoteTap">递补</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空态 / 加载 -->
+    <view wx:if="{{empty}}" class="empty">
+      <text class="empty-icon">👥</text>
+      <text class="empty-title">暂无报名记录</text>
+      <text class="empty-desc">当前分组下没有数据</text>
+    </view>
+    <view wx:if="{{loading}}" class="load-tip">加载中...</view>
+    <view wx:elif="{{finished && list.length > 0}}" class="load-tip">— 没有更多了 —</view>
+  </block>
+</view>

@@ -1,0 +1,182 @@
+/* 活动管理列表 — 与会员端列表同一套设计令牌 */
+page {
+  background: #F5F6F8;
+  font-size: 28rpx;
+  color: #1F2A38;
+}
+
+.page {
+  padding: 20rpx 24rpx 160rpx;
+}
+
+/* 无权限 */
+.perm-box {
+  margin-top: 200rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.perm-icon { font-size: 88rpx; }
+.perm-title { margin-top: 24rpx; font-size: 32rpx; font-weight: 600; }
+.perm-desc { margin-top: 12rpx; font-size: 26rpx; color: #8A94A0; }
+
+/* 搜索栏 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 16rpx 20rpx;
+}
+.search-input {
+  flex: 1;
+  height: 56rpx;
+  line-height: 56rpx;
+  background: #F5F6F8;
+  border-radius: 12rpx;
+  padding: 0 20rpx;
+  font-size: 26rpx;
+}
+.search-btn {
+  margin-left: 16rpx;
+  padding: 0 28rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  border-radius: 12rpx;
+  background: #C8552F;
+  color: #FFFFFF;
+  font-size: 26rpx;
+}
+
+/* 状态 chips */
+.chips {
+  margin-top: 20rpx;
+  white-space: nowrap;
+}
+.chips-row {
+  display: inline-flex;
+  padding: 4rpx 2rpx;
+}
+.chip {
+  display: inline-block;
+  padding: 10rpx 28rpx;
+  margin-right: 16rpx;
+  border-radius: 32rpx;
+  background: #FFFFFF;
+  color: #5A6572;
+  font-size: 26rpx;
+}
+.chip-on {
+  background: #C8552F;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+/* 统计条 */
+.stat-bar {
+  margin: 20rpx 8rpx 0;
+}
+.stat-total {
+  font-size: 24rpx;
+  color: #8A94A0;
+}
+
+/* 卡片 */
+.card-list { margin-top: 12rpx; }
+.card {
+  margin-top: 20rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.card-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.card-title {
+  flex: 1;
+  font-size: 30rpx;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.tag {
+  margin-left: 16rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  flex-shrink: 0;
+}
+.st-green { background: rgba(46, 125, 91, 0.12); color: #2E7D5B; }
+.st-blue { background: rgba(45, 108, 163, 0.12); color: #2D6CA3; }
+.st-red { background: rgba(176, 48, 48, 0.12); color: #B03030; }
+.st-orange { background: rgba(138, 109, 31, 0.12); color: #8A6D1F; }
+.st-grey { background: #F0F2F4; color: #8A94A0; }
+
+.card-meta { margin-top: 14rpx; display: flex; flex-direction: column; }
+.meta-line { font-size: 24rpx; color: #5A6572; line-height: 1.7; }
+.meta-line.warn { color: #8A6D1F; }
+
+.card-stat {
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #F0F2F4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.stat-price { font-size: 26rpx; font-weight: 600; color: #C8552F; }
+.stat-count { font-size: 24rpx; color: #8A94A0; }
+
+/* 操作按钮 */
+.card-actions {
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.btn-mini {
+  margin-left: 16rpx;
+  padding: 10rpx 28rpx;
+  border-radius: 32rpx;
+  font-size: 24rpx;
+  line-height: 1.4;
+}
+.btn-mini::after { border: none; }
+.btn-line { border: 1rpx solid #C8552F; color: #C8552F; background: #FFFFFF; }
+.btn-main { background: #C8552F; color: #FFFFFF; }
+.btn-plain { border: 1rpx solid #D8DEE4; color: #5A6572; background: #FFFFFF; }
+.btn-danger { border: 1rpx solid #B03030; color: #B03030; background: #FFFFFF; }
+
+/* 空态 / 加载 */
+.empty {
+  margin-top: 160rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.empty-icon { font-size: 88rpx; }
+.empty-title { margin-top: 24rpx; font-size: 30rpx; font-weight: 600; color: #1F2A38; }
+.empty-desc { margin-top: 12rpx; font-size: 26rpx; color: #8A94A0; }
+.load-tip {
+  margin-top: 24rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #8A94A0;
+}
+
+/* 新建 FAB */
+.fab {
+  position: fixed;
+  right: 40rpx;
+  bottom: 120rpx;
+  padding: 20rpx 36rpx;
+  border-radius: 48rpx;
+  background: #C8552F;
+  color: #FFFFFF;
+  font-size: 28rpx;
+  font-weight: 500;
+  box-shadow: 0 8rpx 24rpx rgba(200, 85, 47, 0.35);
+  z-index: 10;
+}

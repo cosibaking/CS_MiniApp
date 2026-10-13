@@ -1,0 +1,24 @@
+{
+  "triggers": [
+    {
+      "name": "activity-every-minute",
+      "type": "timer",
+      "config": "0 * * * * * *"
+    },
+    {
+      "name": "activity-every-5min",
+      "type": "timer",
+      "config": "0 */5 * * * * *"
+    },
+    {
+      "name": "activity-daily-3am",
+      "type": "timer",
+      "config": "0 0 3 * * * *"
+    },
+    {
+      "name": "activity-daily-9am",
+      "type": "timer",
+      "config": "0 0 9 * * * *"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+<!--pages/order/refund-apply.wxml — 申请退款（§2 页面5：订单摘要/规则提示/退款原因/提交）-->
+<view class="page">
+  <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+
+  <block wx:if="{{!loading && order}}">
+    <!-- 退款订单摘要 -->
+    <view class="card">
+      <view class="card-title">退款订单</view>
+      <view class="row"><text class="label">活动</text><text class="value strong">{{order.title}}</text></view>
+      <view class="row"><text class="label">开始时间</text><text class="value">{{order.timeText}}</text></view>
+      <view class="row"><text class="label">订单号</text><text class="value">{{order.orderNo}}</text></view>
+      <view class="row"><text class="label">实付金额</text><text class="value strong">¥{{order.payAmountText}}</text></view>
+      <view wx:if="{{order.refundedText}}" class="row"><text class="label">已退金额</text><text class="value">¥{{order.refundedText}}</text></view>
+      <view wx:if="{{estimateText}}" class="row"><text class="label">预计可退</text><text class="value refund-amount">¥{{estimateText}}</text></view>
+    </view>
+
+    <!-- 退款规则提示（动态：全额自动 / 50% 审核 / 不可退） -->
+    <view class="tip-block {{canApply ? 'tip-orange' : 'tip-grey'}}">
+      <text class="tip-text">{{ruleTip}}</text>
+    </view>
+
+    <!-- 按人勾选（§3.9 批量单）：默认全选按整单计算；部分勾选按人分摊预估 -->
+    <view wx:if="{{isBatch && members.length}}" class="card">
+      <view class="card-title">退款成员（{{selectedCount}}/{{members.length}}）</view>
+      <view wx:for="{{members}}" wx:key="userId"
+            class="member-row {{item.disabled ? 'member-disabled' : ''}}"
+            data-user-id="{{item.userId}}" bindtap="onToggleMember">
+        <view class="member-check {{item.checked ? 'checked' : ''}}">
+          <text wx:if="{{item.checked}}" class="member-check-icon">✓</text>
+        </view>
+        <text class="member-name {{item.refunded ? 'member-refunded' : ''}}">{{item.nickname}}</text>
+        <text wx:if="{{item.refunded}}" class="member-tag">已退款</text>
+        <text wx:else class="member-amount">¥{{item.amountText}}</text>
+      </view>
+    </view>
+
+    <!-- 退款原因（必填） -->
+    <view class="card">
+      <view class="card-title">退款原因（必填）</view>
+      <textarea class="reason-input" value="{{reason}}" maxlength="200"
+                placeholder="请填写退款原因，人工审核单将展示给管理员" bindinput="onReasonInput" />
+      <view class="reason-count">{{reason.length}}/200</view>
+    </view>
+
+    <!-- 提交 -->
+    <view wx:if="{{canApply}}" class="btns">
+      <button class="btn-lg btn-primary" loading="{{submitting}}" bindtap="onTapSubmit">提交申请</button>
+    </view>
+  </block>
+</view>

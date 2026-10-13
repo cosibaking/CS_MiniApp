@@ -1,0 +1,53 @@
+/* 活动相册页 — 头部 + 九宫格 + 空态 */
+.page { padding: 24rpx 24rpx calc(40rpx + env(safe-area-inset-bottom)); }
+
+/* 头部 */
+.alb-head { padding: 8rpx 8rpx 24rpx; }
+.alb-title { display: block; font-size: 32rpx; font-weight: 600; color: #1F2A38; line-height: 1.4; }
+.alb-sub { display: block; margin-top: 8rpx; font-size: 24rpx; color: #8A94A0; }
+
+/* 九宫格：3 列，正方形格 */
+.grid { display: flex; flex-wrap: wrap; }
+.grid-cell {
+  width: calc((100% - 16rpx) / 3);
+  height: 214rpx;
+  margin: 0 8rpx 8rpx 0;
+  border-radius: 10rpx;
+  overflow: hidden;
+  background: #E9EDF2;
+}
+.grid-cell:nth-child(3n) { margin-right: 0; }
+.cell-img { width: 100%; height: 100%; }
+
+/* 视频格：深色占位 + 播放标识（无独立缩略图字段，§6.5） */
+.cell-video {
+  width: 100%;
+  height: 100%;
+  background: #1F2A38;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.cell-play { font-size: 44rpx; color: #E8A87C; line-height: 1.2; }
+.cell-video-label { margin-top: 8rpx; font-size: 22rpx; color: #8A94A0; }
+
+/* 状态 */
+.loading-tip { padding: 200rpx 0; text-align: center; font-size: 26rpx; color: #8A94A0; }
+.load-more { padding: 24rpx 0; text-align: center; font-size: 24rpx; color: #8A94A0; }
+
+.empty-card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 80rpx 40rpx;
+  margin-top: 24rpx;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+}
+.empty-text { font-size: 30rpx; font-weight: 600; color: #1F2A38; }
+.empty-desc { font-size: 26rpx; color: #8A94A0; margin-top: 16rpx; line-height: 1.6; }
+.retry-btn { width: 320rpx; line-height: 2.4; font-size: 28rpx; margin-top: 32rpx; }
+.retry-btn::after { border: none; }

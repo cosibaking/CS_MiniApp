@@ -1,0 +1,92 @@
+/* 角色列表（admin-module §2.2-2）— 设计语言对齐 team-audit */
+.role-list-page .card {
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(31, 42, 56, 0.06);
+  overflow: hidden;
+}
+
+.role-row {
+  padding: 24rpx 28rpx;
+  border-bottom: 1rpx solid #f0f2f4;
+}
+
+.role-row:last-child {
+  border-bottom: none;
+}
+
+.role-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.role-name-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.role-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1f2a38;
+}
+
+.role-key {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #8a94a0;
+}
+
+.role-tags {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  flex-shrink: 0;
+}
+
+.tag {
+  font-size: 20rpx;
+  padding: 4rpx 14rpx;
+  border-radius: 8rpx;
+}
+
+.tag-preset {
+  color: #c8552f;
+  background: rgba(200, 85, 47, 0.1);
+}
+
+.tag-wildcard {
+  color: #5a6572;
+  background: #f0f2f4;
+}
+
+.tag-del {
+  font-size: 22rpx;
+  color: #b03030;
+  padding: 4rpx 8rpx;
+}
+
+.role-desc {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #5a6572;
+  word-break: break-all;
+}
+
+.role-meta {
+  margin-top: 12rpx;
+  font-size: 22rpx;
+  color: #8a94a0;
+}
+
+.role-create-btn {
+  margin-top: 32rpx;
+}
+
+.list-more {
+  padding: 20rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #8a94a0;
+}

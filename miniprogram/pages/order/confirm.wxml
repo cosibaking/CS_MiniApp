@@ -1,0 +1,56 @@
+<!--订单确认（会员卡购买）：卡种快照展示 → 提交订单 → 收银台拉起支付-->
+<view class="page">
+  <view class="loading-tip" wx:if="{{loading}}">加载中…</view>
+
+  <block wx:if="{{!loading && product}}">
+    <!-- 商品快照（金额仅展示，下单金额以服务端核算为准 §3.1） -->
+    <view class="goods-card">
+      <view class="goods-head">
+        <text class="goods-name">{{product.name}}</text>
+        <text class="goods-type">{{product.typeLabel}}</text>
+      </view>
+      <text class="goods-benefit" wx:if="{{product.benefit_desc}}">{{product.benefit_desc}}</text>
+      <view class="fee-rows">
+        <view class="fee-row">
+          <text class="fee-label">单价</text>
+          <text class="fee-value">¥{{product.priceText}}</text>
+        </view>
+        <view class="fee-row">
+          <text class="fee-label">数量</text>
+          <text class="fee-value">1 张</text>
+        </view>
+        <view class="fee-row">
+          <text class="fee-label">支付方式</text>
+          <text class="fee-value">微信支付</text>
+        </view>
+        <view class="fee-row fee-total">
+          <text class="fee-label fee-label-strong">应付金额</text>
+          <view class="fee-price">
+            <text class="fee-symbol">¥</text>
+            <text class="fee-num">{{product.priceText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 温馨提示 -->
+    <view class="tips-card">
+      <text class="tips-title">温馨提示</text>
+      <text class="tips-item">1. 提交订单后该卡将保留 15 分钟，逾期未支付自动关单；</text>
+      <text class="tips-item">2. 应付金额以服务端核算结果为准，页面金额仅作展示；</text>
+      <text class="tips-item">3. 提交后进入收银台，拉起微信支付完成付款。</text>
+    </view>
+
+    <!-- 底部操作栏 -->
+    <view class="footer-bar">
+      <view class="pay-amount">
+        <text class="pay-label">应付</text>
+        <text class="pay-symbol">¥</text>
+        <text class="pay-num">{{product.priceText}}</text>
+      </view>
+      <button class="submit-btn btn-primary" disabled="{{submitting}}" bindtap="onSubmit">
+        {{submitting ? '提交中…' : '提交订单'}}
+      </button>
+    </view>
+  </block>
+</view>

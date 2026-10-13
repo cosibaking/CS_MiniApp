@@ -1,0 +1,14 @@
+{
+  "triggers": [
+    {
+      "name": "admin-monthly-archive",
+      "type": "timer",
+      "config": "0 0 3 1 * * *"
+    },
+    {
+      "name": "admin-daily-guard",
+      "type": "timer",
+      "config": "0 0 4 * * * *"
+    }
+  ]
+}
