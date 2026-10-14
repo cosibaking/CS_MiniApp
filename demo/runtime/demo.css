@@ -124,7 +124,13 @@ body {
 @keyframes mp-spin { to { transform: rotate(360deg); } }
 
 /* ---------- 页面容器 ---------- */
-#mp-pages { flex: 1; position: relative; overflow: hidden; background: #f5f6f8; }
+/* transform 使 #mp-pages 成为 fixed 后代的包含块：模拟真机视口，
+   小程序页内 position:fixed 的元素（底部操作栏/FAB）相对本区域固定，
+   而不是相对整个浏览器窗口固定（否则按钮会落在整个演示页面最底部） */
+#mp-pages {
+  flex: 1; position: relative; overflow: hidden; background: #f5f6f8;
+  transform: translateZ(0);
+}
 .mp-page {
   position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden;
   background: #f5f6f8;
